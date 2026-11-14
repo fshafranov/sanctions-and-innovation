@@ -1,0 +1,692 @@
+case,outcome,iso3,country,weight_pct
+Russia 2014,pat_res,NZL,New Zealand,6.8
+Russia 2014,pat_res,KOR,Korea,6.3
+Russia 2014,pat_res,AUS,Australia,6.2
+Russia 2014,pat_res,URY,Uruguay,5.5
+Russia 2014,pat_res,AUT,Austria,5.2
+Russia 2014,pat_res,PRT,Portugal,5.1
+Russia 2014,pat_res,ESP,Spain,5.0
+Russia 2014,pat_res,CZE,Czechia,5.0
+Russia 2014,pat_res,SWE,Sweden,4.4
+Russia 2014,pat_res,JPN,Japan,4.1
+Russia 2014,pat_res,DEU,Germany,4.1
+Russia 2014,pat_res,SVK,Slovak Republic,4.0
+Russia 2014,pat_res,SGP,Singapore,3.9
+Russia 2014,pat_res,CHE,Switzerland,3.7
+Russia 2014,pat_res,PER,Peru,3.5
+Russia 2014,pat_res,GBR,United Kingdom,3.4
+Russia 2014,pat_res,MEX,Mexico,3.2
+Russia 2014,pat_res,FIN,Finland,3.1
+Russia 2014,pat_res,HUN,Hungary,2.8
+Russia 2014,pat_res,NLD,Netherlands,2.8
+Russia 2014,pat_res,NOR,Norway,2.7
+Russia 2014,pat_res,CHL,Chile,2.4
+Russia 2014,pat_res,DNK,Denmark,2.1
+Russia 2014,pat_res,POL,Poland,1.7
+Russia 2014,pat_res,MYS,Malaysia,1.6
+Russia 2014,pat_res,BEL,Belgium,1.4
+Russia 2014,pat_res,ROU,Romania,0.0
+Russia 2014,pat_nres,URY,Uruguay,10.5
+Russia 2014,pat_nres,CHE,Switzerland,9.8
+Russia 2014,pat_nres,DEU,Germany,9.5
+Russia 2014,pat_nres,KOR,Korea,9.0
+Russia 2014,pat_nres,SGP,Singapore,8.7
+Russia 2014,pat_nres,AUS,Australia,8.4
+Russia 2014,pat_nres,DNK,Denmark,8.0
+Russia 2014,pat_nres,MEX,Mexico,6.9
+Russia 2014,pat_nres,JPN,Japan,6.0
+Russia 2014,pat_nres,MYS,Malaysia,5.5
+Russia 2014,pat_nres,AUT,Austria,5.4
+Russia 2014,pat_nres,NZL,New Zealand,5.1
+Russia 2014,pat_nres,BEL,Belgium,4.2
+Russia 2014,pat_nres,PER,Peru,2.9
+Russia 2014,pat_nres,CZE,Czechia,0.0
+Russia 2014,pat_nres,NOR,Norway,0.0
+Russia 2014,pat_nres,HUN,Hungary,0.0
+Russia 2014,pat_nres,SWE,Sweden,0.0
+Russia 2014,pat_nres,ESP,Spain,0.0
+Russia 2014,pat_nres,NLD,Netherlands,0.0
+Russia 2014,pat_nres,ROU,Romania,0.0
+Russia 2014,pat_nres,SVK,Slovak Republic,0.0
+Russia 2014,pat_nres,GBR,United Kingdom,0.0
+Russia 2014,pat_nres,PRT,Portugal,0.0
+Russia 2014,pat_nres,POL,Poland,0.0
+Russia 2014,pat_nres,FIN,Finland,0.0
+Russia 2014,pat_nres,CHL,Chile,0.0
+Russia 2014,works_oa,PNG,Papua New Guinea,13.6
+Russia 2014,works_oa,MAR,Morocco,6.6
+Russia 2014,works_oa,JPN,Japan,5.8
+Russia 2014,works_oa,FIN,Finland,5.4
+Russia 2014,works_oa,SWE,Sweden,5.3
+Russia 2014,works_oa,OMN,Oman,4.8
+Russia 2014,works_oa,SEN,Senegal,4.7
+Russia 2014,works_oa,DNK,Denmark,4.5
+Russia 2014,works_oa,GBR,United Kingdom,4.5
+Russia 2014,works_oa,NAM,Namibia,3.7
+Russia 2014,works_oa,BEL,Belgium,3.3
+Russia 2014,works_oa,HUN,Hungary,3.2
+Russia 2014,works_oa,DEU,Germany,3.2
+Russia 2014,works_oa,MEX,Mexico,3.0
+Russia 2014,works_oa,NLD,Netherlands,2.9
+Russia 2014,works_oa,ITA,Italy,2.8
+Russia 2014,works_oa,SVK,Slovak Republic,2.7
+Russia 2014,works_oa,AUS,Australia,2.4
+Russia 2014,works_oa,CHE,Switzerland,2.4
+Russia 2014,works_oa,AUT,Austria,2.2
+Russia 2014,works_oa,ESP,Spain,2.1
+Russia 2014,works_oa,TTO,Trinidad and Tobago,1.9
+Russia 2014,works_oa,POL,Poland,1.7
+Russia 2014,works_oa,NZL,New Zealand,1.4
+Russia 2014,works_oa,MUS,Mauritius,1.3
+Russia 2014,works_oa,NOR,Norway,1.3
+Russia 2014,works_oa,CHL,Chile,1.2
+Russia 2014,works_oa,URY,Uruguay,0.9
+Russia 2014,works_oa,CZE,Czechia,0.5
+Russia 2014,works_oa,PRI,Puerto Rico (US),0.4
+Russia 2014,works_oa,ROU,Romania,0.1
+Russia 2014,works_oa,LAO,Lao PDR,0.0
+Russia 2014,works_oa,DZA,Algeria,0.0
+Russia 2014,works_oa,TCD,Chad,0.0
+Russia 2014,works_oa,PRT,Portugal,0.0
+Russia 2014,works_oa,MYS,Malaysia,0.0
+Russia 2014,works_oa,KOR,Korea,0.0
+Russia 2014,works_oa,PER,Peru,0.0
+Russia 2014,works_oa,GAB,Gabon,0.0
+Russia 2014,works_oa,MNG,Mongolia,0.0
+Russia 2014,works_oa,QAT,Qatar,0.0
+Russia 2014,works_oa,CYP,Cyprus,0.0
+Russia 2014,works_oa,SGP,Singapore,0.0
+Russia 2014,works_oa,BWA,Botswana,0.0
+Russia 2014,works_oa,BHR,Bahrain,0.0
+Russia 2014,works_oa,SWZ,Eswatini,0.0
+Russia 2014,works_oa,NPL,Nepal,0.0
+Russia 2014,works_oa,BEN,Benin,0.0
+Russia 2014,works_oa,ARE,United Arab Emirates,0.0
+Russia 2014,articles_wb,PNG,Papua New Guinea,21.1
+Russia 2014,articles_wb,JPN,Japan,13.8
+Russia 2014,articles_wb,SWE,Sweden,9.9
+Russia 2014,articles_wb,GBR,United Kingdom,8.7
+Russia 2014,articles_wb,FIN,Finland,7.6
+Russia 2014,articles_wb,TCD,Chad,7.4
+Russia 2014,articles_wb,NAM,Namibia,7.1
+Russia 2014,articles_wb,SEN,Senegal,5.8
+Russia 2014,articles_wb,DEU,Germany,5.0
+Russia 2014,articles_wb,HUN,Hungary,4.2
+Russia 2014,articles_wb,DNK,Denmark,2.7
+Russia 2014,articles_wb,MUS,Mauritius,1.5
+Russia 2014,articles_wb,BEL,Belgium,1.3
+Russia 2014,articles_wb,NLD,Netherlands,1.1
+Russia 2014,articles_wb,SWZ,Eswatini,0.8
+Russia 2014,articles_wb,CHE,Switzerland,0.8
+Russia 2014,articles_wb,MAR,Morocco,0.8
+Russia 2014,articles_wb,AUT,Austria,0.4
+Russia 2014,articles_wb,QAT,Qatar,0.0
+Russia 2014,articles_wb,URY,Uruguay,0.0
+Russia 2014,articles_wb,ARE,United Arab Emirates,0.0
+Russia 2014,articles_wb,BHR,Bahrain,0.0
+Russia 2014,articles_wb,MNG,Mongolia,0.0
+Russia 2014,articles_wb,CHL,Chile,0.0
+Russia 2014,articles_wb,CYP,Cyprus,0.0
+Russia 2014,articles_wb,DZA,Algeria,0.0
+Russia 2014,articles_wb,PER,Peru,0.0
+Russia 2014,articles_wb,POL,Poland,0.0
+Russia 2014,articles_wb,SVK,Slovak Republic,0.0
+Russia 2014,articles_wb,PRI,Puerto Rico (US),0.0
+Russia 2014,articles_wb,AUS,Australia,0.0
+Russia 2014,articles_wb,GAB,Gabon,0.0
+Russia 2014,articles_wb,TTO,Trinidad and Tobago,0.0
+Russia 2014,articles_wb,ITA,Italy,0.0
+Russia 2014,articles_wb,KOR,Korea,0.0
+Russia 2014,articles_wb,SGP,Singapore,0.0
+Russia 2014,articles_wb,BWA,Botswana,0.0
+Russia 2014,articles_wb,BEN,Benin,0.0
+Russia 2014,articles_wb,ROU,Romania,0.0
+Russia 2014,articles_wb,CZE,Czechia,0.0
+Russia 2014,articles_wb,PRT,Portugal,0.0
+Russia 2014,articles_wb,LAO,Lao PDR,0.0
+Russia 2014,articles_wb,OMN,Oman,0.0
+Russia 2014,articles_wb,NZL,New Zealand,0.0
+Russia 2014,articles_wb,NPL,Nepal,0.0
+Russia 2014,articles_wb,NOR,Norway,0.0
+Russia 2014,articles_wb,ESP,Spain,0.0
+Russia 2014,articles_wb,MYS,Malaysia,0.0
+Russia 2014,articles_wb,MEX,Mexico,0.0
+Russia 2014,intl_share,ROU,Romania,19.9
+Russia 2014,intl_share,MAR,Morocco,14.4
+Russia 2014,intl_share,DZA,Algeria,10.3
+Russia 2014,intl_share,SVK,Slovak Republic,8.6
+Russia 2014,intl_share,POL,Poland,8.4
+Russia 2014,intl_share,BEN,Benin,8.3
+Russia 2014,intl_share,KOR,Korea,5.1
+Russia 2014,intl_share,MYS,Malaysia,3.8
+Russia 2014,intl_share,PRT,Portugal,3.7
+Russia 2014,intl_share,GAB,Gabon,3.4
+Russia 2014,intl_share,CZE,Czechia,3.3
+Russia 2014,intl_share,HUN,Hungary,2.9
+Russia 2014,intl_share,URY,Uruguay,2.2
+Russia 2014,intl_share,CYP,Cyprus,1.8
+Russia 2014,intl_share,PER,Peru,1.6
+Russia 2014,intl_share,CHL,Chile,0.9
+Russia 2014,intl_share,MEX,Mexico,0.8
+Russia 2014,intl_share,JPN,Japan,0.2
+Russia 2014,intl_share,MUS,Mauritius,0.2
+Russia 2014,intl_share,LAO,Lao PDR,0.1
+Russia 2014,intl_share,SGP,Singapore,0.0
+Russia 2014,intl_share,SWE,Sweden,0.0
+Russia 2014,intl_share,NLD,Netherlands,0.0
+Russia 2014,intl_share,QAT,Qatar,0.0
+Russia 2014,intl_share,PNG,Papua New Guinea,0.0
+Russia 2014,intl_share,PRI,Puerto Rico (US),0.0
+Russia 2014,intl_share,BWA,Botswana,0.0
+Russia 2014,intl_share,NOR,Norway,0.0
+Russia 2014,intl_share,BHR,Bahrain,0.0
+Russia 2014,intl_share,SEN,Senegal,0.0
+Russia 2014,intl_share,TCD,Chad,0.0
+Russia 2014,intl_share,AUS,Australia,0.0
+Russia 2014,intl_share,DEU,Germany,0.0
+Russia 2014,intl_share,TTO,Trinidad and Tobago,0.0
+Russia 2014,intl_share,NZL,New Zealand,0.0
+Russia 2014,intl_share,DNK,Denmark,0.0
+Russia 2014,intl_share,SWZ,Eswatini,0.0
+Russia 2014,intl_share,BEL,Belgium,0.0
+Russia 2014,intl_share,AUT,Austria,0.0
+Russia 2014,intl_share,GBR,United Kingdom,0.0
+Russia 2014,intl_share,OMN,Oman,0.0
+Russia 2014,intl_share,CHE,Switzerland,0.0
+Russia 2014,intl_share,FIN,Finland,0.0
+Russia 2014,intl_share,NPL,Nepal,0.0
+Russia 2014,intl_share,NAM,Namibia,0.0
+Russia 2014,intl_share,MNG,Mongolia,0.0
+Russia 2014,intl_share,ESP,Spain,0.0
+Russia 2014,intl_share,ITA,Italy,0.0
+Russia 2014,intl_share,ARE,United Arab Emirates,0.0
+Russia 2022,pat_res,SVK,Slovak Republic,9.6
+Russia 2022,pat_res,CZE,Czechia,8.9
+Russia 2022,pat_res,AUT,Austria,8.1
+Russia 2022,pat_res,PRT,Portugal,7.7
+Russia 2022,pat_res,AUS,Australia,7.5
+Russia 2022,pat_res,SWE,Sweden,7.3
+Russia 2022,pat_res,ESP,Spain,6.7
+Russia 2022,pat_res,GBR,United Kingdom,5.6
+Russia 2022,pat_res,DNK,Denmark,5.4
+Russia 2022,pat_res,CAN,Canada,5.4
+Russia 2022,pat_res,JPN,Japan,5.1
+Russia 2022,pat_res,DEU,Germany,4.9
+Russia 2022,pat_res,FIN,Finland,4.5
+Russia 2022,pat_res,NLD,Netherlands,4.3
+Russia 2022,pat_res,NZL,New Zealand,3.5
+Russia 2022,pat_res,ROU,Romania,3.0
+Russia 2022,pat_res,NOR,Norway,2.5
+Russia 2022,pat_res,IND,India,0.0
+Russia 2022,pat_res,DZA,Algeria,0.0
+Russia 2022,pat_res,MAR,Morocco,0.0
+Russia 2022,pat_res,CHL,Chile,0.0
+Russia 2022,pat_res,URY,Uruguay,0.0
+Russia 2022,pat_nres,ESP,Spain,10.3
+Russia 2022,pat_nres,URY,Uruguay,8.4
+Russia 2022,pat_nres,AUT,Austria,7.8
+Russia 2022,pat_nres,FIN,Finland,7.7
+Russia 2022,pat_nres,ROU,Romania,6.9
+Russia 2022,pat_nres,DZA,Algeria,6.8
+Russia 2022,pat_nres,SVK,Slovak Republic,6.0
+Russia 2022,pat_nres,CZE,Czechia,5.7
+Russia 2022,pat_nres,DNK,Denmark,5.6
+Russia 2022,pat_nres,CHL,Chile,4.9
+Russia 2022,pat_nres,GBR,United Kingdom,4.6
+Russia 2022,pat_nres,NOR,Norway,4.2
+Russia 2022,pat_nres,CAN,Canada,4.0
+Russia 2022,pat_nres,IND,India,3.2
+Russia 2022,pat_nres,JPN,Japan,3.1
+Russia 2022,pat_nres,AUS,Australia,3.1
+Russia 2022,pat_nres,DEU,Germany,3.0
+Russia 2022,pat_nres,NZL,New Zealand,3.0
+Russia 2022,pat_nres,SWE,Sweden,1.8
+Russia 2022,pat_nres,PRT,Portugal,0.0
+Russia 2022,pat_nres,MAR,Morocco,0.0
+Russia 2022,pat_nres,NLD,Netherlands,0.0
+Russia 2022,works_oa,QAT,Qatar,11.1
+Russia 2022,works_oa,MNG,Mongolia,7.0
+Russia 2022,works_oa,TGO,Togo,6.0
+Russia 2022,works_oa,DZA,Algeria,5.9
+Russia 2022,works_oa,SWZ,Eswatini,5.7
+Russia 2022,works_oa,CHL,Chile,5.5
+Russia 2022,works_oa,URY,Uruguay,5.1
+Russia 2022,works_oa,CYP,Cyprus,4.9
+Russia 2022,works_oa,TLS,Timor-Leste,4.4
+Russia 2022,works_oa,PNG,Papua New Guinea,4.2
+Russia 2022,works_oa,SEN,Senegal,3.8
+Russia 2022,works_oa,BEN,Benin,3.7
+Russia 2022,works_oa,COG,Congo,3.3
+Russia 2022,works_oa,NAM,Namibia,3.1
+Russia 2022,works_oa,TCD,Chad,2.9
+Russia 2022,works_oa,BWA,Botswana,2.6
+Russia 2022,works_oa,MRT,Mauritania,2.5
+Russia 2022,works_oa,NOR,Norway,2.3
+Russia 2022,works_oa,OMN,Oman,1.8
+Russia 2022,works_oa,IND,India,1.8
+Russia 2022,works_oa,NZL,New Zealand,1.6
+Russia 2022,works_oa,BHR,Bahrain,1.3
+Russia 2022,works_oa,FIN,Finland,1.3
+Russia 2022,works_oa,AUS,Australia,1.3
+Russia 2022,works_oa,DNK,Denmark,1.2
+Russia 2022,works_oa,AUT,Austria,0.8
+Russia 2022,works_oa,MUS,Mauritius,0.8
+Russia 2022,works_oa,SWE,Sweden,0.7
+Russia 2022,works_oa,ESP,Spain,0.6
+Russia 2022,works_oa,ROU,Romania,0.5
+Russia 2022,works_oa,GBR,United Kingdom,0.5
+Russia 2022,works_oa,CAN,Canada,0.5
+Russia 2022,works_oa,PRI,Puerto Rico (US),0.5
+Russia 2022,works_oa,CZE,Czechia,0.2
+Russia 2022,works_oa,MAR,Morocco,0.2
+Russia 2022,works_oa,NLD,Netherlands,0.2
+Russia 2022,works_oa,ITA,Italy,0.1
+Russia 2022,works_oa,JPN,Japan,0.0
+Russia 2022,works_oa,PRT,Portugal,0.0
+Russia 2022,works_oa,SVK,Slovak Republic,0.0
+Russia 2022,works_oa,NPL,Nepal,0.0
+Russia 2022,works_oa,DEU,Germany,0.0
+Russia 2022,works_oa,TTO,Trinidad and Tobago,0.0
+Russia 2022,articles_wb,SWZ,Eswatini,11.4
+Russia 2022,articles_wb,MAR,Morocco,10.5
+Russia 2022,articles_wb,TCD,Chad,10.4
+Russia 2022,articles_wb,QAT,Qatar,7.6
+Russia 2022,articles_wb,MUS,Mauritius,5.7
+Russia 2022,articles_wb,DZA,Algeria,5.7
+Russia 2022,articles_wb,COG,Congo,5.6
+Russia 2022,articles_wb,TGO,Togo,5.1
+Russia 2022,articles_wb,BWA,Botswana,4.7
+Russia 2022,articles_wb,NPL,Nepal,4.6
+Russia 2022,articles_wb,CZE,Czechia,4.4
+Russia 2022,articles_wb,SVK,Slovak Republic,4.4
+Russia 2022,articles_wb,SEN,Senegal,3.8
+Russia 2022,articles_wb,CHL,Chile,3.3
+Russia 2022,articles_wb,URY,Uruguay,3.2
+Russia 2022,articles_wb,NAM,Namibia,2.7
+Russia 2022,articles_wb,BHR,Bahrain,2.3
+Russia 2022,articles_wb,IND,India,2.2
+Russia 2022,articles_wb,CYP,Cyprus,1.2
+Russia 2022,articles_wb,AUS,Australia,0.6
+Russia 2022,articles_wb,NOR,Norway,0.5
+Russia 2022,articles_wb,DNK,Denmark,0.0
+Russia 2022,articles_wb,PRT,Portugal,0.0
+Russia 2022,articles_wb,ITA,Italy,0.0
+Russia 2022,articles_wb,PNG,Papua New Guinea,0.0
+Russia 2022,articles_wb,ROU,Romania,0.0
+Russia 2022,articles_wb,GBR,United Kingdom,0.0
+Russia 2022,articles_wb,OMN,Oman,0.0
+Russia 2022,articles_wb,TLS,Timor-Leste,0.0
+Russia 2022,articles_wb,BEN,Benin,0.0
+Russia 2022,articles_wb,AUT,Austria,0.0
+Russia 2022,articles_wb,FIN,Finland,0.0
+Russia 2022,articles_wb,TTO,Trinidad and Tobago,0.0
+Russia 2022,articles_wb,SWE,Sweden,0.0
+Russia 2022,articles_wb,CAN,Canada,0.0
+Russia 2022,articles_wb,DEU,Germany,0.0
+Russia 2022,articles_wb,MNG,Mongolia,0.0
+Russia 2022,articles_wb,ESP,Spain,0.0
+Russia 2022,articles_wb,PRI,Puerto Rico (US),0.0
+Russia 2022,articles_wb,NZL,New Zealand,0.0
+Russia 2022,articles_wb,NLD,Netherlands,0.0
+Russia 2022,articles_wb,JPN,Japan,0.0
+Russia 2022,articles_wb,MRT,Mauritania,0.0
+Russia 2022,intl_share,BEN,Benin,8.7
+Russia 2022,intl_share,MNG,Mongolia,7.4
+Russia 2022,intl_share,MAR,Morocco,6.2
+Russia 2022,intl_share,TLS,Timor-Leste,5.2
+Russia 2022,intl_share,TCD,Chad,4.9
+Russia 2022,intl_share,DZA,Algeria,4.3
+Russia 2022,intl_share,ROU,Romania,4.3
+Russia 2022,intl_share,COG,Congo,4.1
+Russia 2022,intl_share,NPL,Nepal,3.9
+Russia 2022,intl_share,PNG,Papua New Guinea,3.9
+Russia 2022,intl_share,MRT,Mauritania,3.5
+Russia 2022,intl_share,IND,India,3.5
+Russia 2022,intl_share,SVK,Slovak Republic,3.3
+Russia 2022,intl_share,TTO,Trinidad and Tobago,3.1
+Russia 2022,intl_share,PRI,Puerto Rico (US),3.0
+Russia 2022,intl_share,URY,Uruguay,3.0
+Russia 2022,intl_share,TGO,Togo,2.6
+Russia 2022,intl_share,SEN,Senegal,2.5
+Russia 2022,intl_share,NAM,Namibia,2.4
+Russia 2022,intl_share,ITA,Italy,2.0
+Russia 2022,intl_share,JPN,Japan,2.0
+Russia 2022,intl_share,PRT,Portugal,1.8
+Russia 2022,intl_share,CYP,Cyprus,1.7
+Russia 2022,intl_share,ESP,Spain,1.7
+Russia 2022,intl_share,DEU,Germany,1.6
+Russia 2022,intl_share,AUT,Austria,1.5
+Russia 2022,intl_share,CAN,Canada,1.1
+Russia 2022,intl_share,CHL,Chile,1.0
+Russia 2022,intl_share,CZE,Czechia,0.9
+Russia 2022,intl_share,NZL,New Zealand,0.8
+Russia 2022,intl_share,QAT,Qatar,0.7
+Russia 2022,intl_share,BHR,Bahrain,0.6
+Russia 2022,intl_share,NLD,Netherlands,0.6
+Russia 2022,intl_share,DNK,Denmark,0.5
+Russia 2022,intl_share,NOR,Norway,0.5
+Russia 2022,intl_share,FIN,Finland,0.4
+Russia 2022,intl_share,BWA,Botswana,0.4
+Russia 2022,intl_share,SWE,Sweden,0.2
+Russia 2022,intl_share,OMN,Oman,0.2
+Russia 2022,intl_share,SWZ,Eswatini,0.0
+Russia 2022,intl_share,GBR,United Kingdom,0.0
+Russia 2022,intl_share,MUS,Mauritius,0.0
+Russia 2022,intl_share,AUS,Australia,0.0
+Iran 2012,pat_res,VNM,Viet Nam,85.7
+Iran 2012,pat_res,PRT,Portugal,14.3
+Iran 2012,pat_res,POL,Poland,0.0
+Iran 2012,pat_res,SVK,Slovak Republic,0.0
+Iran 2012,pat_res,ESP,Spain,0.0
+Iran 2012,pat_res,DNK,Denmark,0.0
+Iran 2012,pat_res,ZAF,South Africa,0.0
+Iran 2012,pat_res,FIN,Finland,0.0
+Iran 2012,pat_res,MDA,Moldova,0.0
+Iran 2012,pat_res,CHL,Chile,0.0
+Iran 2012,pat_res,GEO,Georgia,0.0
+Iran 2012,pat_res,MEX,Mexico,0.0
+Iran 2012,pat_res,HRV,Croatia,0.0
+Iran 2012,pat_res,AUS,Australia,0.0
+Iran 2012,pat_res,URY,Uruguay,0.0
+Iran 2012,pat_res,BRA,Brazil,0.0
+Iran 2012,pat_res,HKG,"Hong Kong SAR, China",0.0
+Iran 2012,pat_res,GBR,United Kingdom,0.0
+Iran 2012,pat_res,JOR,Jordan,0.0
+Iran 2012,pat_res,EST,Estonia,0.0
+Iran 2012,pat_res,PER,Peru,0.0
+Iran 2012,pat_res,NZL,New Zealand,0.0
+Iran 2012,pat_res,SGP,Singapore,0.0
+Iran 2012,pat_res,SWE,Sweden,0.0
+Iran 2012,pat_res,ROU,Romania,0.0
+Iran 2012,pat_res,NLD,Netherlands,0.0
+Iran 2012,pat_res,NOR,Norway,0.0
+Iran 2012,pat_res,ARG,Argentina,0.0
+Iran 2012,pat_res,MYS,Malaysia,0.0
+Iran 2012,pat_res,LVA,Latvia,0.0
+Iran 2012,pat_res,LTU,Lithuania,0.0
+Iran 2012,pat_res,KOR,Korea,0.0
+Iran 2012,pat_res,HUN,Hungary,0.0
+Iran 2012,pat_res,DEU,Germany,0.0
+Iran 2012,pat_res,CZE,Czechia,0.0
+Iran 2012,pat_res,CHE,Switzerland,0.0
+Iran 2012,pat_res,BGD,Bangladesh,0.0
+Iran 2012,pat_res,BEL,Belgium,0.0
+Iran 2012,pat_res,AUT,Austria,0.0
+Iran 2012,pat_res,JPN,Japan,0.0
+Iran 2012,pat_nres,JOR,Jordan,13.6
+Iran 2012,pat_nres,SGP,Singapore,12.0
+Iran 2012,pat_nres,ZAF,South Africa,11.3
+Iran 2012,pat_nres,VNM,Viet Nam,9.5
+Iran 2012,pat_nres,HKG,"Hong Kong SAR, China",7.1
+Iran 2012,pat_nres,KOR,Korea,5.6
+Iran 2012,pat_nres,URY,Uruguay,4.8
+Iran 2012,pat_nres,BGD,Bangladesh,4.8
+Iran 2012,pat_nres,DEU,Germany,4.5
+Iran 2012,pat_nres,JPN,Japan,4.4
+Iran 2012,pat_nres,BRA,Brazil,4.3
+Iran 2012,pat_nres,GEO,Georgia,4.2
+Iran 2012,pat_nres,MEX,Mexico,3.7
+Iran 2012,pat_nres,AUS,Australia,3.6
+Iran 2012,pat_nres,DNK,Denmark,2.6
+Iran 2012,pat_nres,MYS,Malaysia,1.5
+Iran 2012,pat_nres,AUT,Austria,1.2
+Iran 2012,pat_nres,NZL,New Zealand,1.1
+Iran 2012,pat_nres,CHE,Switzerland,0.4
+Iran 2012,pat_nres,EST,Estonia,0.0
+Iran 2012,pat_nres,POL,Poland,0.0
+Iran 2012,pat_nres,CZE,Czechia,0.0
+Iran 2012,pat_nres,LVA,Latvia,0.0
+Iran 2012,pat_nres,FIN,Finland,0.0
+Iran 2012,pat_nres,HRV,Croatia,0.0
+Iran 2012,pat_nres,ESP,Spain,0.0
+Iran 2012,pat_nres,GBR,United Kingdom,0.0
+Iran 2012,pat_nres,PER,Peru,0.0
+Iran 2012,pat_nres,ROU,Romania,0.0
+Iran 2012,pat_nres,SVK,Slovak Republic,0.0
+Iran 2012,pat_nres,ARG,Argentina,0.0
+Iran 2012,pat_nres,NLD,Netherlands,0.0
+Iran 2012,pat_nres,PRT,Portugal,0.0
+Iran 2012,pat_nres,NOR,Norway,0.0
+Iran 2012,pat_nres,LTU,Lithuania,0.0
+Iran 2012,pat_nres,SWE,Sweden,0.0
+Iran 2012,pat_nres,HUN,Hungary,0.0
+Iran 2012,pat_nres,CHL,Chile,0.0
+Iran 2012,pat_nres,BEL,Belgium,0.0
+Iran 2012,works_oa,XKX,Kosovo,41.7
+Iran 2012,works_oa,MYS,Malaysia,22.8
+Iran 2012,works_oa,ALB,Albania,10.0
+Iran 2012,works_oa,QAT,Qatar,8.7
+Iran 2012,works_oa,NIC,Nicaragua,5.2
+Iran 2012,works_oa,LAO,Lao PDR,4.5
+Iran 2012,works_oa,CYP,Cyprus,2.2
+Iran 2012,works_oa,PRY,Paraguay,1.9
+Iran 2012,works_oa,SWZ,Eswatini,1.6
+Iran 2012,works_oa,GHA,Ghana,1.1
+Iran 2012,works_oa,DZA,Algeria,0.4
+Iran 2012,works_oa,BGD,Bangladesh,0.1
+Iran 2012,works_oa,BWA,Botswana,0.0
+Iran 2012,works_oa,GAB,Gabon,0.0
+Iran 2012,works_oa,DNK,Denmark,0.0
+Iran 2012,works_oa,BHR,Bahrain,0.0
+Iran 2012,works_oa,KGZ,Kyrgyz Republic,0.0
+Iran 2012,works_oa,GEO,Georgia,0.0
+Iran 2012,works_oa,MEX,Mexico,0.0
+Iran 2012,works_oa,CHE,Switzerland,0.0
+Iran 2012,works_oa,ARG,Argentina,0.0
+Iran 2012,works_oa,PNG,Papua New Guinea,0.0
+Iran 2012,works_oa,JPN,Japan,0.0
+Iran 2012,works_oa,SVN,Slovenia,0.0
+Iran 2012,works_oa,BFA,Burkina Faso,0.0
+Iran 2012,works_oa,SLV,El Salvador,0.0
+Iran 2012,works_oa,FIN,Finland,0.0
+Iran 2012,works_oa,SEN,Senegal,0.0
+Iran 2012,works_oa,KWT,Kuwait,0.0
+Iran 2012,works_oa,BEL,Belgium,0.0
+Iran 2012,works_oa,URY,Uruguay,0.0
+Iran 2012,works_oa,KAZ,Kazakhstan,0.0
+Iran 2012,works_oa,SGP,Singapore,0.0
+Iran 2012,works_oa,MUS,Mauritius,0.0
+Iran 2012,works_oa,TJK,Tajikistan,0.0
+Iran 2012,works_oa,JOR,Jordan,0.0
+Iran 2012,works_oa,SAU,Saudi Arabia,0.0
+Iran 2012,works_oa,PER,Peru,0.0
+Iran 2012,works_oa,PRI,Puerto Rico (US),0.0
+Iran 2012,works_oa,LTU,Lithuania,0.0
+Iran 2012,works_oa,GBR,United Kingdom,0.0
+Iran 2012,works_oa,NPL,Nepal,0.0
+Iran 2012,works_oa,MKD,North Macedonia,0.0
+Iran 2012,works_oa,HRV,Croatia,0.0
+Iran 2012,works_oa,BRA,Brazil,0.0
+Iran 2012,works_oa,ROU,Romania,0.0
+Iran 2012,works_oa,ZAF,South Africa,0.0
+Iran 2012,works_oa,POL,Poland,0.0
+Iran 2012,works_oa,VNM,Viet Nam,0.0
+Iran 2012,works_oa,PRT,Portugal,0.0
+Iran 2012,works_oa,TTO,Trinidad and Tobago,0.0
+Iran 2012,works_oa,TCD,Chad,0.0
+Iran 2012,works_oa,SWE,Sweden,0.0
+Iran 2012,works_oa,OMN,Oman,0.0
+Iran 2012,works_oa,SVK,Slovak Republic,0.0
+Iran 2012,works_oa,LVA,Latvia,0.0
+Iran 2012,works_oa,NZL,New Zealand,0.0
+Iran 2012,works_oa,NOR,Norway,0.0
+Iran 2012,works_oa,AUS,Australia,0.0
+Iran 2012,works_oa,AUT,Austria,0.0
+Iran 2012,works_oa,BEN,Benin,0.0
+Iran 2012,works_oa,CHL,Chile,0.0
+Iran 2012,works_oa,CMR,Cameroon,0.0
+Iran 2012,works_oa,CZE,Czechia,0.0
+Iran 2012,works_oa,DEU,Germany,0.0
+Iran 2012,works_oa,ESP,Spain,0.0
+Iran 2012,works_oa,EST,Estonia,0.0
+Iran 2012,works_oa,ETH,Ethiopia,0.0
+Iran 2012,works_oa,HKG,"Hong Kong SAR, China",0.0
+Iran 2012,works_oa,HUN,Hungary,0.0
+Iran 2012,works_oa,ITA,Italy,0.0
+Iran 2012,works_oa,KOR,Korea,0.0
+Iran 2012,works_oa,LSO,Lesotho,0.0
+Iran 2012,works_oa,MAR,Morocco,0.0
+Iran 2012,works_oa,MDA,Moldova,0.0
+Iran 2012,works_oa,MNG,Mongolia,0.0
+Iran 2012,works_oa,MOZ,Mozambique,0.0
+Iran 2012,works_oa,NAM,Namibia,0.0
+Iran 2012,works_oa,NLD,Netherlands,0.0
+Iran 2012,works_oa,ZMB,Zambia,0.0
+Iran 2012,articles_wb,MYS,Malaysia,47.2
+Iran 2012,articles_wb,QAT,Qatar,33.8
+Iran 2012,articles_wb,DZA,Algeria,12.3
+Iran 2012,articles_wb,LAO,Lao PDR,6.8
+Iran 2012,articles_wb,BHR,Bahrain,0.0
+Iran 2012,articles_wb,BGD,Bangladesh,0.0
+Iran 2012,articles_wb,CMR,Cameroon,0.0
+Iran 2012,articles_wb,GEO,Georgia,0.0
+Iran 2012,articles_wb,BWA,Botswana,0.0
+Iran 2012,articles_wb,GAB,Gabon,0.0
+Iran 2012,articles_wb,HUN,Hungary,0.0
+Iran 2012,articles_wb,BFA,Burkina Faso,0.0
+Iran 2012,articles_wb,MUS,Mauritius,0.0
+Iran 2012,articles_wb,KWT,Kuwait,0.0
+Iran 2012,articles_wb,ARG,Argentina,0.0
+Iran 2012,articles_wb,AUT,Austria,0.0
+Iran 2012,articles_wb,NOR,Norway,0.0
+Iran 2012,articles_wb,ITA,Italy,0.0
+Iran 2012,articles_wb,DEU,Germany,0.0
+Iran 2012,articles_wb,CHE,Switzerland,0.0
+Iran 2012,articles_wb,MDA,Moldova,0.0
+Iran 2012,articles_wb,CZE,Czechia,0.0
+Iran 2012,articles_wb,SVK,Slovak Republic,0.0
+Iran 2012,articles_wb,LVA,Latvia,0.0
+Iran 2012,articles_wb,BEL,Belgium,0.0
+Iran 2012,articles_wb,DNK,Denmark,0.0
+Iran 2012,articles_wb,PRT,Portugal,0.0
+Iran 2012,articles_wb,GBR,United Kingdom,0.0
+Iran 2012,articles_wb,HRV,Croatia,0.0
+Iran 2012,articles_wb,FIN,Finland,0.0
+Iran 2012,articles_wb,GHA,Ghana,0.0
+Iran 2012,articles_wb,POL,Poland,0.0
+Iran 2012,articles_wb,NAM,Namibia,0.0
+Iran 2012,articles_wb,PER,Peru,0.0
+Iran 2012,articles_wb,ESP,Spain,0.0
+Iran 2012,articles_wb,KAZ,Kazakhstan,0.0
+Iran 2012,articles_wb,JPN,Japan,0.0
+Iran 2012,articles_wb,URY,Uruguay,0.0
+Iran 2012,articles_wb,AUS,Australia,0.0
+Iran 2012,articles_wb,ETH,Ethiopia,0.0
+Iran 2012,articles_wb,NZL,New Zealand,0.0
+Iran 2012,articles_wb,KOR,Korea,0.0
+Iran 2012,articles_wb,JOR,Jordan,0.0
+Iran 2012,articles_wb,ZMB,Zambia,0.0
+Iran 2012,articles_wb,NIC,Nicaragua,0.0
+Iran 2012,articles_wb,MKD,North Macedonia,0.0
+Iran 2012,articles_wb,NLD,Netherlands,0.0
+Iran 2012,articles_wb,PRY,Paraguay,0.0
+Iran 2012,articles_wb,NPL,Nepal,0.0
+Iran 2012,articles_wb,VNM,Viet Nam,0.0
+Iran 2012,articles_wb,CYP,Cyprus,0.0
+Iran 2012,articles_wb,MNG,Mongolia,0.0
+Iran 2012,articles_wb,SWE,Sweden,0.0
+Iran 2012,articles_wb,SLV,El Salvador,0.0
+Iran 2012,articles_wb,BRA,Brazil,0.0
+Iran 2012,articles_wb,SVN,Slovenia,0.0
+Iran 2012,articles_wb,TJK,Tajikistan,0.0
+Iran 2012,articles_wb,SWZ,Eswatini,0.0
+Iran 2012,articles_wb,TCD,Chad,0.0
+Iran 2012,articles_wb,SEN,Senegal,0.0
+Iran 2012,articles_wb,TTO,Trinidad and Tobago,0.0
+Iran 2012,articles_wb,BEN,Benin,0.0
+Iran 2012,articles_wb,ZAF,South Africa,0.0
+Iran 2012,articles_wb,SGP,Singapore,0.0
+Iran 2012,articles_wb,CHL,Chile,0.0
+Iran 2012,articles_wb,SAU,Saudi Arabia,0.0
+Iran 2012,articles_wb,ROU,Romania,0.0
+Iran 2012,articles_wb,MOZ,Mozambique,0.0
+Iran 2012,articles_wb,PRI,Puerto Rico (US),0.0
+Iran 2012,articles_wb,EST,Estonia,0.0
+Iran 2012,articles_wb,PNG,Papua New Guinea,0.0
+Iran 2012,articles_wb,KGZ,Kyrgyz Republic,0.0
+Iran 2012,articles_wb,OMN,Oman,0.0
+Iran 2012,articles_wb,LSO,Lesotho,0.0
+Iran 2012,articles_wb,LTU,Lithuania,0.0
+Iran 2012,articles_wb,MAR,Morocco,0.0
+Iran 2012,articles_wb,MEX,Mexico,0.0
+Iran 2012,articles_wb,ALB,Albania,0.0
+Iran 2012,intl_share,ROU,Romania,5.7
+Iran 2012,intl_share,MUS,Mauritius,5.4
+Iran 2012,intl_share,MDA,Moldova,5.1
+Iran 2012,intl_share,PRY,Paraguay,4.8
+Iran 2012,intl_share,MAR,Morocco,3.9
+Iran 2012,intl_share,BRA,Brazil,3.5
+Iran 2012,intl_share,GEO,Georgia,3.4
+Iran 2012,intl_share,LVA,Latvia,3.4
+Iran 2012,intl_share,ALB,Albania,3.4
+Iran 2012,intl_share,POL,Poland,3.4
+Iran 2012,intl_share,DZA,Algeria,3.1
+Iran 2012,intl_share,MYS,Malaysia,3.0
+Iran 2012,intl_share,LTU,Lithuania,3.0
+Iran 2012,intl_share,URY,Uruguay,2.8
+Iran 2012,intl_share,HRV,Croatia,2.7
+Iran 2012,intl_share,CYP,Cyprus,2.6
+Iran 2012,intl_share,SVK,Slovak Republic,2.6
+Iran 2012,intl_share,HUN,Hungary,2.5
+Iran 2012,intl_share,KOR,Korea,2.2
+Iran 2012,intl_share,TTO,Trinidad and Tobago,2.1
+Iran 2012,intl_share,PRT,Portugal,2.0
+Iran 2012,intl_share,ARG,Argentina,2.0
+Iran 2012,intl_share,CZE,Czechia,2.0
+Iran 2012,intl_share,CMR,Cameroon,1.9
+Iran 2012,intl_share,EST,Estonia,1.8
+Iran 2012,intl_share,JPN,Japan,1.6
+Iran 2012,intl_share,BGD,Bangladesh,1.6
+Iran 2012,intl_share,XKX,Kosovo,1.5
+Iran 2012,intl_share,BEN,Benin,1.4
+Iran 2012,intl_share,JOR,Jordan,1.4
+Iran 2012,intl_share,MEX,Mexico,1.4
+Iran 2012,intl_share,CHL,Chile,1.1
+Iran 2012,intl_share,DEU,Germany,1.0
+Iran 2012,intl_share,LAO,Lao PDR,0.9
+Iran 2012,intl_share,GAB,Gabon,0.9
+Iran 2012,intl_share,DNK,Denmark,0.8
+Iran 2012,intl_share,ESP,Spain,0.8
+Iran 2012,intl_share,ITA,Italy,0.7
+Iran 2012,intl_share,SVN,Slovenia,0.7
+Iran 2012,intl_share,GHA,Ghana,0.6
+Iran 2012,intl_share,PER,Peru,0.6
+Iran 2012,intl_share,OMN,Oman,0.5
+Iran 2012,intl_share,KGZ,Kyrgyz Republic,0.5
+Iran 2012,intl_share,AUS,Australia,0.5
+Iran 2012,intl_share,FIN,Finland,0.4
+Iran 2012,intl_share,ZAF,South Africa,0.4
+Iran 2012,intl_share,KWT,Kuwait,0.4
+Iran 2012,intl_share,NLD,Netherlands,0.4
+Iran 2012,intl_share,HKG,"Hong Kong SAR, China",0.4
+Iran 2012,intl_share,KAZ,Kazakhstan,0.4
+Iran 2012,intl_share,MKD,North Macedonia,0.3
+Iran 2012,intl_share,NPL,Nepal,0.2
+Iran 2012,intl_share,NZL,New Zealand,0.1
+Iran 2012,intl_share,VNM,Viet Nam,0.1
+Iran 2012,intl_share,GBR,United Kingdom,0.1
+Iran 2012,intl_share,NOR,Norway,0.1
+Iran 2012,intl_share,CHE,Switzerland,0.0
+Iran 2012,intl_share,SWE,Sweden,0.0
+Iran 2012,intl_share,NIC,Nicaragua,0.0
+Iran 2012,intl_share,LSO,Lesotho,0.0
+Iran 2012,intl_share,ETH,Ethiopia,0.0
+Iran 2012,intl_share,BWA,Botswana,0.0
+Iran 2012,intl_share,PRI,Puerto Rico (US),0.0
+Iran 2012,intl_share,TJK,Tajikistan,0.0
+Iran 2012,intl_share,SEN,Senegal,0.0
+Iran 2012,intl_share,ZMB,Zambia,0.0
+Iran 2012,intl_share,BEL,Belgium,0.0
+Iran 2012,intl_share,BHR,Bahrain,0.0
+Iran 2012,intl_share,SGP,Singapore,0.0
+Iran 2012,intl_share,SLV,El Salvador,0.0
+Iran 2012,intl_share,SAU,Saudi Arabia,0.0
+Iran 2012,intl_share,QAT,Qatar,0.0
+Iran 2012,intl_share,AUT,Austria,0.0
+Iran 2012,intl_share,SWZ,Eswatini,0.0
+Iran 2012,intl_share,TCD,Chad,0.0
+Iran 2012,intl_share,PNG,Papua New Guinea,0.0
+Iran 2012,intl_share,NAM,Namibia,0.0
+Iran 2012,intl_share,MOZ,Mozambique,0.0
+Iran 2012,intl_share,MNG,Mongolia,0.0
+Iran 2012,intl_share,BFA,Burkina Faso,0.0

@@ -1,0 +1,19 @@
+/data/
+.venv/
+__pycache__/
+.Rhistory
+.DS_Store
+*.Rproj.user
+SESSION_LOG.md
+# LaTeX build files
+reports/*.aux
+reports/*.log
+reports/*.out
+reports/*.fls
+reports/*.fdb_latexmk
+reports/*.synctex.gz
+reports/*.bbl
+reports/*.blg
+
+# Literature PDFs: copyrighted, not redistributed (index in papers/README.md)
+papers/downloads/

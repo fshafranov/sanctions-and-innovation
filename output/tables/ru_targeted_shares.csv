@@ -1,0 +1,91 @@
+year,type,target,share
+2005,inv_foreign,Food chemistry (field 18),2.375775723647095
+2005,inv_foreign,Oil and gas drilling (IPC E21B),1.8226793386277833
+2005,inv_ru,Food chemistry (field 18),3.636853448275862
+2005,inv_ru,Oil and gas drilling (IPC E21B),3.567377495462795
+2005,um,Food chemistry (field 18),0.7385161680265941
+2005,um,Oil and gas drilling (IPC E21B),5.009066183136899
+2006,inv_foreign,Food chemistry (field 18),2.4279835390946505
+2006,inv_foreign,Oil and gas drilling (IPC E21B),1.940035273368607
+2006,inv_ru,Food chemistry (field 18),3.6562021439509955
+2006,inv_ru,Oil and gas drilling (IPC E21B),3.330781010719755
+2006,um,Food chemistry (field 18),0.6096902989101113
+2006,um,Oil and gas drilling (IPC E21B),6.075321031617569
+2007,inv_foreign,Food chemistry (field 18),2.072279507458204
+2007,inv_foreign,Oil and gas drilling (IPC E21B),2.04224647111823
+2007,inv_ru,Food chemistry (field 18),4.765224840961703
+2007,inv_ru,Oil and gas drilling (IPC E21B),3.3739815169245913
+2007,um,Food chemistry (field 18),0.7681053401609363
+2007,um,Oil and gas drilling (IPC E21B),4.723586581669976
+2008,inv_foreign,Food chemistry (field 18),2.381875141297678
+2008,inv_foreign,Oil and gas drilling (IPC E21B),2.228466233892065
+2008,inv_ru,Food chemistry (field 18),5.701659937191567
+2008,inv_ru,Oil and gas drilling (IPC E21B),3.4239569313593554
+2008,um,Food chemistry (field 18),0.5007704160246534
+2008,um,Oil and gas drilling (IPC E21B),3.7846687211093997
+2009,inv_foreign,Food chemistry (field 18),2.0621574489287497
+2009,inv_foreign,Oil and gas drilling (IPC E21B),1.6909566517189838
+2009,inv_ru,Food chemistry (field 18),3.337944307451735
+2009,inv_ru,Oil and gas drilling (IPC E21B),3.007157033740302
+2009,um,Food chemistry (field 18),0.5558750239601304
+2009,um,Oil and gas drilling (IPC E21B),3.6802760207015535
+2010,inv_foreign,Food chemistry (field 18),2.069907322162892
+2010,inv_foreign,Oil and gas drilling (IPC E21B),1.546676486834837
+2010,inv_ru,Food chemistry (field 18),4.086547799401779
+2010,inv_ru,Oil and gas drilling (IPC E21B),3.9855494697587686
+2010,um,Food chemistry (field 18),0.6161814609751742
+2010,um,Oil and gas drilling (IPC E21B),2.866583318449724
+2011,inv_foreign,Food chemistry (field 18),2.1296129071097467
+2011,inv_foreign,Oil and gas drilling (IPC E21B),2.383962434531335
+2011,inv_ru,Food chemistry (field 18),3.2812116405113967
+2011,inv_ru,Oil and gas drilling (IPC E21B),3.3369214208826694
+2011,um,Food chemistry (field 18),0.3759084454097402
+2011,um,Oil and gas drilling (IPC E21B),2.639712638877287
+2012,inv_foreign,Food chemistry (field 18),2.17819239986306
+2012,inv_foreign,Oil and gas drilling (IPC E21B),2.550496405340636
+2012,inv_ru,Food chemistry (field 18),3.929576435332383
+2012,inv_ru,Oil and gas drilling (IPC E21B),3.480977962942659
+2012,um,Food chemistry (field 18),0.5055046871593636
+2012,um,Oil and gas drilling (IPC E21B),2.771419228253761
+2013,inv_foreign,Food chemistry (field 18),1.6165413533834585
+2013,inv_foreign,Oil and gas drilling (IPC E21B),2.614490772385509
+2013,inv_ru,Food chemistry (field 18),4.11411830357143
+2013,inv_ru,Oil and gas drilling (IPC E21B),3.1863839285714293
+2013,um,Food chemistry (field 18),0.467365028203062
+2013,um,Oil and gas drilling (IPC E21B),2.747784045124899
+2014,inv_foreign,Food chemistry (field 18),1.9831854000058582
+2014,inv_foreign,Oil and gas drilling (IPC E21B),2.5573424729765355
+2014,inv_ru,Food chemistry (field 18),4.084727072229369
+2014,inv_ru,Oil and gas drilling (IPC E21B),3.577773693561232
+2014,um,Food chemistry (field 18),0.8128023399707502
+2014,um,Oil and gas drilling (IPC E21B),2.4468444144448194
+2015,inv_foreign,Food chemistry (field 18),1.4759358288770057
+2015,inv_foreign,Oil and gas drilling (IPC E21B),2.0855614973262036
+2015,inv_ru,Food chemistry (field 18),4.566071531750159
+2015,inv_ru,Oil and gas drilling (IPC E21B),3.0739007338071302
+2015,um,Food chemistry (field 18),0.433329852772267
+2015,um,Oil and gas drilling (IPC E21B),2.756604364623578
+2016,inv_foreign,Food chemistry (field 18),1.883358726934146
+2016,inv_foreign,Oil and gas drilling (IPC E21B),1.9400711020822756
+2016,inv_ru,Food chemistry (field 18),4.393440139378102
+2016,inv_ru,Oil and gas drilling (IPC E21B),2.925803885922054
+2016,um,Food chemistry (field 18),0.5945682346762698
+2016,um,Oil and gas drilling (IPC E21B),2.7458924150348865
+2017,inv_foreign,Food chemistry (field 18),1.6700315233946095
+2017,inv_foreign,Oil and gas drilling (IPC E21B),1.753267452980555
+2017,inv_ru,Food chemistry (field 18),3.897666688251419
+2017,inv_ru,Oil and gas drilling (IPC E21B),3.3089425629735154
+2017,um,Food chemistry (field 18),0.42023565367756466
+2017,um,Oil and gas drilling (IPC E21B),2.642055736518277
+2018,inv_foreign,Food chemistry (field 18),1.1225926484638207
+2018,inv_foreign,Oil and gas drilling (IPC E21B),1.29732991401418
+2018,inv_ru,Food chemistry (field 18),3.5270023315898924
+2018,inv_ru,Oil and gas drilling (IPC E21B),2.986955699792047
+2018,um,Food chemistry (field 18),0.5284030010718114
+2018,um,Oil and gas drilling (IPC E21B),2.3922829581993565
+2019,inv_foreign,Food chemistry (field 18),0.5899219131283552
+2019,inv_foreign,Oil and gas drilling (IPC E21B),1.6471449487554901
+2019,inv_ru,Food chemistry (field 18),3.542999289267946
+2019,inv_ru,Oil and gas drilling (IPC E21B),3.3566859579652757
+2019,um,Food chemistry (field 18),0.34821539609501306
+2019,um,Oil and gas drilling (IPC E21B),2.4375077726650916

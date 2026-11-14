@@ -1,0 +1,14 @@
+[project]
+name = "sanctions-innovation"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "db-dtypes>=1.9.0",
+    "google-cloud-bigquery>=3.47.0",
+    "openpyxl>=3.1.5",
+    "pandas>=3.1.1",
+    "pyarrow>=26.0.1",
+    "pydata-google-auth>=1.9.1",
+    "requests>=2.34.2",
+    "scikit-learn>=1.9.1",
+]
