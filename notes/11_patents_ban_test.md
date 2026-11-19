@@ -209,3 +209,103 @@ A field is treated from the first year its EU coverage reaches 50%.
 domestic invention declined modestly in fields as they became banned (about 6–15% for crossing 50% coverage, about
 7% per 10 pp of coverage). The pre-2022 drift is still present and limits how much of this is causal. 2014 adds no
 usable variation.
+
+## Sector × year fixed effects (exploratory, session 5, 18 Nov 2026)
+
+Script `scripts/analysis/16e_patents_sector_fe.R`; tables `output/tables/patents_sector_fe.csv`,
+`patents_sector_fe_es.csv`; fig34. Year FE replaced by WIPO sector × year FE (5 sectors, Schmoch 2008), so fields
+are compared only within their sector. 73% of the cross-field variance of Ban_f is within sector. Randomization
+inference permutes Ban_f within sector (2,000 draws).
+
+| Specification | Industry map (main) | Product-name map |
+|---|---|---|
+| Year FE (pre-registered main) | −0.091 [−0.114, −0.069] | −0.099 [−0.154, −0.045] |
+| **Sector × year FE** | **−0.099 [−0.127, −0.071]**, RI p = 0.020 | −0.115 [−0.178, −0.052], RI p = 0.009 |
+| Sector × year FE, 2019–2025 | −0.074 [−0.097, −0.052] | −0.097 [−0.143, −0.050] |
+| Sector × year FE + field linear trends | −0.031 [−0.049, −0.013] | −0.059 [−0.092, −0.027] |
+
+**Event study, industry map, sector × year FE:**
+- Pre: +0.068 (2015), +0.059, +0.033, +0.037 (2018), +0.005, +0.015 (2020), 0.
+- 2015, 2016 and 2018 exclude 0. **The pre-trend is not removed**; the intervals are tighter.
+- Post: −0.028, −0.076, −0.079, −0.085 (all exclude 0).
+- Product-name map: pre-period 2018 and 2020 exclude 0; post −0.04 to −0.10.
+
+**Reading:** the drift is within sectors (e.g. pharma/biotech vs metallurgy inside chemistry; medical vs
+measurement inside instruments), not between them. Sector × year FE does not deliver a flat pre-period. What is
+new: with field trends on top of sector × year FE, the industry-map estimate now excludes 0 (−3%/SD). 2019–21 is
+flat in every version. Next: HonestDiD bounds, and designs with more treatment units (finer technology classes,
+firm level).
+
+**Superseded numbers.** The sector × year table above was computed before the industry-map bug fix (M3). The
+corrected numbers are in the next section.
+
+## Session 5 update: industry-map bug fix, corrected results, holder types, regions
+
+**Bug (decision M3).** The industry map dropped HS→ISIC links whose ISIC4 group does not exist in NACE Rev.2,
+mainly ISIC 2100 (pharma) and 1701/1702/1709 (paper). The product's remaining links were then renormalised, so
+medicaments (HS 3004, the largest Western import line) went ⅔ to *medical technology* and none to pharma. This
+affected 8% of Western manufactured import value. Fix: fall back to the Dorner–Harhoff 2-digit table.
+- Coverage changes: pharma 0.25 → 0.08, biotech 0.35 → 0.19, organic fine chemistry 0.39 → 0.26, medical
+  technology 0.13 → 0.20, optics 0.41 → 0.49. Correlation of old and new field coverage 0.93.
+- Agreement of the two maps on the top field per HS code rose from 0.29 to 0.36.
+- The product-name map is unchanged. All scripts from 16 onward were rerun (`run_all.sh` order). The
+  pre-registered specification is unchanged; only the input was corrected.
+
+**Corrected main test (industry map, as pre-registered):** β = **−0.099 [−0.151, −0.047]**, RI p = 0.002.
+
+| Variant | β | 95% CI |
+|---|---|---|
+| 1 Product-name map | −0.099 | [−0.154, −0.045] |
+| 2 Drop weak fields | −0.097 | [−0.152, −0.041] |
+| 3a Firms | −0.041 | [−0.109, +0.027] |
+| 3b Universities | −0.110 | [−0.141, −0.078] |
+| 3c Research institutes | −0.131 | [−0.206, −0.056] |
+| 4 n_hybrid | −0.098 | [−0.132, −0.064] |
+| 5 2015–2024 | −0.097 | [−0.142, −0.051] |
+| 6 Without "ex" codes | −0.096 | [−0.149, −0.043] |
+
+**Corrected event study (industry map, field + year FE):**
+- Pre: +0.047 [−0.046, 0.139] (2015), +0.032, +0.029, +0.034 [−0.006, 0.075] (2018), +0.003, −0.003 (2020), 0.
+- **No pre-period coefficient excludes zero.** The point estimates still slope down (about +0.03 to +0.05 in
+  2015–18). That is a drift of about 1%/SD/yr, with wider intervals than before the fix. So this passes the
+  "insignificant pre-period" rule, but the drift should still be bounded (HonestDiD).
+- Post: −0.047, −0.091, −0.087, −0.084 (all exclude 0).
+
+**Corrected sector × year FE (industry map):** β = −0.105 [−0.164, −0.046], within-sector RI p = 0.012. Event
+study pre-period: 2015 +0.067, 2016 +0.057, 2018 +0.035 exclude 0. So sector × year FE makes the pre-period
+*worse*. With field trends added: −0.038 [−0.066, −0.010]. 2019–25 window: −0.081 [−0.127, −0.035].
+
+### Holder types (script 16f, fig35; field × holder × year panel)
+
+PPML with field × holder FE and holder × year FE, Ban_f × Post by holder type, SEs clustered by field:
+
+| Holder | Industry map | + sector × year | Product-name map |
+|---|---|---|---|
+| Firms | −0.041 [−0.109, +0.027] | −0.049 [−0.127, +0.028] | −0.024 [−0.089, +0.040] |
+| Universities | −0.110 [−0.141, −0.078] | −0.120 [−0.160, −0.080] | −0.123 [−0.158, −0.088] |
+| Research institutes | −0.131 [−0.206, −0.056] | −0.133 [−0.212, −0.054] | −0.142 [−0.229, −0.055] |
+| Individuals | −0.119 [−0.233, −0.005] | −0.122 [−0.204, −0.040] | −0.098 [−0.239, +0.043] |
+
+- Universities + research institutes minus firms: **−0.078 (SE 0.029, p = 0.007)**.
+- The decline is in public research (universities, institutes) and individuals. Firms show a small decline whose
+  interval includes 0.
+- Readings to test: (a) public labs lost imported equipment and reagents with no budget to switch suppliers;
+  (b) universities file to meet ministry patent targets, so they shift filings quickly toward funded topics; firms
+  keep their technology lines.
+
+### Region × field × year (script 16f, fig36)
+
+84 regions × 35 fields × 2015–25 (32,340 cells, 50% zero; 25,189 used after FE drop all-zero region × field
+cells). PPML with region × field FE and region × year FE, so the effect is identified *within regions*, across
+fields:
+
+| Specification | Industry map | Product-name map |
+|---|---|---|
+| region × field + region × year FE | −0.095 [−0.146, −0.043] | −0.098 [−0.151, −0.045] |
+| + sector × year FE | −0.104 [−0.156, −0.051] | −0.116 [−0.173, −0.058] |
+
+- SEs clustered by field. Two-way clustering (field + region) gives slightly smaller SEs (0.021–0.026).
+- Event study, region × year FE: pre-period +0.039, +0.028, +0.033, +0.033 [−0.001, 0.067], +0.002, −0.005; none
+  exclude 0. Post −0.047, −0.093, −0.083, −0.080.
+- Regional shocks (mobilisation, defence orders, local budgets) are absorbed by region × year FE and do not drive
+  the result. The treatment is still field-level (35 clusters), so this is robustness, not more power.

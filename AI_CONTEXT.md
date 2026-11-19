@@ -1,6 +1,6 @@
 # AI context: sanctions and innovation (handoff for the next session)
 
-Last updated **12 Nov 2026**, end of session 4. Read this first, then `notes/11_patents_ban_test.md` (current
+Last updated **19 Nov 2026**, session 5 (see §3a first). Read this first, then `notes/11_patents_ban_test.md` (current
 main result), `notes/02_theory_and_design.md` (design) and `notes/data_decisions.md` (every data choice). Per-session change record: `SESSION_LOG.md`.
 
 ## 1. Project in one paragraph
@@ -27,6 +27,48 @@ sanctioning coalition as treatment intensity.
 | EU ban coverage by field (treatment) | **done, strong first stage (session 4)** | 35 versions of Reg. 833/2014 parsed (CELLAR API); bans cover 49% of 2019–21 Western manuf. imports by end-2023; 1 SD coverage → Western imports −0.31/−0.48 (2023), −0.38/−0.61 (2024); China does not replace more in banned fields. Next: reduced form on domestic patents. `notes/10_ban_coverage.md` |
 | Literature methods (seminar papers + Moonshot) | done (session 4) | `notes/07_literature_methods_innovation.md` |
 | Design D: regions of Russia (exposure × capacity; substitution vs decline) | designed; register parsed; maps | `notes/04_regional_design.md`, results `notes/05_design_d_first_results.md`, maps and post-2022 changes `notes/06_regional_maps_results.md` (session 3) |
+
+## 3a. Session 5 (18–19 Nov 2026): read this first
+
+- **Bug fixed in the industry map (M3):** pharma (ISIC 2100) and paper links had been dropped, so medicines went to
+  medical technology. All results from script 16 on were rerun. Corrected main test: β = −0.099 [−0.151, −0.047],
+  RI p = 0.002. The main event-study pre-period now has **no coefficient excluding 0** (point estimates still slope
+  down ~1%/SD/yr). Note 11, "Session 5 update".
+- Sector × year FE (16e): does not flatten the pre-period (it worsens it). Holder types (16f): universities −11%,
+  institutes −13%, firms −4% (n.s.), public minus firms −0.078 (p = 0.007). Region × field × year with region ×
+  year FE (16f): −0.095, pre-period insignificant.
+- **IPC subclass design (note 13):** title classifier on 458 subclasses (out-of-time top-1 70%). Across subclasses
+  the result replicates (−0.09, 233 units). **Within WIPO fields (field × year FE) there is no 2022 break**; the
+  pooled −0.057 comes from a 2020–21 drop. Possible artefact of the cross-fit/final-model switch at 2021. Check
+  with base 2019 and with official IPC for 2022+.
+- **Official IPC:** the FIPS pages are blocked (DDoS-Guard; do not work around it). Solved via the Rospatent search
+  platform API (user's key; see below). API docs (gitignored, kept locally): `patent_search_api.docx` in the project root (search filters by filing
+  date and IPC; returns IPC, CPC, citations, holders).
+- Firm level: RFSD has INN/OKVED/region and lines 1110/1120 but **no firm names**. The register has names only, so
+  a name → INN table is needed (FNS open data sets with org name + INN, e.g. headcount/revenue sets; user download).
+- New notes: 00 (data walkthrough), 12 (trade shocks and patents literature; Egorov et al. measure confirmed from
+  the PDF), 13 (subclass design).
+- **Official IPC (19 Nov, note 14):** Rospatent API works (user's key in ~/.zshrc as ROSPATENT_TOKEN; script 21b,
+  full records in data/raw/rospatent_api/weeks). With official codes the main test is −0.095 [−0.148, −0.042],
+  RI p = 0.002, and **every pre-period coefficient includes zero** (2019–20 ≈ 0). Within-field subclass null is
+  confirmed (not a classifier artefact). Raw series: the relative decline is mostly a rise in low-coverage fields
+  (universities, life sciences). Classifier accuracy vs official codes is stable 70–72% in 2019–2026.
+- RFSD selected columns 2011–2025 downloaded to data/raw/rfsd (script 24, 1.9 GB; no firm names).
+- **Channel question (user, 19 Nov):** ban coverage bundles lost products and lost Western knowledge links.
+  Planned tests, for later: (1) horse race with pre-war knowledge dependence × year (Western citation share from
+  API citations, Western co-inventors/holders); (2) staggered ban timing (knowledge shock in 2022 at once,
+  product bans package by package); (3) **China replacement**: effect smaller where China replaced lost Western
+  imports (engines, transport) than where it did not (electronics, telecom), via Ban_f × China-replacement
+  interaction (user: "interesting, test later"); (4) Western citations / co-invention after 2022 as outcomes.
+  Also planned: pre-war characteristics × year controls (world patenting by field, Western import share,
+  university share, foreign-holder share, size); wild-cluster bootstrap; HonestDiD; grant-lag check and
+  applications (kind A) via the API; utility models.
+- **Final state (19 Nov 03:30):** the API download is complete for 1994-2026 (531k documents), so **every patent now
+  uses official IPC codes** (Google codes no longer used). Main −0.096 [−0.150, −0.042], RI p 0.0015; pre 2015–2020 all
+  include 0; leave-one-out −0.072 to −0.107, all below 0. **Caveat:** dropping the 5 life-science fields halves the effect
+  (−0.049 industry map, −0.036 text map, borderline). Summary figure for the advisor: **fig48_summary** (raw Q4 vs Q1,
+  event study, leave-one-out; script 18h). Pitch figure: fig38 left panel. Pre-trend tests 18e, raw lines 18f, LOO 18g.
+- Session 5 committed and pushed to main on 19 Nov.
 
 ## 3. Start here next session
 
@@ -116,6 +158,9 @@ Python `synthdid` cross-check (12c) runs in a separate env (pins clash with the 
   note 01) stay as robustness; the staggered-DiD main version is `11_staggered_did.R` (note 01 §A).
 - **Blocked sites** (do not try to get around them): SSRN (Cloudflare check; the user downloads PDFs by hand) and
   dataverse.nl (bot protection; PWT TFP taken from FRED instead).
+  Also www1.fips.ru (DDoS-Guard browser check on scripted requests, 18 Nov 2026; `21_get_fips_ipc.py` stopped
+  after the first requests, nothing collected). Official route: Rospatent search platform API (JWT token, the user
+  registers).
 - `setFixest_nthreads(1)` in `00_setup.R`: multithreaded fixest segfaulted in long loops.
 - Downloaded files are untrusted: run Python on them with `.venv/bin/python -I`.
 - Local git only, no remote. Data files are git-ignored.

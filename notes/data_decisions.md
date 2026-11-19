@@ -96,6 +96,12 @@ Counts 1995–2023: 427 Western economic onset years (131 five-year-clean episod
 | I2 | Russia = importer 643; values in thousand current US$ | Claude, mechanical |
 | M1 | Two product → field maps, compared (user's choice): (a) title classifier on Russian TN VED product names (tws.by list), HS22 → HS07 via `concordance`; (b) HS07 → ISIC4 (`concordance` 2.1.0, equal weights) → NACE Rev.2 group → fields via Dorner & Harhoff (2018) vertical table (IAB FDZ MR 07/2017) | user (both), Claude (sources) |
 | M2 | Eurostat IPC–NACE2 table not used (only copy on the offline EPO forum); ALP (Lybbert–Zolas) offline | Claude, data |
+| M3 | **Bug fix (session 5, 18 Nov 2026):** ISIC4 groups that do not exist as NACE Rev.2 groups (ISIC 2100 pharma = NACE 21.1+21.2; ISIC 1701/1702/1709 paper = NACE 17.1/17.2; 2,035 HS–ISIC links) now use the Dorner–Harhoff 2-digit table. Before, these links were silently dropped and the HS code's remaining links renormalised (medicaments HS 3004 went ⅔ to medical technology via ISIC 3250); 8% of Western manufactured import value was affected. Industry-map coverage changes: pharma 0.25→0.08, biotech 0.35→0.19, organic fine chem 0.39→0.26; field correlation old/new 0.93 | Claude (found while explaining the merge) |
+| SC1–SC4 | IPC subclass classifier (`14b_title_subclass_classifier.py`): labels = distinct IPC subclasses, weight 1/k; classes = subclasses with ≥ 200 labelled patents 2000–21; out-of-time validation (train ≤ 2017, test 2018–21); 3-fold cross-fitting; count = top predicted subclass | Claude |
+| A1–A3 | Rospatent search platform API (`21b_get_rospatent_api.py`): user's own key from «Разработчикам» (env `ROSPATENT_TOKEN`, never in the repo); query q="*", country RU, kind C1/C2, one filing week per query, limit 500 + offset; weeks 2022–2026 first, then 2021 back to 1994; 1 request at a time, 1 s pause; full records kept (gz JSON). Test 1–7 Mar 2023: 355 documents, all matched to the register | user (key, priority, keep full records), Claude (query) |
+| A4 | FIPS document pages (`21_get_fips_ipc.py`) not used: DDoS-Guard browser check on scripted requests (18 Nov 2026); nothing collected; not worked around | Claude |
+| O1–O2 | Official-IPC panels (`23_build_official_ipc_panels.py`): API codes, else Google; fields via the Schmoch table, fractional over distinct fields (main) and first-listed code | Claude |
+| RF1 | RFSD (`24_get_rfsd.py`, Hugging Face irlspbru/RFSD v3.1.0, CC BY 4.0): all identifier/descriptor columns + lines 1110, 1120, 1150, 1300, 1600, 2110, 2120, 2200, 2400, years 2011–2025; full yearly files downloaded one at a time and deleted after column extraction (disk had 13 GB free) | user (fetch), Claude (columns) |
 | E1 | Pre-periods 2011–13 (2014 shock) and 2019–21 (2022), annual means | Claude |
 | E2 | Main product sample = HS chapters 28–97 (drops food/agriculture, hit by Russia's 2014 counter-embargo, and fuels/minerals); "all" kept as a check | Claude, provisional |
 | E3 | Exposure = Western share of imports mapped to the field; size variant = Western imports per domestic patent (log). **First stage fails for 2022 (sign reversed) and 2014 (zero), see note 09** | Claude |
@@ -151,3 +157,6 @@ Counts 1995–2023: 427 Western economic onset years (131 five-year-clean episod
 3. **O1.** OpenAlex articles and reviews only, or all work types?
 4. **OpenAlex coverage.** OpenAlex keeps adding journals, including Russian- and Persian-language ones, so country
    counts partly reflect indexing. Year fixed effects absorb the common part but not country-specific additions.
+
+- **O3 (19 Nov 2026):** official Rospatent API codes now cover all filing years 1994-2026; the Google IPC fallback in
+  script 23 is no longer used for 2010+ (share_api ≥ 0.986 every year). All official-IPC results were rerun (note 14, final update).

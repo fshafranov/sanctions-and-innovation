@@ -17,3 +17,6 @@ reports/*.blg
 
 # Literature PDFs: copyrighted, not redistributed (index in papers/README.md)
 papers/downloads/
+
+# Rospatent API documentation (third-party, kept locally only)
+/*.docx

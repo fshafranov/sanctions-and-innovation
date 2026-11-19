@@ -74,18 +74,28 @@ def industry_map():
     """HS07 -> ISIC4 (equal weights) -> NACE Rev.2 group (3-digit; ISIC4 and NACE Rev.2 coincide at this level)
     -> 35 fields with the Dorner-Harhoff (2018) vertical table: share of each industry's patents in each field,
     estimated from German inventors linked to their employers (EPO patents 1999-2011)."""
-    v = pd.read_stata(RAW / "concordances" / "iab_dorner_harhoff" / "vertical tables" /
-                      "corrtab_w08_3_area35_ano.dta")
-    v["nace3"] = v.w08_3.astype(str).str.extract(r"^(\d+)")[0].astype(int)
-    v = v.drop(columns="w08_3").melt(id_vars="nace3", var_name="f", value_name="w_nf")
-    v["field"] = v.f.str.split("_").str[1].astype(int)
-    v = v[v.w_nf > 0][["nace3", "field", "w_nf"]]
+    def dh(level):
+        v = pd.read_stata(RAW / "concordances" / "iab_dorner_harhoff" / "vertical tables" /
+                          f"corrtab_w08_{level}_area35_ano.dta")
+        key = v.columns[0]
+        v["nace"] = v[key].astype(str).str.extract(r"^(\d+)")[0].astype(int)
+        v = v.drop(columns=key).melt(id_vars="nace", var_name="f", value_name="w_nf")
+        v["field"] = v.f.str.split("_").str[1].astype(int)
+        return v[v.w_nf > 0][["nace", "field", "w_nf"]]
+    v3, v2 = dh(3), dh(2)
 
     c = pd.read_csv(CLEAN / "concord_hs_isic4.csv", dtype=str).rename(columns={"HS_6d": "hs07", "ISIC4_4d": "isic4"})
     c = c[c.isic4.str.fullmatch(r"\d{4}", na=False)].drop_duplicates()
     c["k"] = 1 / c.groupby("hs07").isic4.transform("size")
-    c["nace3"] = c.isic4.str[:3].astype(int)
-    x = c.merge(v, on="nace3")
+    # M3 (session 5 fix): ISIC4 groups do not always exist in NACE Rev.2 (ISIC 2100 pharma = NACE 21.1 + 21.2;
+    # ISIC 1701/1702/1709 paper = NACE 17.1/17.2). Use the NACE 3-digit row where it exists, otherwise the
+    # 2-digit division row. Before this fix such links were dropped and the HS code's remaining links renormalised
+    # (e.g. medicaments 3004 went 2/3 to medical technology via ISIC 3250).
+    c["nace"] = c.isic4.str[:3].astype(int)
+    has3 = c.nace.isin(set(v3.nace))
+    c.loc[~has3, "nace"] = c.loc[~has3, "isic4"].str[:2].astype(int)
+    print(f"industry map: {(~has3).sum()} HS-ISIC links use the NACE 2-digit table (ISIC group not in NACE 3-digit)")
+    x = pd.concat([c[has3].merge(v3, on="nace"), c[~has3].merge(v2, on="nace")])
     x["w"] = x.k * x.w_nf
     x = x.groupby(["hs07", "field"]).w.sum().reset_index()
     x["w"] /= x.groupby("hs07").w.transform("sum")  # products whose industries file no patents drop out

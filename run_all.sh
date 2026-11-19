@@ -56,6 +56,26 @@ if [ -f data/raw/rospatent/data-20261102-structure-20180828.csv ]; then   # user
       Rscript scripts/analysis/16b_patents_ban_trends.R 2>&1 | tee data/logs/16b_patents_ban_trends_R.log
       Rscript scripts/analysis/16c_patents_2014.R 2>&1 | tee data/logs/16c_patents_2014_R.log
       Rscript scripts/analysis/16d_patents_staggered.R 2>&1 | tee data/logs/16d_patents_staggered_R.log
+      Rscript scripts/analysis/16e_patents_sector_fe.R 2>&1 | tee data/logs/16e_patents_sector_fe_R.log
+      Rscript scripts/analysis/16f_patents_holder_region.R 2>&1 | tee data/logs/16f_patents_holder_region_R.log
+      # session 5: IPC subclass design (classifier ~30 min)
+      uv run python -I -W ignore scripts/data/14b_title_subclass_classifier.py 2>&1 | tee data/logs/14b_subclass_classifier.log
+      uv run python -I -c "import pandas as pd; p=pd.read_parquet('data/clean/rospatent_subclass_top.parquet'); p=p[p.domestic & ~p.mass_filer & p.app_year.between(2015,2025)]; p.groupby(['sub_top','app_year','holder_type']).size().rename('n').reset_index().rename(columns={'sub_top':'subclass','app_year':'year','holder_type':'h'}).to_csv('data/clean/ru_domestic_subclass_holder_year.csv', index=False)"
+      uv run python -I -W ignore scripts/data/19b_subclass_ban_coverage.py 2>&1 | tee data/logs/19b_subclass_ban_coverage.log
+      Rscript scripts/analysis/17_patents_subclass.R 2>&1 | tee data/logs/17_patents_subclass_R.log
+      # official IPC from the Rospatent API (needs ROSPATENT_TOKEN; slow, resumable) and RFSD
+      zsh -ic 'uv run python -I scripts/data/21b_get_rospatent_api.py' 2>&1 | tee -a data/logs/21b_rospatent_api.log
+      uv run python -I scripts/data/22_parse_rospatent_api.py 2>&1 | tee data/logs/22_parse_api.log
+      uv run python -I scripts/data/23_build_official_ipc_panels.py 2>&1 | tee data/logs/23_official_panels.log
+      Rscript scripts/analysis/18_patents_official.R 2>&1 | tee data/logs/18_patents_official_R.log
+      Rscript scripts/analysis/18b_official_raw_series.R 2>&1 | tee data/logs/18b_official_raw_R.log
+      Rscript scripts/analysis/18c_subclass_twfe.R 2>&1 | tee data/logs/18c_subclass_twfe_R.log
+      Rscript scripts/analysis/18d_pitch_figures.R 2>&1 | tee data/logs/18d_pitch_figures_R.log
+      Rscript scripts/analysis/18e_pretrend_tests.R 2>&1 | tee data/logs/18e_pretrend_tests_R.log
+      Rscript scripts/analysis/18f_raw_lines.R 2>&1 | tee data/logs/18f_raw_lines_R.log
+      Rscript scripts/analysis/18g_leave_one_out.R 2>&1 | tee data/logs/18g_leave_one_out_R.log
+      Rscript scripts/analysis/18h_summary_figure.R 2>&1 | tee data/logs/18h_summary_figure_R.log
+      uv run python -I scripts/data/24_get_rfsd.py 2>&1 | tee data/logs/24_get_rfsd.log
     fi
   fi
 fi
