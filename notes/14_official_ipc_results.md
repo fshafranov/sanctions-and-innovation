@@ -180,3 +180,54 @@ except 2020 0.997 and 2021 0.986), and Google codes are no longer used. Scripts 
 - raw Q4-Q1 gap 2015-21 within +-0.10, then -0.13, -0.27, -0.25, -0.25
 - leave-one-out -0.072 to -0.107, all CIs below 0. Dropping the 5 life-science fields: industry -0.049 [-0.096, -0.002],
   text -0.036 [-0.072, 0.000]; so about half the effect comes from the life-science vs rest contrast (borderline without it).
+
+## HonestDiD (19 Nov 2026; script 18l, fig53, tables honestdid*.csv)
+Context: individual pre-period coefficients all include 0, but the joint Wald test rejects (industry p 0.019, text
+p 0.001; 35 clusters, likely over-rejects); linear pre-trend p 0.40; placebo 2018 p 0.44. Rambachan & Roth (2023),
+HonestDiD 0.2.8. PPML field event study, 6 pre / 4 post periods, per SD of coverage.
+
+| Target, map | Original CI | Linear pre-trend continues (DeltaSD, M = 0) | Breakdown M (smoothness) | Breakdown Mbar (relative magnitudes) |
+|---|---|---|---|---|
+| average 2022-25, industry | -0.080 [-0.102, -0.058] | [-0.077, -0.034] | 0.010 | 0.75 |
+| 2023, industry | -0.094 [-0.119, -0.070] | [-0.097, -0.054] | 0.020 | 1.00 |
+| average 2022-25, product-name | -0.075 [-0.104, -0.046] | [-0.076, -0.018] | 0.005 | 0.50 |
+| 2023, product-name | -0.089 [-0.119, -0.059] | [-0.087, -0.017] | 0.005 | 0.75 |
+
+- If the pre-period drift simply continued linearly, the effect stays clearly negative (both maps, both targets).
+- Relative magnitudes: the industry-map result survives post-period violations up to 75% (average effect) or 100%
+  (2023) of the largest year-to-year change seen before 2022; the product-name map up to 50-75%. Mbar = 1 is the usual
+  benchmark, so: moderately robust for the main map, less for the product-name map.
+- Smoothness: breakdown at M = 0.01 (industry, average) i.e. the trend's slope would have to change by 1 log point per
+  year per year, versus an estimated pre-trend slope of 0.7 log points per year.
+Summary sentence: "The effect is robust to a continuation of the pre-period trend and to non-linear violations up to
+about the size of the largest pre-period year-to-year change (industry map); it is not robust to larger violations."
+
+## Pre-war controls x year and small-cluster pre-tests (20 Nov 2026; scripts 26, 18m; fig54; prewar_controls*.csv)
+Controls fixed before estimation (rule PC1). Joint pre-test of Ban x 2015..2020 in four versions: standard clustered
+Wald (PPML), PPML pairs-cluster bootstrap-t (499), OLS log(1+n) standard Wald, OLS wild cluster restricted bootstrap
+(Webb weights, 499). Western import share correlates -0.66 with coverage (pharma: high Western share, exempt).
+
+| Controls | Industry: beta (p) | pre-test p: Wald / boot-t / OLS Wald / OLS WCR | Product-name: beta (p) | pre-test p: Wald / boot-t / OLS Wald / OLS WCR |
+|---|---|---|---|---|
+| none | -0.096 (<0.001) | 0.019 / 0.57 / 0.08 / 0.28 | -0.096 (0.001) | 0.001 / 0.37 / 0.000 / 0.012 |
+| university share | -0.096 (0.001) | 0.010 / 0.52 / 0.09 / 0.29 | -0.103 (0.001) | 0.001 / 0.28 / 0.000 / 0.020 |
+| Western import share | -0.115 (0.001) | 0.016 / 0.48 / 0.002 / 0.21 | -0.106 (0.001) | 0.012 / 0.41 / 0.001 / 0.038 |
+| foreign-holder share | -0.093 (0.001) | 0.063 / 0.63 / 0.10 / 0.34 | -0.097 (0.001) | 0.002 / 0.30 / 0.000 / 0.050 |
+| size | -0.094 (0.001) | 0.001 / 0.36 / 0.06 / 0.21 | -0.094 (0.001) | 0.000 / 0.23 / 0.000 / 0.008 |
+| all four | -0.108 (<0.001) | 0.009 / 0.49 / 0.000 / 0.15 | -0.104 (<0.001) | 0.021 / 0.62 / 0.004 / 0.088 |
+
+- The controls do NOT change the effect (-0.093 to -0.115, all p <= 0.001) and do NOT fix the standard Wald rejection
+  (the drift is not explained by university share, Western dependence, foreign presence or size).
+- The small-cluster bootstraps do: PPML bootstrap-t p = 0.36-0.63 (industry), 0.23-0.62 (product-name); OLS WCR
+  0.15-0.34 (industry). The standard Wald rejection is largely the known over-rejection of cluster-robust joint tests
+  with 35 clusters. Exception: OLS on log(1+n) with the product-name map still rejects under WCR (0.008-0.088).
+- Summary: with small-cluster-robust inference the main specification passes the joint pre-test (p ~ 0.5); the
+  product-name map is weaker in OLS. Point estimates in the pre-period still slope down slightly (fig54); HonestDiD
+  (above) covers that.
+
+## Event study with cluster bootstrap-t CIs (20 Nov 2026; script 18n; fig38b; bootstrap_es*.csv)
+Pairs cluster bootstrap-t over the 35 fields (999 draws), percentile-t CIs per coefficient; point estimates as fig38a.
+- Joint pre-test (2015-2020 = 0): bootstrap p = 0.51 (industry), 0.32 (product-name); standard Wald 0.019 / 0.001.
+- Pre-period CIs are wider (e.g. 2015 [-0.10, 0.24]), all include 0. Post CIs stay below 0 in every year for both maps
+  (industry 2022 [-0.062, -0.026], 2023 [-0.122, -0.061], 2024 [-0.132, -0.038], 2025 [-0.179, -0.008]).
+- Use fig38b as the main event-study figure: same estimates, small-cluster-robust intervals and pre-test.

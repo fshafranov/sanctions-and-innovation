@@ -160,3 +160,8 @@ Counts 1995–2023: 427 Western economic onset years (131 five-year-clean episod
 
 - **O3 (19 Nov 2026):** official Rospatent API codes now cover all filing years 1994-2026; the Google IPC fallback in
   script 23 is no longer used for 2010+ (share_api ≥ 0.986 every year). All official-IPC results were rerun (note 14, final update).
+
+- **PC1 (20 Nov 2026):** pre-war controls for the field event study, fixed before estimation: university share of
+  domestic patents (2015-19), Western share of total imports (2019-21, same map as Ban), foreign-holder share of
+  granted patents (2015-19), log size (2015-19); each z-scored x year dummies (base 2021); each alone and all four
+  together; all versions reported. Own pre-period growth is excluded (it is detrending). Script 26 builds them, 18m estimates.

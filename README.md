@@ -19,13 +19,17 @@ invention by field.
 
 **Main result: Russian domestic patents by technology field vs EU export-ban coverage (event study)**
 
-![Event study: 35 fields, both maps](output/figures/fig38a_fields_official_es.png)
+![Event study: 35 fields, both maps, bootstrap CIs](output/figures/fig38b_fields_official_es_boot.png)
 
-*PPML. 35 WIPO technology fields, field and year fixed effects, base year 2021, 95% CIs clustered by field.
-Coefficient per SD of ban coverage (the share of a field's 2019–21 Western imports banned by the EU by end-2023),
-with two independent product→technology maps. Official Rospatent IPC codes. No pre-period coefficient excludes zero;
-after 2022, fields with more of their imports banned file fewer domestic patents: **−0.096** [−0.150, −0.042] pooled,
-randomization-inference p = 0.0015. There is no rise (no import substitution in invention).*
+*PPML. 35 WIPO technology fields, field and year fixed effects, base year 2021. 95% CIs from a pairs cluster
+bootstrap-t over fields (999 draws), which is reliable with few clusters. Coefficient per SD of ban coverage (the share
+of a field's 2019–21 Western imports banned by the EU by end-2023), with two independent product→technology maps.
+Official Rospatent IPC codes. Before 2022 no coefficient excludes zero and the joint pre-test does not reject
+(bootstrap p = 0.51 industry map, 0.32 product-name map). After 2022, fields with more of their imports banned file
+fewer domestic patents: **−0.096** [−0.150, −0.042] pooled, randomization-inference p = 0.0015. The estimate is
+unchanged by pre-war controls × year (university share, Western import dependence, foreign presence, size: −0.09 to
+−0.12) and robust to a continuation of the mild pre-period slope (HonestDiD, Rambachan & Roth 2023). There is no rise
+(no import substitution in invention).*
 
 **Within fields: subclasses follow their field's exposure, not their own**
 

@@ -1,0 +1,9 @@
+map,target,restriction,breakdown,grid_max
+industry,2023,relative magnitudes (Mbar),1,2
+industry,2023,smoothness (M),0.02,0.03
+industry,average 2022-25,relative magnitudes (Mbar),0.75,2
+industry,average 2022-25,smoothness (M),0.01,0.03
+text,2023,relative magnitudes (Mbar),0.75,2
+text,2023,smoothness (M),0.005,0.03
+text,average 2022-25,relative magnitudes (Mbar),0.5,2
+text,average 2022-25,smoothness (M),0.005,0.03

@@ -79,6 +79,10 @@ if [ -f data/raw/rospatent/data-20261102-structure-20180828.csv ]; then   # user
       uv run python -I scripts/data/25_build_tech_proximity.py 2>&1 | tee data/logs/25_tech_proximity.log
       Rscript scripts/analysis/18j_spillovers.R 2>&1 | tee data/logs/18j_spillovers_R.log
       Rscript scripts/analysis/18k_oriv_spillovers.R 2>&1 | tee data/logs/18k_oriv_spillovers_R.log
+      Rscript scripts/analysis/18l_honestdid.R 2>&1 | tee data/logs/18l_honestdid_R.log
+      uv run python -I scripts/data/26_field_prewar_characteristics.py 2>&1 | tee data/logs/26_prewar_chars.log
+      Rscript scripts/analysis/18m_prewar_controls.R 2>&1 | tee data/logs/18m_prewar_controls_R.log
+      Rscript scripts/analysis/18n_bootstrap_es.R 2>&1 | tee data/logs/18n_bootstrap_es_R.log
       uv run python -I scripts/data/24_get_rfsd.py 2>&1 | tee data/logs/24_get_rfsd.log
     fi
   fi
