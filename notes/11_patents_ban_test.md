@@ -309,3 +309,46 @@ fields:
   exclude 0. Post −0.047, −0.093, −0.083, −0.080.
 - Regional shocks (mobilisation, defence orders, local budgets) are absorbed by region × year FE and do not drive
   the result. The treatment is still field-level (35 clusters), so this is robustness, not more power.
+
+## 2014 with official IPC and a long pre-period (20 Nov 2026; script 18o, fig55; supersedes the 16c numbers above)
+PPML, 35 fields, field + year FE, base 2013, SEs clustered by field, official IPC (Rospatent API), 2005-2021/2025.
+- **(A) 2014 oil-equipment list** (Annex II coverage, at most 4% of a field's imports). Industry map: pre 2005-12 flat
+  (joint p 0.10), then 2015 -0.033, 2016 -0.054, 2017 -0.073 (all exclude 0), staying around -0.05 to -0.07 to 2021.
+  Product-name map: smaller (-0.02 to -0.03, n.s.) and pre-period rejects (p < 0.001). Pooled 2014-17 vs 2009-13:
+  -0.027 (p 0.17) / -0.021 (p 0.003). Still confounded by the late-2014 oil-price collapse.
+- **(B) 2022 ban coverage over 2005-2025, base 2013:** the later-banned fields ROSE relative to the rest in 2005-2013
+  (2005-09 about -0.04 to -0.07 relative to 2013), peaked in 2014 (+0.015), then drifted down 2015-2021 (to -0.055),
+  then dropped in 2022-25 (-0.10, -0.15, -0.15, -0.14). Three-period pooled version (base 2005-13): 2014-21 +0.005
+  (p 0.83), 2022+ -0.098 (p 0.047) industry; text +0.001 / -0.102 (p 0.048).
+  => The 2015-21 "pre-trend" of the main design is the down-leg of a rise-and-fall cycle that peaked in 2014, not a
+  long monotone decline; against the 2005-13 baseline, 2014-21 is on average unchanged and 2022+ is -0.10.
+- Main design (2015-2025, base 2021) with oil-list coverage x year as control (corr with 2022 coverage 0.52 industry,
+  0.18 text): pre Wald p 0.47 (industry; pre coefficients not flatter, SEs larger), 0.02 (text); post unchanged
+  (-0.07, -0.11, -0.08, -0.08).
+- Missing: the dual-use channel of 2014 (Art. 2a/2b Reg 833/2014: dual-use goods banned for military end-users).
+  Needs the Commission's dual-use <-> CN correlation table (CIRCABC; the JSON API needs a login, so a manual download of
+  the 2013/2014 table is required).
+
+## 2014 with dual-use exposure (20 Nov 2026; rule DU1; scripts 27, 18p; fig56; dualuse_2014_*.csv)
+Exposure = share of the field's 2011-13 Western imports in products that can be declared as dual-use goods (Commission
+correlation table, 1 Apr 2014). Broad (any 10-digit line listed; 25% of Western manufactured imports) and narrow (HS6
+listed as a whole; 8%). Most exposed: telecom (0.54 broad), basic/digital communication, semiconductors, nano, optics,
+computers, control. Correlation with 2022 ban coverage 0.66 (industry) / 0.69 (text); with the oil list 0.21 / -0.26.
+
+(A) 2014 event study, 2005-2021, base 2013, PPML, per SD:
+- **Dual-use-exposed fields GAINED after 2014**, not lost: pooled 2014-17 +0.072 (p 0.01), 2018-21 +0.073 (p 0.08),
+  industry broad; narrow +0.072 / +0.100; product-name map broad +0.055 / +0.085 (p 0.06 / 0.03); with the oil list
+  in the same model similar.
+- Pre-period: industry map rises from about -0.10 (2005-08) to ~0 by 2011 (clustered Wald p 0.001; bootstrap-t
+  0.54); product-name map flatter (-0.04 to 0; Wald p 0.30, bootstrap 0.77) and the post rise is clearer there
+  (+0.03 in 2014 to +0.10 in 2020).
+- Reading: after 2014, Russian patenting moved TOWARD the dual-use technologies (electronics, communication), the
+  opposite of 2022. Consistent with import substitution after 2014 (state programmes, defence procurement), but not
+  identified as a sanctions effect: the 2011-2020 State Armament Programme, the devaluation and import-substitution
+  policy all target the same fields, and the industry-map pre-period already rises from 2009-11.
+(B) Main 2022 design with dual-use-2014 x year: the pre-period does NOT flatten (2015 coefficient rises to +0.07),
+bootstrap pre-test p 0.56 -> 0.71 (industry), 0.32 -> 0.59 (text); post unchanged (-0.03, -0.08, -0.09, -0.09).
+=> The 2015-21 drift of 2022-exposed fields is not early treatment through the 2014 dual-use restrictions (those
+fields grew after 2014). Together with 18o: 2022-exposed fields rose until 2014 and drifted down after; dual-use
+fields within them rose after 2014, so the drift comes from the non-dual-use part of 2022 coverage (machinery,
+vehicles: the industrial-capacity annex).

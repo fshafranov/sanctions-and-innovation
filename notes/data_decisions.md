@@ -165,3 +165,15 @@ Counts 1995–2023: 427 Western economic onset years (131 five-year-clean episod
   domestic patents (2015-19), Western share of total imports (2019-21, same map as Ban), foreign-holder share of
   granted patents (2015-19), log size (2015-19); each z-scored x year dummies (base 2021); each alone and all four
   together; all versions reported. Own pre-period growth is excluded (it is detrending). Script 26 builds them, 18m estimates.
+
+- **DU1 (20 Nov 2026), 2014 dual-use exposure, fixed before estimation.** Source: Commission dual-use correlation table
+  of 1 April 2014 (`data/raw/circabc/`, downloaded by the user from CIRCABC), the version in force when Reg. 833/2014
+  Art. 2 (dual-use goods for military end-use/end-users) started (31 Jul 2014). TARIC 10-digit -> HS6 (CN 2014 =
+  HS2012) -> HS07 via concord_hsvintage_hs07 (share = listed HS2012 codes / all HS2012 codes of the HS07 code).
+  Two versions: **broad** (an HS6 counts if any 10-digit line is listed; upper bound) = main; **narrow** (only HS6 codes
+  listed as a whole, TARIC ending 0000). Field exposure: Sum w(hs,f) W(hs) d(hs) / Sum w(hs,f) W(hs), W = 2011-13 Western
+  imports, manufactured goods (HS 28-97), both maps, z-scored.
+  Estimates: PPML, 35 fields, field + year FE, 2005-2021 (stops before the 2022 bans), base 2013, SEs clustered by
+  field + pairs cluster bootstrap-t joint pre-test (2005-2012). Specs: dual-use alone (broad, narrow); dual-use + oil
+  list jointly. Pooled: 2014-17 and 2014-21 vs 2005-13. Second question: in the main 2022 design (2015-2025, base 2021),
+  does dual-use-2014 exposure x year absorb the 2015-21 drift? All versions reported.
