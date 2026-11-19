@@ -17,15 +17,15 @@ invention by field.
 
 ## Headline figures
 
-**Main result: 35 technology fields, Russian domestic patents vs EU export-ban coverage**
+**Main result: Russian domestic patents by technology field vs EU export-ban coverage (event study)**
 
-![Summary: raw series, event study, leave-one-out](output/figures/fig48_summary.png)
+![Event study: 35 fields, both maps](output/figures/fig38a_fields_official_es.png)
 
-*Official IPC codes. (A) Raw patent counts in the most- and least-banned quarter of the 35 WIPO fields, 2019–21 = 100.
-(B) PPML event study, field and year fixed effects, base 2021, per SD of ban coverage (the share of a field's 2019–21
-Western imports banned by the EU by end-2023), 95% CIs clustered by field: **−0.096** [−0.150, −0.042] after 2022,
-randomization-inference p = 0.0015, no pre-period coefficient excludes zero. (C) Dropping one field at a time: −0.072
-to −0.107, all below zero. Dropping the five life-science fields together halves the effect (−0.049 [−0.096, −0.002]).*
+*PPML. 35 WIPO technology fields, field and year fixed effects, base year 2021, 95% CIs clustered by field.
+Coefficient per SD of ban coverage (the share of a field's 2019–21 Western imports banned by the EU by end-2023),
+with two independent product→technology maps. Official Rospatent IPC codes. No pre-period coefficient excludes zero;
+after 2022, fields with more of their imports banned file fewer domestic patents: **−0.096** [−0.150, −0.042] pooled,
+randomization-inference p = 0.0015. There is no rise (no import substitution in invention).*
 
 **Within fields: subclasses follow their field's exposure, not their own**
 
@@ -37,6 +37,16 @@ map noise by ORIV (Gillen, Snowberg & Yariv 2019: each of the two product→tech
 Own exposure is about zero throughout; rest-of-field exposure falls after 2022 (−0.11 to −0.16 in 2023–24), though
 its pre-period is noisy (joint p = 0.33). Within a field, a subclass's own share of banned imports adds no
 explanatory power: the bans act at the level of technology fields.*
+
+**The same result in raw data, with leave-one-out**
+
+![Summary: raw series, event study, leave-one-out](output/figures/fig48_summary.png)
+
+*Official IPC codes. (A) Raw patent counts in the most- and least-banned quarter of the 35 WIPO fields, 2019–21 = 100.
+(B) PPML event study, field and year fixed effects, base 2021, per SD of ban coverage (the share of a field's 2019–21
+Western imports banned by the EU by end-2023), 95% CIs clustered by field: **−0.096** [−0.150, −0.042] after 2022,
+randomization-inference p = 0.0015, no pre-period coefficient excludes zero. (C) Dropping one field at a time: −0.072
+to −0.107, all below zero. Dropping the five life-science fields together halves the effect (−0.049 [−0.096, −0.002]).*
 
 **Cross-country check: synthetic difference-in-differences for Iran 2012, Russia 2014 and Russia 2022**
 

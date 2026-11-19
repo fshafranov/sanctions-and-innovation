@@ -113,3 +113,17 @@ p <- es %>% mutate(map = recode(map, industry = "Industry map (main)", text = "P
   theme_paper() + theme(legend.position = "top")
 ggsave(file.path(FIG_DIR, "fig38_patents_official_es.pdf"), p, width = 10, height = 5)
 ggsave(file.path(FIG_DIR, "fig38_patents_official_es.png"), p, width = 10, height = 5, dpi = 150)
+
+# fig38a: field panel alone (README opener)
+pf <- es %>% filter(panel == "Fields (35), field + year FE") %>%
+  mutate(map = recode(map, industry = "Industry map (main)", text = "Product-name map")) %>%
+  ggplot(aes(year, estimate, colour = map)) +
+  geom_hline(yintercept = 0, colour = "grey40") + geom_vline(xintercept = 2021.5, linetype = "dotted", colour = "grey50") +
+  geom_pointrange(aes(ymin = conf.low, ymax = conf.high), position = position_dodge(0.4), size = 0.3) +
+  scale_x_continuous(breaks = 2015:2025) + scale_colour_manual(values = c("#0072B2", "#D55E00")) +
+  labs(x = "Filing year", y = "PPML coefficient on ban coverage (per SD)", colour = NULL,
+       caption = paste("35 WIPO technology fields, field + year FE, base 2021, 95% CIs clustered by field.",
+                       "Domestic invention patents, official IPC (Rospatent API), fractional counts.")) +
+  theme_paper() + theme(legend.position = "top")
+ggsave(file.path(FIG_DIR, "fig38a_fields_official_es.pdf"), pf, width = 8, height = 5)
+ggsave(file.path(FIG_DIR, "fig38a_fields_official_es.png"), pf, width = 8, height = 5, dpi = 150)
