@@ -7,22 +7,36 @@ The project starts with a cross-country panel and then narrows to **Russia after
 uses the EU's export bans, which differ in coverage across technology fields, as treatment intensity for domestic
 invention by field.
 
-> **Status (Nov 2026): work in progress.** The results below are preliminary. The main event study still shows a pre-trend
-> (see [What did not work](#what-did-not-work)). Draft report:
-> [`reports/sanctions_innovation_report.pdf`](reports/sanctions_innovation_report.pdf).
+> **Status (19 Nov 2026): work in progress.** All patents now carry **official Rospatent IPC codes** (search-platform
+> API, 1994–2026), replacing the title classifier. With official codes the main event study has a **flat pre-period**.
+> Latest results: [`notes/14_official_ipc_results.md`](notes/14_official_ipc_results.md) (fields) and
+> [`notes/13_subclass_design.md`](notes/13_subclass_design.md) (subclasses, ORIV, spillovers). The draft report
+> [`reports/sanctions_innovation_report.pdf`](reports/sanctions_innovation_report.pdf) predates these updates.
 
 ---
 
 ## Headline figures
 
-**Main test: Russian domestic patents by technology field vs EU export-ban coverage (event study)**
+**Main result: 35 technology fields, Russian domestic patents vs EU export-ban coverage**
 
-![Event study: domestic patents on EU ban coverage](output/figures/fig30_patents_ban_eventstudy.png)
+![Summary: raw series, event study, leave-one-out](output/figures/fig48_summary.png)
 
-*PPML. 35 WIPO technology fields, field and year fixed effects, base year 2021, 95% CIs clustered by field.
-Coefficient per SD of ban coverage (the share of a field's 2019–21 Western imports banned by end-2023). After
-2022, fields with more of their imports banned file fewer domestic patents. There is no rise. Fields with high
-coverage were already drifting down before 2022 (2017–18 exclude zero).*
+*Official IPC codes. (A) Raw patent counts in the most- and least-banned quarter of the 35 WIPO fields, 2019–21 = 100.
+(B) PPML event study, field and year fixed effects, base 2021, per SD of ban coverage (the share of a field's 2019–21
+Western imports banned by the EU by end-2023), 95% CIs clustered by field: **−0.096** [−0.150, −0.042] after 2022,
+randomization-inference p = 0.0015, no pre-period coefficient excludes zero. (C) Dropping one field at a time: −0.072
+to −0.107, all below zero. Dropping the five life-science fields together halves the effect (−0.049 [−0.096, −0.002]).*
+
+**Within fields: subclasses follow their field's exposure, not their own**
+
+![Own vs rest-of-field exposure, ORIV](output/figures/fig52_oriv_spillovers_es.png)
+
+*268 IPC subclasses, subclass and year fixed effects, OLS log(1 + patents), per 10 pp of coverage. Both the
+subclass's own ban coverage and the coverage of the rest of its WIPO field enter the same model, each corrected for
+map noise by ORIV (Gillen, Snowberg & Yariv 2019: each of the two product→technology maps instruments the other).
+Own exposure is about zero throughout; rest-of-field exposure falls after 2022 (−0.11 to −0.16 in 2023–24), though
+its pre-period is noisy (joint p = 0.33). Within a field, a subclass's own share of banned imports adds no
+explanatory power: the bans act at the level of technology fields.*
 
 **Cross-country check: synthetic difference-in-differences for Iran 2012, Russia 2014 and Russia 2022**
 
@@ -56,7 +70,9 @@ The regional changes after 2014 and after 2022 are almost unrelated (correlation
 | Source | What | Used for | Access |
 |---|---|---|---|
 | **Rospatent open register** of granted inventions (version 2 Nov 2026) | 867,684 patents: holders, addresses, titles, filing dates | domestic patents by field, region and holder type | public download (by hand) |
+| **Rospatent search-platform API** | full records of RU invention patents 1994–2026: official IPC/CPC, holders, citations | official technology fields and subclasses; holder types; closeness weights | personal API key (not in repo) |
 | **Google Patents public data** (BigQuery) | Russian patents with IPC codes | IPC codes for the training set of the title classifier; patent types | needs a Google account |
+| **RFSD** (Russian Financial Statements Database) | firm balance sheets 2011–2025 | planned firm-level design | public (Hugging Face) |
 | **EU Council Regulation 833/2014**, 35 consolidated versions | annexes listing banned products (HS/CN codes) and entry dates | ban coverage by field (treatment) | EUR-Lex CELLAR API |
 | **CEPII BACI** | bilateral trade, HS6 | Russia's 2019–21 imports from the West, by field | public |
 | HS → WIPO field concordances | Dorner–Harhoff industry map (main); product-name map (check) | product → technology field | public / built here |
@@ -102,9 +118,10 @@ staggered, heterogeneity-robust estimators run alongside plain TWFE.
 | Question | Result |
 |---|---|
 | **First stage:** did the EU bans cut imports where they applied? | **Yes, strongly.** By end-2023 the bans cover 49% of Russia's 2019–21 Western manufactured imports. 1 SD more coverage → Western imports −0.31 to −0.48 log points (2023), −0.38 to −0.61 (2024). China did **not** replace more in banned fields. |
-| **Main test:** did domestic invention move into banned fields? | **No.** β = **−0.092** [−0.114, −0.069] per SD, RI p = 0.0065. All six pre-specified checks are negative. No specification has an upper bound above **+3% per SD**, so substitution larger than that is ruled out. |
-| Size of the decline | Uncertain: −9% per SD unadjusted, −7 to −8% in the 2019–25 window, **−2 to −6% after adjusting for the pre-trend** (the interval includes 0 with the main map). |
-| Who | The decline is clearest for **research institutes (−12%)** and **universities (−9%)**. Firms −5%, interval just includes 0. |
+| **Main test:** did domestic invention move into banned fields? | **No.** With official IPC codes: β = **−0.096** [−0.150, −0.042] per SD, RI p = 0.0015, flat pre-period (2015–2020 all include 0). Same with sector × year FE (−0.096) and with the product-name map. Leave-one-out −0.072 to −0.107. |
+| Size of the decline | About **−9% per SD** of coverage. About half comes from the contrast between lightly banned life-science fields (rising, driven by universities) and the rest. |
+| Who | **Research institutes (−13%)**, **universities (−10%)**, individuals (−13%); firms −4%, not significant. Public minus firms −0.075 (p = 0.006). |
+| Subclasses (IPC, 4 characters) | Across subclasses the drop is present but PPML versions have a pre-trend. **Within fields** there is no break; ORIV (correcting for map noise) does not change this. Subclasses follow the exposure of the rest of their field, not their own. |
 | Staggered / dose | Robust estimators give −6% to −15% for crossing 50% coverage, about −7% per 10 pp of coverage. Same pre-drift as the main test. |
 | National totals after 2022 | Domestic patents +2%, **university patents +19%** (ministry targets), firms +1%; **foreign filings −50%**. |
 | Cross-country | Synthetic DiD: non-resident patents about −0.6 after Iran 2012 and Russia 2022; resident patents no effect; TFP null. Staggered DiD: resident patents rise relative to never-treated (mostly rich) countries; this disappears against not-yet-treated countries. |
@@ -115,8 +132,9 @@ staggered, heterogeneity-robust estimators run alongside plain TWFE.
 
 - **The treatment.** Parsing every version of the EU sanctions regulation gives a dated, sender-defined treatment
   by product. It has a strong first stage (correlation with the realised import drop about −0.9).
-- **The title classifier.** It recovers technology fields for post-2018 patents that have no open IPC data. It
-  is validated out of time and against IPC.
+- **Official IPC from the Rospatent search-platform API** (1994–2026, 531k documents, 98–99.5% of the register).
+  It replaced the title classifier (top-1 accuracy against official codes 70–72%) and removed the pre-trend.
+- **ORIV** with the two independent product→technology maps, to correct exposure for measurement error.
 - **Pre-registering the main specification** before estimating, with randomization inference.
 - **Regional assignment** from postal codes: it agrees with the town named in the address in 99.6% of cases.
 - **Synthetic DiD** for single cases. It matches the pre-period well, and the Python `synthdid` package gives the
@@ -124,9 +142,10 @@ staggered, heterogeneity-robust estimators run alongside plain TWFE.
 
 ## What did not work
 
-- **Flat pre-trends in the main event study.** Fields with high ban coverage were already drifting down by about
-  1% per SD per year before 2022, as Russian invention moved away from machinery and electronics toward life
-  sciences. This drift is why the size of the decline is uncertain.
+- **Flat pre-trends at the subclass level.** The field-level pre-trend disappeared with official IPC codes, but
+  across subclasses the more-banned ones were already drifting down before 2022 in PPML specifications.
+- **Holder-overlap spillover weights.** Organisations and individuals patent across so many subclasses that the
+  weights are too diffuse to be informative.
 - **The cross-country panel.** It is dominated by a few countries (China, Iran). The never-treated group is mostly
   rich Western countries, and the arms/travel "placebo" behaves like the treatment. Results depend on the
   estimator and the control group.
@@ -136,8 +155,7 @@ staggered, heterogeneity-robust estimators run alongside plain TWFE.
   had high Western shares but were exempt). It was replaced by legal ban coverage.
 - **Regional trade exposure.** No open region × partner-country trade data was found, so the regional design
   measures knowledge links, not the imported-input channel.
-- **IPC for post-2022 patents.** The Rospatent search-platform API needs a token that could not be obtained, hence
-  the title classifier.
+- **FIPS patent pages** are behind a bot check and were not used; the search-platform API (with a personal key) was.
 
 ## Interpretation
 
@@ -159,12 +177,12 @@ shock. The classifier adds measurement error to the outcome (checks with IPC-mat
 
 ## Next directions
 
-1. **Sector × year fixed effects** (WIPO's 5 sectors): compare fields only within their broad sector, so that the
-   machinery → life-science drift is removed and the pre-period is flat by design.
-2. **HonestDiD (Rambachan–Roth) bounds:** does "no substitution" survive pre-trend violations of M = 1–2?
-3. **Region × field × year** with region × year FE as the main robustness check.
-4. **Firm-level design:** EU Annex IV military end-users (~970 dated entities) matched to patent holders, with
-   not-yet-listed firms as controls.
+1. **Channels:** products vs Western knowledge links (pre-war Western citation and co-invention shares × year), and
+   **China replacement** (smaller effect where China replaced the lost Western imports).
+2. **Inference for shift-share exposure:** permute product-level bans and rebuild exposure (Adão–Kolesár–Morales);
+   wild-cluster bootstrap and HonestDiD bounds.
+3. **Exposure measure:** all-origin import denominator (as in Egorov et al.), 8-digit ban lines weighted, Annex VII dating.
+4. **Firm-level design:** patent holders → RFSD firm accounts (2011–2025, downloaded) via a name → INN table.
 5. **Regional trade exposure** (Rosstat regional trade data, author data requests, or an industry-mix shift-share)
    and a defence-industry control.
 6. **Other outcomes:** utility models and software registrations, where substitution should show first;
@@ -178,15 +196,15 @@ shock. The classifier adds measurement error to the outcome (checks with IPC-mat
 
 | Folder | Contents |
 |---|---|
-| `scripts/data/` | Python (uv): downloads, parsing, cleaning, panels (01–20) |
-| `scripts/analysis/` | R (fixest, did, quadprog): estimation and figures (01–16d) |
+| `scripts/data/` | Python (uv): downloads, parsing, cleaning, panels (01–25) |
+| `scripts/analysis/` | R (fixest, did, quadprog): estimation and figures (01–18k) |
 | `output/figures/`, `output/tables/` | all figures (PNG + PDF) and result tables (CSV) |
-| `notes/` | design notes, results by step (01–11), data decisions, literature notes |
+| `notes/` | design notes, results by step (00–14), data decisions, literature notes |
 | `reports/` | LaTeX draft report |
 | `papers/` | index of the literature (PDFs not redistributed) |
 | `data/` | git-ignored; rebuilt by `run_all.sh` |
 
-Start with [`notes/11_patents_ban_test.md`](notes/11_patents_ban_test.md) (main result),
+Start with [`notes/14_official_ipc_results.md`](notes/14_official_ipc_results.md) (main result, official IPC), [`notes/00_data_walkthrough.md`](notes/00_data_walkthrough.md) (how the data are merged),
 [`notes/02_theory_and_design.md`](notes/02_theory_and_design.md) (theory and designs) and
 [`notes/data_decisions.md`](notes/data_decisions.md).
 
@@ -203,6 +221,7 @@ uv sync
 Manual steps (not scriptable):
 - GSDB V4 into `data/raw/gsdb/` (request form at globalsanctionsdatabase.com).
 - Rospatent register into `data/raw/rospatent/`.
+- A personal Rospatent search-platform API key in the environment variable `ROSPATENT_TOKEN` (for `21b`).
 - WDI bulk zip into `data/raw/wb/wdi_bulk/`.
 - A Google login for the BigQuery step.
 

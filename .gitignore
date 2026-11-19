@@ -20,3 +20,7 @@ papers/downloads/
 
 # Rospatent API documentation (third-party, kept locally only)
 /*.docx
+
+# Local-only AI handoff notes (versioned in the separate local repo .git-private)
+AI_CONTEXT.md
+.git-private/
