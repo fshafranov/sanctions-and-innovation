@@ -177,3 +177,29 @@ Counts 1995–2023: 427 Western economic onset years (131 five-year-clean episod
   field + pairs cluster bootstrap-t joint pre-test (2005-2012). Specs: dual-use alone (broad, narrow); dual-use + oil
   list jointly. Pooled: 2014-17 and 2014-21 vs 2005-13. Second question: in the main 2022 design (2015-2025, base 2021),
   does dual-use-2014 exposure x year absorb the 2015-21 drift? All versions reported.
+
+- **IND1 (20 Nov 2026), industry-level design, fixed before estimation.** Unit = NACE Rev. 2 3-digit manufacturing
+  industry (divisions 10-32; 33 repair/installation excluded).
+  Outcome: domestic invention patents (official IPC, fractional over distinct subclasses, mass filers dropped, by filing
+  year) -> industries with the Dorner-Harhoff horizontal table corrtab_ipc4_frac_w08_3 (share of each IPC subclass's
+  German patents by industry), restricted to manufacturing industries and renormalised within manufacturing; subclasses
+  not in the table dropped (share reported).
+  Treatment: HS07 -> ISIC4 (R concordance), links to ISIC 33xx dropped, equal split over remaining links; ISIC4 -> NACE
+  3-digit (= first 3 digits; where that group does not exist in NACE, equal split over the NACE groups of the same
+  division). Coverage_i = Sum k W b / Sum k W, W = 2019-21 Western imports (HS 28-97), b = EU ban share end-2023. z-scored.
+  Sample: industries with >= 10 patents/yr on average in 2015-19 and positive mapped Western imports.
+  Estimation: PPML, industry + year FE (main) and industry + division x year FE (as Egorov et al.), 2015-2025, base 2021,
+  SEs clustered by industry; event study with pairs cluster bootstrap-t joint pre-test; pooled Ban x Post with
+  randomization inference (1,000 permutations). All versions reported.
+
+- **IN1 (20 Nov 2026), input-based ban exposure, fixed before estimation.** Input structure: BEA 2017 detailed Use
+  table, before redefinitions, producer prices (`data/raw/bea/AllTablesIO.zip`, apps.bea.gov), a proxy for how industries
+  combine inputs (US technology). BEA detail codes -> NAICS 2017 (BEA's own list; ranges expanded) -> ISIC4 (R
+  concordance, weights) -> for using industries NACE 3-digit as in IND1.
+  Commodity ban share b_c = Sum_isic w(c,isic) * banned share of the ISIC4 product group's 2019-21 Western imports
+  (HS -> ISIC4 without 33xx, end-2023 list). Only manufactured commodities (BEA codes in NAICS 31-33) with Western
+  imports count as inputs.
+  Input exposure_j = Sum_c U(c,j) b_c / Sum_c U(c,j), U = use of commodity c by NACE industry j (BEA industries mapped
+  to NACE3 with ISIC weights). Main: all manufactured inputs; variant: excluding the industry's own product group.
+  Estimation as IND1 (same 55 industries, PPML, industry + year FE, 2015-2025, base 2021): input exposure alone; output
+  exposure alone; both in one model. Event study with bootstrap pre-test, pooled with RI. All versions reported.

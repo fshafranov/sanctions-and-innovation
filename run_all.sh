@@ -86,6 +86,12 @@ if [ -f data/raw/rospatent/data-20261102-structure-20180828.csv ]; then   # user
       Rscript scripts/analysis/18o_2014_official.R 2>&1 | tee data/logs/18o_2014_official_R.log
       uv run python -I scripts/data/27_dualuse_2014_coverage.py 2>&1 | tee data/logs/27_dualuse_2014.log
       Rscript scripts/analysis/18p_dualuse_2014.R 2>&1 | tee data/logs/18p_dualuse_2014_R.log
+      uv run python -I scripts/data/28_industry_panel.py 2>&1 | tee data/logs/28_industry_panel.log
+      Rscript scripts/analysis/18q_industry_design.R 2>&1 | tee data/logs/18q_industry_design_R.log
+      uv run python -I scripts/data/29a_bea_naics_parse.py 2>&1 | tee data/logs/29a_bea.log
+      Rscript scripts/data/29b_naics_isic_concord.R 2>&1 | tee data/logs/29b_naics_isic.log
+      uv run python -I scripts/data/29c_input_exposure.py 2>&1 | tee data/logs/29c_input_exposure.log
+      Rscript scripts/analysis/18r_input_exposure.R 2>&1 | tee data/logs/18r_input_exposure_R.log
       uv run python -I scripts/data/24_get_rfsd.py 2>&1 | tee data/logs/24_get_rfsd.log
     fi
   fi

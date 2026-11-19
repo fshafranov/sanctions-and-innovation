@@ -84,3 +84,22 @@ banned by end-2023. Shares × shocks = shift-share (Bartik). Two ways to justify
 3. Get more treatment units: IPC subclasses via ALP (note 13) and firms via RFSD (route 1).
 4. Firm vs university heterogeneity: Egorov et al. cover only firms; universities and research institutes are
    ours alone.
+
+## 5. Literature on the 2014 sanctions and Russian innovation (web search 20 Nov 2026; abstracts only unless noted)
+No study found that estimates the effect of the 2014 sanctions on Russian domestic patenting by technology. Closest:
+- Duong, Ongena, Vu & Huynh (2025), "Sanctions and Knowledge Spillovers", Swiss Finance Institute RP 25-01: Russian
+  patent filings ABROAD are processed more slowly in sanctioning countries and get fewer forward citations; Russia's
+  counter-sanctions work the other way. Outcome = Russian patents in foreign offices, not domestic invention.
+- Makkonen & Mitze (2023), The World Economy 46(10), doi 10.1111/twec.13421 (arXiv 2112.00564): EU-Russia
+  co-publications fell about 15% after 2014 (15-70% in the preprint, by control group); channels include dual-use.
+- Ahn & Ludema, "The sword and the shield" (CESifo WP 7620, 2019): firms targeted by the 2014 US/EU sanctions lose about
+  a quarter of revenue; government-designated "strategic" firms are shielded. Firm finance, not innovation.
+- Nigmatulina, "Sanctions and misallocation" (NBER conference paper): staggered US firm-level sanctions 2014-2020,
+  600k firms, aggregate TFP effects. Not innovation.
+- Import substitution after 2014: Simachev & Fedyunina (HSE chapter): results ambiguous, positive mainly in agriculture
+  and food. Counter-sanctions (food embargo): Kuznetsova & Volchkova (2019, FREE policy brief / JNEA): consumer losses
+  about 445bn roubles a year, few industries show positive import-substitution effects.
+- Russian-language regional studies (e.g. Equilibrium 2018, doi 10.24136/eq.2018.023): no rise in regional innovation
+  indicators 2013-2015. Low quality for identification.
+Gap for this project: field-level domestic patents, 2014 (dual-use, partial) vs 2022 (broad) as two episodes with
+opposite signs. Not yet checked with the reference-lookup tool; verify before citing.
