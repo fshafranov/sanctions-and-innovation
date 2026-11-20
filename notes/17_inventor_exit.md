@@ -64,6 +64,43 @@ Event study (base cohort 2019): 2012 +0.020, falling to ≈ 0 by 2014–2019 (n.
    who stop filing; a destination test needs foreign patent offices (EPO/USPTO/PCT via Google Patents BigQuery,
    Latin-script names, matching on co-inventors and fields) or OpenAlex affiliation changes for researchers.
 
+## Where do they go? Foreign patent offices and OpenAlex (20 Nov; scripts 32, 33, 18w, 18x; fig65)
+
+**BigQuery (Google Patents, all offices except Rospatent; MV1–MV3).** Pool = inventor names with a Russian address in
+the prior three years (~11k internationally active inventors); "abroad" = same name with a foreign address.
+
+| | 2017–21 mean | 2022 | 2023 | 2024* | 2025* |
+|---|---|---|---|---|---|
+| Inventors appearing abroad | 329 | 419 | 409 | 494 | 425 |
+| % of pool | 2.87 | 3.61 | 4.00 | 5.62 | 5.51 |
+
+\* incomplete (publication lag). The count rises by about a third; the rate rises more because the pool shrinks
+(Russian inventors stopped filing abroad). Destinations shift away from the US/Korea/Germany towards the UK, Finland,
+Armenia, Canada, Switzerland (fig65c). Names are not disambiguated (Latin script, no patronymic), so levels are upper
+bounds. A first query used Google's RU office data, which end in May 2022 and made the pool collapse; fixed by
+using foreign offices only.
+
+**OpenAlex trial (OA1–OA3).** Random 10,000 of the 655k authors with a Russian affiliation and ≥ 5 works (61 s; a full
+pull would take about an hour, not a day). Moved = foreign affiliation in y and no Russian one in y.
+
+| | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 |
+|---|---|---|---|---|---|---|---|
+| Pool | 3,891 | 4,269 | 4,657 | 4,893 | 4,889 | 4,808 | 4,502 |
+| Moved, % | 3.39 | 3.09 | 3.54 | 3.96 | 4.34 | 4.12 | 3.78 |
+
+- Rate up from ~3.3% (2019–21) to ~4.1% (2022–25), about +25%. Pre-2019 rates were higher (5–6.5% in 2013–17) and
+  had been falling, so 2022 reverses a decline rather than starting from a flat base.
+- By field (sample, noisy): engineering 2.2 → 3.6%, chemistry 2.2 → 3.1%, social sciences 0.9 → 1.8%, medicine
+  3.0 → 3.6%; physics high at both times (11.5 → 13.7%; international collaborations such as CERN inflate it);
+  biochemistry falls (4.9 → 3.2%).
+- Destinations 2022+: US, China, Germany, Italy, France, UK, Switzerland, Ukraine, Kazakhstan.
+
+**Reading.** Both sources show a moderate rise (a quarter to a third) in moves abroad after 2022, not a wave. Among
+patenting inventors the extra moves are ~100–150 a year, an order of magnitude below the field-level fall in
+inventors (≈7% per SD out of 37–41k). Emigration is a real but secondary channel. The OpenAlex rise is largest in
+engineering and chemistry, i.e. closer to the banned technologies; a full pull with a mapping from researchers to
+patent fields (via institutions' patent profiles) would test that properly.
+
 ## Open
 
 - Field switching: do continuing inventors move from banned to unbanned fields (exposure at t vs next active year)?
