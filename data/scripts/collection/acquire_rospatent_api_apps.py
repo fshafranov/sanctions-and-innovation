@@ -24,7 +24,7 @@ from pathlib import Path
 
 import requests
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "data" / "raw" / "rospatent_api" / "weeks_A"
 sp = importlib.util.spec_from_file_location("s21b", ROOT / "data" / "scripts" / "collection" / "acquire_rospatent_api.py")
 s21b = importlib.util.module_from_spec(sp)

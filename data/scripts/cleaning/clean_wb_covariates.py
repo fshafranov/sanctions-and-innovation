@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 ZIP = ROOT / "data" / "raw" / "wb" / "wdi_bulk" / "WDI_CSV.zip"
 OUT = ROOT / "data" / "clean" / "covariates_country_year.csv"
 

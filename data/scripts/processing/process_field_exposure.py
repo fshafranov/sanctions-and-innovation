@@ -19,7 +19,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 CLEAN = ROOT / "data" / "clean"
 PERIODS = {2014: range(2011, 2014), 2022: range(2019, 2022)}
 POST = {2014: range(2015, 2017), 2022: range(2023, 2025)}

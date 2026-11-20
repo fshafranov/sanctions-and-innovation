@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 F = ROOT / "data" / "raw" / "bea" / "IOUse_Before_Redefinitions_PRO_2017_Detail.xlsx"
 
 

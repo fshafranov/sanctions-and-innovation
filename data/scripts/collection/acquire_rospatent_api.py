@@ -27,7 +27,7 @@ from pathlib import Path
 
 import requests
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "data" / "raw" / "rospatent_api" / "weeks"
 URL = "https://searchplatform.rospatent.gov.ru/patsearch/v0.2/search"
 LIMIT, PAUSE, MAX_FAIL = 500, 1.0, 10

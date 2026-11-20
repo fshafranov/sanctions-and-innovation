@@ -16,7 +16,7 @@ from pathlib import Path
 import pandas as pd
 import requests
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "data" / "raw" / "pwt"
 OUT.mkdir(parents=True, exist_ok=True)
 

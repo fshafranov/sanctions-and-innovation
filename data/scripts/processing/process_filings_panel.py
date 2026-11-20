@@ -26,7 +26,7 @@ from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 RAW, CLEAN = ROOT / "data" / "raw", ROOT / "data" / "clean"
 sp11 = importlib.util.spec_from_file_location("s11", ROOT / "data" / "scripts" / "cleaning" / "clean_rospatent.py")
 s11 = importlib.util.module_from_spec(sp11)

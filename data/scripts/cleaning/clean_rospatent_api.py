@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 WEEKS = ROOT / "data" / "raw" / "rospatent_api" / "weeks"
 CLEAN = ROOT / "data" / "clean"
 CC = re.compile(r"\(([A-Z]{2})\)\s*$")

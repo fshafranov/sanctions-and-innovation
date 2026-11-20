@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 CLEAN = ROOT / "data" / "clean"
 EVENTS = {"eu2022": (range(2019, 2022), [2022, 2023, 2024, 2025, 2026]), "oil2014": (range(2011, 2014), [2014])}
 

@@ -22,7 +22,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 CLEAN = ROOT / "data" / "clean"
 
 OA = {"Adygeya Republic": "RU-AD", "Altai": "RU-AL", "Altai Krai": "RU-ALT", "Amur Oblast": "RU-AMU",

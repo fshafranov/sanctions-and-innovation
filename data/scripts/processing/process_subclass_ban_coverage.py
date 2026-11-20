@@ -23,7 +23,7 @@ import joblib
 import numpy as np
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 RAW, CLEAN = ROOT / "data" / "raw", ROOT / "data" / "clean"
 DH = RAW / "concordances" / "iab_dorner_harhoff" / "vertical tables"
 

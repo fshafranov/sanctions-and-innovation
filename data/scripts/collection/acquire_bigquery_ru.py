@@ -29,7 +29,7 @@ from pathlib import Path
 import pydata_google_auth
 from google.cloud import bigquery
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "data" / "raw" / "bigquery"
 SCOPES = ["https://www.googleapis.com/auth/bigquery"]
 MIN_FILING = 20000101  # filing date from 2000 on; pre-period for 2014 and 2022 with room for leads

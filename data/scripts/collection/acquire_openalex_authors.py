@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "data" / "raw" / "openalex" / "authors"
 FLT = "affiliations.institution.country_code:RU,works_count:>4"
 SEL = "id,works_count,affiliations,topics,last_known_institutions"

@@ -16,7 +16,7 @@ from pathlib import Path
 
 import requests
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "data" / "raw" / "oecd"
 OUT.mkdir(parents=True, exist_ok=True)
 URL = ("https://sdmx.oecd.org/public/rest/data/OECD.STI.PIE,DSD_PATENTS@DF_PATENTS_WIPO,/"

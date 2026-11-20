@@ -31,7 +31,7 @@ from scipy.sparse import hstack
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import SGDClassifier
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 RAW, CLEAN, LOGS = ROOT / "data" / "raw", ROOT / "data" / "clean", ROOT / "data" / "logs"
 REG_CSV = RAW / "rospatent" / "data-20261102-structure-20180828.csv"
 SEED = 20261118

@@ -24,7 +24,7 @@ from pathlib import Path
 import pyarrow.parquet as pq
 import requests
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "data" / "raw" / "rfsd"
 BASE = "https://huggingface.co/datasets/irlspbru/RFSD/resolve/main/RFSD/year={y}/part-0.parquet"
 LINES = ["line_1110", "line_1120", "line_1150", "line_1600", "line_1300",

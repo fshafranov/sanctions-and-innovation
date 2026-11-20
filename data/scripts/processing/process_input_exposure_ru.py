@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 CLEAN = ROOT / "data" / "clean"
 F = ROOT / "data" / "raw" / "rosstat_io" / "baz_tzv-2021.xlsx"
 MANUF = re.compile(r"\s*(1\d|2\d|3[0-3])(\D|$)")

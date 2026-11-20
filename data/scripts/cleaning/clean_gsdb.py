@@ -25,7 +25,7 @@ from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 RAW = ROOT / "data" / "raw"
 OUT = ROOT / "data" / "clean"
 OUT.mkdir(parents=True, exist_ok=True)

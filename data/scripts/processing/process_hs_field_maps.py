@@ -21,7 +21,7 @@ import joblib
 import numpy as np
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 RAW, CLEAN = ROOT / "data" / "raw", ROOT / "data" / "clean"
 
 spec = importlib.util.spec_from_file_location("s14", ROOT / "data" / "scripts" / "processing" / "process_title_fields.py")

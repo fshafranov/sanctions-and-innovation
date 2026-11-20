@@ -18,7 +18,7 @@ from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 ZIP = ROOT / "data" / "raw" / "baci" / "BACI_HS07_V202601.zip"
 OUT = ROOT / "data" / "clean" / "ru_imports_hs6.parquet"
 

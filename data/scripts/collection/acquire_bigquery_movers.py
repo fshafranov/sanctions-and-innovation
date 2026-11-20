@@ -23,7 +23,7 @@ from pathlib import Path
 import pydata_google_auth
 from google.cloud import bigquery
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "data" / "raw" / "bigquery"
 BASE = """
 WITH inv AS (

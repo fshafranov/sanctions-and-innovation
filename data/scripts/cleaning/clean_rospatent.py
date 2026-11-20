@@ -27,7 +27,7 @@ from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 RAW = ROOT / "data" / "raw" / "rospatent" / "data-20261102-structure-20180828.csv"
 CITIES = ROOT / "data" / "raw" / "rucities"
 OUT = ROOT / "data" / "clean" / "rospatent_inventions.parquet"

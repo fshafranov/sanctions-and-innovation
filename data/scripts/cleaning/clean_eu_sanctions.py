@@ -31,7 +31,7 @@ from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 RAW, CLEAN = ROOT / "data" / "raw" / "eu_sanctions", ROOT / "data" / "clean"
 
 ART = re.compile(r"referred to in (?:[Aa]rticles? )(2aa|3b|3c|3h|3k|2, 2a|3)\b(?![a-z])")
