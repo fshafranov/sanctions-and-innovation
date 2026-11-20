@@ -24,3 +24,6 @@ papers/downloads/
 # Local-only AI handoff notes (versioned in the separate local repo .git-private)
 AI_CONTEXT.md
 .git-private/
+
+# Private research notes (versioned in the local repo .git-private, not public)
+notes/
