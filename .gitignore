@@ -38,3 +38,6 @@ archive/baseline/
 
 # Local-only session state (versioned in .git-private)
 research-state.md
+
+# Generated per-step logs
+empirics/results/logs/
