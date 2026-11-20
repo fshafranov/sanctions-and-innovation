@@ -1,4 +1,4 @@
-# 04_figures.R: figures from output/tables/lp_results.csv and leave_one_out.csv (Healy style: facets,
+# 04_figures.R: figures from empirics/results/tables/lp_results.csv and leave_one_out.csv (Healy style: facets,
 # intervals, zero line, full labels).
 source(here::here("empirics", "scripts", "00_setup.R"))
 source(here::here("empirics", "scripts", "specifications.R"))

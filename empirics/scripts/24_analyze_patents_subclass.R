@@ -6,7 +6,7 @@
 # drift (life sciences vs machinery) behind the field-level pre-trend.
 # SEs clustered by subclass; conservative variant clustered by WIPO field (35). Randomization inference permutes
 # Ban_s across subclasses within field (1,000 draws).
-# Output: output/tables/patents_subclass.csv, patents_subclass_es.csv, patents_subclass_holder.csv;
+# Output: empirics/results/tables/patents_subclass.csv, patents_subclass_es.csv, patents_subclass_holder.csv;
 #         fig37_patents_subclass_es. Holder counts: data/clean/ru_domestic_subclass_holder_year.csv (from 14b output)
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261118)

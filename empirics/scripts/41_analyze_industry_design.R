@@ -5,7 +5,7 @@
 # PPML, 2015-2025, base 2021, SEs clustered by industry. FE: industry + year (main); industry + division x year.
 # Pooled Ban x Post with randomization inference (1,000 permutations of coverage across industries); event study
 # with pairs cluster bootstrap-t joint pre-test (B draws).
-# Output: output/tables/industry_design.csv, industry_design_es.csv; fig57_industry_es
+# Output: empirics/results/tables/industry_design.csv, industry_design_es.csv; fig57_industry_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261123)
 B <- 499; R <- 1000

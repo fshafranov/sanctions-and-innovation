@@ -5,7 +5,7 @@
 #     Pooled: Exposure x 1[2014-2017] and Exposure x 1[2018-2021] vs 2005-2013.
 # (B) Does 2014 exposure explain the 2015-21 drift of the main 2022 design? 2015-2025, base 2021, Ban2022 event study
 #     with and without dual-use-broad x year; joint pre-test (Ban x 2015-2020) clustered and bootstrap-t.
-# Output: output/tables/dualuse_2014_es.csv, dualuse_2014_tests.csv; fig56_dualuse_2014
+# Output: empirics/results/tables/dualuse_2014_es.csv, dualuse_2014_tests.csv; fig56_dualuse_2014
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261122)
 B <- 499

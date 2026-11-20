@@ -3,7 +3,7 @@
 Pool in year y = authors with a Russian affiliation in y-3..y-1 (OA3). Moved in y = a foreign affiliation in y and
 no Russian affiliation in y. Also "any foreign affiliation in y" (includes visiting/dual affiliations). By OpenAlex
 domain and field of the author's top topic. Input: the trial sample (script 33) or the full file if present.
-Output: output/tables/openalex_movers_year.csv, openalex_movers_field.csv
+Output: empirics/results/tables/openalex_movers_year.csv, openalex_movers_field.csv
 """
 import collections
 import gzip
@@ -14,7 +14,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "data" / "raw" / "openalex" / "authors"
-TAB = ROOT / "output" / "tables"
+TAB = ROOT / "empirics" / "results" / "tables"
 f = SRC / "all_ru_authors.json.gz"
 f = f if f.exists() else SRC / "sample_10000_seed20261120.json.gz"
 A = json.load(gzip.open(f, "rt"))

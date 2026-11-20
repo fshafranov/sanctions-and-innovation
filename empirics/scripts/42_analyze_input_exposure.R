@@ -5,7 +5,7 @@
 # Specs (each z-scored): output alone; input alone; input excl. own; output + input in one model.
 # Pooled with RI (1,000 permutations; for the joint model the two exposures are permuted together across industries);
 # event studies with pairs cluster bootstrap-t joint pre-test (B draws).
-# Output: output/tables/input_exposure.csv, input_exposure_es.csv; fig58_input_exposure_es
+# Output: empirics/results/tables/input_exposure.csv, input_exposure_es.csv; fig58_input_exposure_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261124)
 B <- 499; R <- 1000

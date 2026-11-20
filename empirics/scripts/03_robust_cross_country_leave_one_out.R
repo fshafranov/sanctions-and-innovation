@@ -1,7 +1,7 @@
 # 03_leave_one_out.R: base onset LP (Western economic, and the placebo measure), dropping one event country at a time.
 # Counts are estimated by PPML, which weights countries by their level (China files ~1.5m resident patent
 # applications a year), so a few large countries can carry the pooled estimate.
-# Output: output/tables/leave_one_out.csv
+# Output: empirics/results/tables/leave_one_out.csv
 source(here::here("empirics", "scripts", "00_setup.R"))
 source(here::here("empirics", "scripts", "specifications.R"))
 source(here::here("empirics", "scripts", "lp_functions.R"))

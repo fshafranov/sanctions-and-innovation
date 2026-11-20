@@ -7,7 +7,7 @@
 # Fixed specification (decided before running): P1 main, P2 mechanism, rest-of-field simple check; subclasses
 # (282, >= 10 patents/yr) with subclass + year and subclass + field x year FE; fields with field + year FE (P1, P2).
 # PPML main, OLS log(1+n) alongside; industry map main, product-name map robustness. SEs clustered by unit.
-# Output: output/tables/spillovers.csv, spillovers_corr.csv; fig50_spillovers
+# Output: empirics/results/tables/spillovers.csv, spillovers_corr.csv; fig50_spillovers
 source(here::here("empirics", "scripts", "00_setup.R"))
 YEARS <- 2015:2025
 prox <- read_csv(here("data", "clean", "tech_proximity.csv"), show_col_types = FALSE,

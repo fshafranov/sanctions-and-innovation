@@ -2,7 +2,7 @@
 #  (a) overlap: how often a placebo onset coincides with Western economic sanctions
 #  (b) placebo LP controlling for Western economic sanctions (onset, 2 lags, cases in force)
 #  (c) which events carry the PPML estimate: patent level in t-1 (the PPML weight) and log change to t+4
-# Output: output/tables/diag_overlap.csv, diag_placebo_controlled.csv, diag_event_contributions.csv
+# Output: empirics/results/tables/diag_overlap.csv, diag_placebo_controlled.csv, diag_event_contributions.csv
 source(here::here("empirics", "scripts", "00_setup.R"))
 source(here::here("empirics", "scripts", "specifications.R"))
 source(here::here("empirics", "scripts", "lp_functions.R"))

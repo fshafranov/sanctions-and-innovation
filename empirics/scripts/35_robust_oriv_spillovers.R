@@ -7,7 +7,7 @@
 # FE interacted with the copy; SEs clustered by subclass. Outcome OLS log(1 + n_frac) (linear IV), per 10 pp.
 # Neighbour: rest of field (main; flat pre-trend in 18j) and co-classification. Subclass + year FE.
 # Compared with naive OLS (industry map; average of maps). Event-study version for rest of field.
-# Output: output/tables/oriv_spillovers.csv, oriv_spillovers_es.csv; fig52_oriv_spillovers_es
+# Output: empirics/results/tables/oriv_spillovers.csv, oriv_spillovers_es.csv; fig52_oriv_spillovers_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 YEARS <- 2015:2025
 prox <- read_csv(here("data", "clean", "tech_proximity.csv"), show_col_types = FALSE,

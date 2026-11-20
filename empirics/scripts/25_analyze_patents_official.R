@@ -4,7 +4,7 @@
 #     clustered by field, RI 2,000 permutations; event study base 2021; + sector x year FE; holder types.
 # (B) Subclass level (note 13): subclass + field x year FE, same sample rule (>= 10 patents/yr 2015-21).
 # Outcomes: n_frac (fractional over distinct fields/subclasses, main) and n_first (first-listed code).
-# Output: output/tables/patents_official.csv, patents_official_es.csv; fig38_patents_official_es
+# Output: empirics/results/tables/patents_official.csv, patents_official_es.csv; fig38_patents_official_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261119)
 YEARS <- 2015:2025

@@ -10,7 +10,7 @@
 #     cohort 2020 straddles; cohorts 2021-22 are post). Pooled: Ban x 1[t >= 2021], cohort 2020 dropped, on all
 #     cohorts 2012-22 and on 2016-22 (older cohorts sit on a mild downward pre-trend).
 #     By holder type; and without common surnames (homonym check, IV2).
-# Output: output/tables/inventor_field_es.csv, inventor_field_pooled.csv, inventor_cont_es.csv,
+# Output: empirics/results/tables/inventor_field_es.csv, inventor_field_pooled.csv, inventor_cont_es.csv,
 #         inventor_cont_pooled.csv; fig63_inventor_margins, fig64_inventor_continuation
 source(here::here("empirics", "scripts", "00_setup.R"))
 iy <- read_csv(here("data", "clean", "inventor_year_field.csv.gz"), show_col_types = FALSE)

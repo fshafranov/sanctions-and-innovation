@@ -4,7 +4,7 @@
 # other 33-35). Aim: remove the machinery -> life-science drift behind the pre-trend in the main event study.
 #   P_ft = exp(beta * Ban_f * Post_t + field FE + sector x year FE), PPML, 35 fields x 2015-2025.
 # Randomization inference permutes Ban_f WITHIN sector (the comparison the FE leave).
-# Output: output/tables/patents_sector_fe.csv, patents_sector_fe_es.csv; fig34_patents_sector_fe_es
+# Output: empirics/results/tables/patents_sector_fe.csv, patents_sector_fe_es.csv; fig34_patents_sector_fe_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261118)
 

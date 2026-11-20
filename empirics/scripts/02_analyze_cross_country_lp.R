@@ -9,7 +9,7 @@
 #            controls = countries with no case of the measure in force in t-5..t+h ("clean").
 #  Counts: PPML on the level (estimator option "ols": OLS on log(1+y)) (lags in log(1+y)); LP-DiD uses log(1+y) differences. b_h ~ log points.
 #
-# Output: output/tables/lp_results.csv, output/tables/run_log.csv (one row per run)
+# Output: empirics/results/tables/lp_results.csv, empirics/results/tables/run_log.csv (one row per run)
 source(here::here("empirics", "scripts", "00_setup.R"))
 source(here::here("empirics", "scripts", "specifications.R"))
 

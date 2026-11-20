@@ -19,7 +19,7 @@
 #   Iran its neighbours (Iraq, Turkey, Afghanistan, Pakistan, Armenia, Azerbaijan, Turkmenistan, UAE) and China.
 # Outcomes: log(1+resident patents), log(1+non-resident patents), log OpenAlex articles, log WB articles,
 #   internationally co-authored share (pp).
-# Output: output/tables/sdid_estimates.csv, sdid_paths.csv, sdid_weights.csv, sdid_yearly.csv; figures fig20-22;
+# Output: empirics/results/tables/sdid_estimates.csv, sdid_paths.csv, sdid_weights.csv, sdid_yearly.csv; figures fig20-22;
 #   data/clean/sdid_case_data.csv (the balanced case panels, re-estimated with the Python synthdid package in 12c).
 source(here::here("empirics", "scripts", "00_setup.R"))
 suppressPackageStartupMessages(library(quadprog))

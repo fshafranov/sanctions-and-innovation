@@ -7,7 +7,7 @@
 #   dose      : time-varying coverage at end of each year (0 before 2022), per 10 pp
 #   staggered : binary from the first year coverage >= 50% (2022-2026), Sun-Abraham (PPML) and TWFE
 # SEs clustered by subclass; field-clustered SEs reported alongside.
-# Output: output/tables/subclass_twfe.csv, subclass_twfe_es.csv; fig40_subclass_twfe_es
+# Output: empirics/results/tables/subclass_twfe.csv, subclass_twfe_es.csv; fig40_subclass_twfe_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 YEARS <- 2015:2025
 

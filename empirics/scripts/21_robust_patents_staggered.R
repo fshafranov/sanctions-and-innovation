@@ -8,7 +8,7 @@
 #     Callaway-Sant'Anna (did; log(1 + n), never-treated and not-yet-treated controls). Window 2015-2025.
 #     Robustness: threshold 60%.
 # Caveat: Annex VII electronics bans enter only via Annex XL (Dec 2023), so electronics cohorts are dated too late.
-# Output: output/tables/patents_staggered.csv, patents_staggered_es.csv; fig33_patents_staggered
+# Output: empirics/results/tables/patents_staggered.csv, patents_staggered_es.csv; fig33_patents_staggered
 source(here::here("empirics", "scripts", "00_setup.R"))
 suppressPackageStartupMessages(library(did))
 set.seed(20261112)

@@ -8,7 +8,7 @@
 # Outcome: OLS log(1 + n_frac) (ORIV is linear). PPML: approximate control-function version, pooled only,
 # cluster bootstrap. Coefficients per 10 pp of coverage; also per SD of the latent coverage, sd(x*) = sqrt(cov(x_ind, x_txt)).
 # Comparison: naive OLS with each map alone and with the average of the two maps.
-# Output: output/tables/oriv.csv, oriv_es.csv; fig49_oriv_es
+# Output: empirics/results/tables/oriv.csv, oriv_es.csv; fig49_oriv_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261119)
 YEARS <- 2015:2025

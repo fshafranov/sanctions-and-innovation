@@ -8,7 +8,7 @@
 # dated by international filing date; 2021 foreign PCT cohort largely missing (note 16).
 #  (C) foreign filings by group (AP6), 2022 coverage, base 2013: West, West without Ford, China, West PCT, West
 #      direct; and the foreign applicants that cut most in high-coverage fields (top tercile) 2013-14 -> 2019-20.
-# Output: output/tables/filings_2014_es.csv, filings_2014_pooled.csv, filings_foreign_groups_es.csv,
+# Output: empirics/results/tables/filings_2014_es.csv, filings_2014_pooled.csv, filings_foreign_groups_es.csv,
 #         filings_foreign_top_applicants.csv; fig61_filings_2014, fig62_foreign_groups
 source(here::here("empirics", "scripts", "00_setup.R"))
 fp <- read_csv(here("data", "clean", "ru_filings_field_year_origin.csv"), show_col_types = FALSE)

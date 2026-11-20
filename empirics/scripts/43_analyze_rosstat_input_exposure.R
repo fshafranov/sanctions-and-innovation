@@ -7,7 +7,7 @@
 #   out  = output exposure (banned share of what it makes; script 28)
 # Treatment varies at the level of 32 Rosstat industry columns: SEs clustered by column (main) and by industry;
 # RI permutes column-level exposure across columns (1,000 draws); bootstrap pre-test resamples columns (B draws).
-# Output: output/tables/rosstat_input.csv, rosstat_input_es.csv; fig59_rosstat_input_es
+# Output: empirics/results/tables/rosstat_input.csv, rosstat_input_es.csv; fig59_rosstat_input_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261125)
 B <- 499; R <- 1000

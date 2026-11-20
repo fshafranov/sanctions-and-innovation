@@ -8,7 +8,7 @@
 #   (1) standard clustered Wald (PPML)
 #   (2) PPML pairs cluster bootstrap-t: resample fields, W* = (b* - b)' V*^-1 (b* - b) / 6, p = share of W* >= W
 #   (3) OLS log(1 + n): standard Wald and wild cluster restricted bootstrap (null imposed, Webb weights by field)
-# Output: output/tables/prewar_controls.csv, prewar_controls_es.csv; fig54_prewar_controls_es
+# Output: empirics/results/tables/prewar_controls.csv, prewar_controls_es.csv; fig54_prewar_controls_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261120)
 B <- 499

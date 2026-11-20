@@ -19,7 +19,7 @@ invention by field.
 
 **Main result: Russian domestic patents by technology field vs EU export-ban coverage (event study)**
 
-![Event study: 35 fields, both maps, bootstrap CIs](output/figures/fig38b_fields_official_es_boot.png)
+![Event study: 35 fields, both maps, bootstrap CIs](empirics/results/figures/fig38b_fields_official_es_boot.png)
 
 *PPML. 35 WIPO technology fields, field and year fixed effects, base year 2021. 95% CIs from a pairs cluster
 bootstrap-t over fields (999 draws), which is reliable with few clusters. Coefficient per SD of ban coverage (the share
@@ -33,7 +33,7 @@ unchanged by pre-war controls × year (university share, Western import dependen
 
 **Within fields: subclasses follow their field's exposure, not their own**
 
-![Own vs rest-of-field exposure, ORIV](output/figures/fig52_oriv_spillovers_es.png)
+![Own vs rest-of-field exposure, ORIV](empirics/results/figures/fig52_oriv_spillovers_es.png)
 
 *268 IPC subclasses, subclass and year fixed effects, OLS log(1 + patents), per 10 pp of coverage. Both the
 subclass's own ban coverage and the coverage of the rest of its WIPO field enter the same model, each corrected for
@@ -44,7 +44,7 @@ explanatory power: the bans act at the level of technology fields.*
 
 **The same result in raw data, with leave-one-out**
 
-![Summary: raw series, event study, leave-one-out](output/figures/fig48_summary.png)
+![Summary: raw series, event study, leave-one-out](empirics/results/figures/fig48_summary.png)
 
 *Official IPC codes. (A) Raw patent counts in the most- and least-banned quarter of the 35 WIPO fields, 2019–21 = 100.
 (B) PPML event study, field and year fixed effects, base 2021, per SD of ban coverage (the share of a field's 2019–21
@@ -54,7 +54,7 @@ to −0.107, all below zero. Dropping the five life-science fields together halv
 
 **Cross-country check: synthetic difference-in-differences for Iran 2012, Russia 2014 and Russia 2022**
 
-![Synthetic DiD paths](output/figures/fig20_sdid_paths.png)
+![Synthetic DiD paths](empirics/results/figures/fig20_sdid_paths.png)
 
 *Synthetic DiD (Arkhangelsky et al. 2021). Donors are countries with no Western economic sanction in force. The
 clearest effect is on **non-resident** (foreign) patent filings: about −0.6 log points after Iran 2012 and Russia
@@ -64,8 +64,8 @@ clearest effect is on **non-resident** (foreign) patent filings: about −0.6 lo
 
 <table>
 <tr>
-<td width="50%"><img src="output/figures/fig14_region_change_ranking_2014.png" alt="Regions ranked by change in domestic patents after 2014"></td>
-<td width="50%"><img src="output/figures/fig14_region_change_ranking.png" alt="Regions ranked by change in domestic patents after 2022"></td>
+<td width="50%"><img src="empirics/results/figures/fig14_region_change_ranking_2014.png" alt="Regions ranked by change in domestic patents after 2014"></td>
+<td width="50%"><img src="empirics/results/figures/fig14_region_change_ranking.png" alt="Regions ranked by change in domestic patents after 2022"></td>
 </tr>
 <tr>
 <td align="center"><b>2014–16 vs 2011–13</b></td>

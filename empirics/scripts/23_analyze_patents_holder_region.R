@@ -6,7 +6,7 @@
 #     region x year FE (+ sector x year), Ban_f x Post; SEs clustered by field (treatment level) and, as a
 #     variant, two-way by field and region.
 # Ban_f = EU ban coverage end-2023, industry map (main) and product-name map, manufactured goods, z-scored.
-# Output: output/tables/patents_holder.csv, patents_holder_es.csv, patents_region.csv;
+# Output: empirics/results/tables/patents_holder.csv, patents_holder_es.csv, patents_region.csv;
 #         fig35_patents_holder_es, fig36_patents_region_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 

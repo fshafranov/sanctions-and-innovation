@@ -6,7 +6,7 @@
 #      to drift? (2014 sanctions/devaluation/import-substitution programmes vs a long-run trend)
 #  (C) pooled: (A) Post = 2014-2017 on 2009-2017; (B) three-period version on 2005-2025:
 #      Ban x 1[2014-2021] and Ban x 1[2022+], base 2005-2013
-# Output: output/tables/patents_2014_official.csv, patents_2014_official_pooled.csv; fig55_2014_official
+# Output: empirics/results/tables/patents_2014_official.csv, patents_2014_official_pooled.csv; fig55_2014_official
 source(here::here("empirics", "scripts", "00_setup.R"))
 pat <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE)
 cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")

@@ -1,7 +1,7 @@
 # 15_ban_first_stage.R: first stage with EU ban coverage as exposure (notes/10_ban_coverage.md).
 #   PPML: imports_{f,t} ~ sum_k beta_k * BanCoverage_f(z) * 1{t = k} + field FE + year FE, SEs clustered by field.
 #   Main exposure: coverage at end-2023 of 2019-21 Western imports (manufactured goods); 2014: oil list (Annex II).
-# Output: fig28_ban_first_stage.{pdf,png}, fig29_ban_coverage_vs_drop.{pdf,png}, output/tables/ban_first_stage.csv
+# Output: fig28_ban_first_stage.{pdf,png}, fig29_ban_coverage_vs_drop.{pdf,png}, empirics/results/tables/ban_first_stage.csv
 source(here::here("empirics", "scripts", "00_setup.R"))
 
 imp <- read_csv(here("data", "clean", "field_imports_year.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")

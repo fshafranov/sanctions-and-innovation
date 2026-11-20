@@ -4,7 +4,7 @@
 #   t* = (b* - b) / se*(clustered);  95% CI = [b - q(0.975, t*) * se, b - q(0.025, t*) * se]   (percentile-t)
 # and the joint pre-test (2015-2020 = 0) as W* = (b* - b)' V*^-1 (b* - b) / 6 vs the sample W.
 # Point estimates are unchanged; only the intervals and the joint p-value differ from fig38a.
-# Output: output/tables/bootstrap_es.csv; fig38b_fields_official_es_boot
+# Output: empirics/results/tables/bootstrap_es.csv; fig38b_fields_official_es_boot
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261121)
 B <- 999

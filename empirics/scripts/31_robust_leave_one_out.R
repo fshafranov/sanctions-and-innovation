@@ -3,7 +3,7 @@
 #  (1) leave one field out (35 re-estimates), both maps
 #  (2) drop blocks: life sciences (pharma, biotech, medical technology, analysis of biological materials, organic
 #      fine chemistry), the 5 largest fields, telecom/digital/semiconductors/computers (electronics core)
-# Output: output/tables/leave_one_out.csv; fig47_leave_one_out
+# Output: empirics/results/tables/leave_one_out.csv; fig47_leave_one_out
 source(here::here("empirics", "scripts", "00_setup.R"))
 pat <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
   filter(between(year, 2015, 2025))

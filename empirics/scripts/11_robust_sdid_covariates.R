@@ -14,7 +14,7 @@
 #             (Euclidean distance), then SDID on the outcome
 # Balance table: sanctioned country vs simple donor mean vs SDID-weighted donors (baseline weights), per covariate.
 # Inputs: data/clean/sdid_case_data.csv (from 12), data/clean/covariates_country_year.csv (from 13), panel.
-# Output: output/tables/sdid_covariates.csv, sdid_balance.csv; figures fig23_sdid_covariates, fig24_sdid_balance.
+# Output: empirics/results/tables/sdid_covariates.csv, sdid_balance.csv; figures fig23_sdid_covariates, fig24_sdid_balance.
 source(here::here("empirics", "scripts", "00_setup.R"))
 source(here::here("empirics", "scripts", "sdid_functions.R"))
 

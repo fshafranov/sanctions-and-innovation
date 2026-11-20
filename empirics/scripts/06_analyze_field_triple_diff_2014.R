@@ -15,7 +15,7 @@
 # Estimators: PPML (base) and OLS on log(1+y) (equal weights; PPML lets China dominate the field-year effects).
 # Inference: (i) SE clustered by field; (ii) permutation: re-estimate with each comparison country as fake treated
 #            (Russia dropped) and compare Russia's pooled b with that distribution.
-# Output: output/tables/field_eventstudy.csv, field_pooled.csv, field_permutation.csv; figures fig6-fig8.
+# Output: empirics/results/tables/field_eventstudy.csv, field_pooled.csv, field_permutation.csv; figures fig6-fig8.
 source(here::here("empirics", "scripts", "00_setup.R"))
 
 dep <- read_csv(here("data", "clean", "field_dependence.csv"), show_col_types = FALSE)

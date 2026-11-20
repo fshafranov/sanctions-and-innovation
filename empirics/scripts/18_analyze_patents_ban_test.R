@@ -2,7 +2,7 @@
 #   P_ft = exp(beta * Ban_f * Post_t + field FE + year FE), PPML, 35 fields x 2015-2025, Post = 2022+,
 #   Ban_f = EU ban coverage end-2023 (industry map, manufactured goods), z-scored; SEs clustered by field;
 #   main p-value: randomization inference (2,000 permutations of Ban_f across fields).
-# Output: output/tables/patents_ban_test.csv, patents_ban_eventstudy.csv; fig30_patents_ban_eventstudy, fig31_ri
+# Output: empirics/results/tables/patents_ban_test.csv, patents_ban_eventstudy.csv; fig30_patents_ban_eventstudy, fig31_ri
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261112)
 

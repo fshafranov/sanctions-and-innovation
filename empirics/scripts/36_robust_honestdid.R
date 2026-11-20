@@ -9,7 +9,7 @@
 #   smoothness (DeltaSD, M): the trend may change slope by at most M per year (M = 0: linear extrapolation of the
 #     pre-trend)
 # Breakdown value: the largest Mbar (or M) at which the robust 95% CI still excludes 0.
-# Output: output/tables/honestdid.csv, honestdid_breakdown.csv; fig53_honestdid
+# Output: empirics/results/tables/honestdid.csv, honestdid_breakdown.csv; fig53_honestdid
 source(here::here("empirics", "scripts", "00_setup.R"))
 library(HonestDiD)
 pat <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%

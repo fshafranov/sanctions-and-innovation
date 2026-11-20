@@ -10,7 +10,7 @@ Python, so it is installed WITHOUT its pins in a separate environment:
     uv venv --python 3.13 <env>; VIRTUAL_ENV=<env> uv pip install numpy pandas scipy matplotlib statsmodels
     VIRTUAL_ENV=<env> uv pip install --no-deps synthdid==0.10.1
     <env>/bin/python empirics/scripts/10_robust_synthdid_python.py
-Input : data/clean/sdid_case_data.csv.  Output: output/tables/sdid_python_vs_r.csv
+Input : data/clean/sdid_case_data.csv.  Output: empirics/results/tables/sdid_python_vs_r.csv
 """
 from pathlib import Path
 
@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[2]
 np.random.seed(20261112)
 
 d = pd.read_csv(ROOT / "data" / "clean" / "sdid_case_data.csv")
-r = pd.read_csv(ROOT / "output" / "tables" / "sdid_estimates.csv")
+r = pd.read_csv(ROOT / "empirics" / "results" / "tables" / "sdid_estimates.csv")
 rows = []
 for (case, outcome), g in d.groupby(["case", "outcome"], sort=False):
     g = g[["iso3", "year", "treated", "y"]].copy()
@@ -39,6 +39,6 @@ for (case, outcome), g in d.groupby(["case", "outcome"], sort=False):
 
 out = pd.DataFrame(rows).merge(r[["case", "outcome", "method", "tau", "se_placebo"]], on=["case", "outcome", "method"])
 out = out.rename(columns={"tau": "tau_r", "se_placebo": "se_r"})
-out.to_csv(ROOT / "output" / "tables" / "sdid_python_vs_r.csv", index=False)
+out.to_csv(ROOT / "empirics" / "results" / "tables" / "sdid_python_vs_r.csv", index=False)
 print(out.round(3).to_string())
 print("correlation of point estimates:", out.groupby("method")[["tau_py", "tau_r"]].corr().round(3).iloc[0::2, 1].to_dict())

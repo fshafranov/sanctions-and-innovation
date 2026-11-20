@@ -7,7 +7,7 @@ suppressPackageStartupMessages({
 setFixest_notes(FALSE)
 setFixest_nthreads(1)   # 12 Nov 2026: multithreaded fixest segfaulted inside long purrr loops (03_leave_one_out.R)
 
-FIG_DIR <- here("output", "figures"); TAB_DIR <- here("output", "tables")
+FIG_DIR <- here("empirics", "results", "figures"); TAB_DIR <- here("empirics", "results", "tables")
 dir.create(FIG_DIR, showWarnings = FALSE, recursive = TRUE); dir.create(TAB_DIR, showWarnings = FALSE, recursive = TRUE)
 
 H_MAX <- 8   # years after the event

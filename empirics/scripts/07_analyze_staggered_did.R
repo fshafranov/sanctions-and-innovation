@@ -14,7 +14,7 @@
 #   cs     Callaway-Sant'Anna (did::att_gt), never-treated controls (cs) or not-yet-treated (cs_nyt); outcome-
 #          regression DiD without covariates, universal base period, aggregated to event time (aggte dynamic)
 # Outcomes: counts in log(1+y) for OLS estimators (equal weight per country); PPML on levels weights big countries.
-# Output: output/tables/staggered_did.csv, output/tables/staggered_cohorts.csv, figures fig17-fig19.
+# Output: empirics/results/tables/staggered_did.csv, empirics/results/tables/staggered_cohorts.csv, figures fig17-fig19.
 source(here::here("empirics", "scripts", "00_setup.R"))
 source(here::here("empirics", "scripts", "specifications.R"))
 suppressPackageStartupMessages(library(did))

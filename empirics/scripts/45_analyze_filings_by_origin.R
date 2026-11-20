@@ -9,7 +9,7 @@
 #     and the pooled estimate also with 2021 dropped.
 #     Also domestic grants (main panel) on the same years, for comparison; and foreign excluding PCT entries.
 # 2025 is dropped: applications are published 18 months after priority, so 2025 filings are mostly unpublished.
-# Output: output/tables/filings_origin.csv, filings_origin_es.csv, filings_benchmark.csv; fig60_filings_origin
+# Output: empirics/results/tables/filings_origin.csv, filings_origin_es.csv, filings_benchmark.csv; fig60_filings_origin
 source(here::here("empirics", "scripts", "00_setup.R"))
 YEARS <- 2015:2024
 

@@ -6,7 +6,7 @@
 #  (4) placebo scatter: log change 2015-17 -> 2019-21 against coverage (fig43, left) next to the real change
 #      2019-21 -> 2023-24 (right)
 #  (5) dose-bin event study: quartiles of coverage vs the lowest quartile (fig44): parallel trends across doses
-# Output: output/tables/pretrend_tests.csv; fig43_placebo_scatter, fig44_dose_bins_es
+# Output: empirics/results/tables/pretrend_tests.csv; fig43_placebo_scatter, fig44_dose_bins_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 pat <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
   filter(between(year, 2015, 2025))

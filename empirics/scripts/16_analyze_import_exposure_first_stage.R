@@ -4,7 +4,7 @@
 #   PPML: imports_{f,t} ~ sum_k beta_k * WestShare_f(z) * 1{t = k} + field FE + year FE, SEs clustered by field.
 #   Exposure fixed in 2011-13 (2014 event, ref 2013) or 2019-21 (2022 event, ref 2021); manufactured goods (E2).
 # Output: fig26_import_first_stage.{pdf,png}, fig27_exposure_maps_agree.{pdf,png},
-#         output/tables/import_first_stage.csv
+#         empirics/results/tables/import_first_stage.csv
 source(here::here("empirics", "scripts", "00_setup.R"))
 
 imp <- read_csv(here("data", "clean", "field_imports_year.csv"), show_col_types = FALSE)

@@ -1,7 +1,7 @@
 # 18w_movers_figure.R: Russian inventors who reappear abroad (BigQuery, script 32; note 17). Descriptive.
 # Panels: (a) number of pooled RU inventors appearing with a foreign address in year y; (b) as a share of the pool
 # (RU address in y-3..y-1); (c) destinations, 2017-2021 vs 2022-2025 (shares of destination mentions).
-# 2024-2025 shaded: incomplete (publication lag). Output: output/tables/movers_bigquery.csv; fig65_movers_bigquery
+# 2024-2025 shaded: incomplete (publication lag). Output: empirics/results/tables/movers_bigquery.csv; fig65_movers_bigquery
 source(here::here("empirics", "scripts", "00_setup.R"))
 library(patchwork)
 yr <- read_csv(here("data", "raw", "bigquery", "movers_by_year.csv"), show_col_types = FALSE) %>%
