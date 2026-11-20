@@ -9,9 +9,8 @@ invention by field.
 
 > **Status (19 Nov 2026): work in progress.** All patents now carry **official Rospatent IPC codes** (search-platform
 > API, 1994–2026), replacing the title classifier. With official codes the main event study has a **flat pre-period**.
-> Latest results: [`notes/14_official_ipc_results.md`](notes/14_official_ipc_results.md) (fields) and
-> [`notes/13_subclass_design.md`](notes/13_subclass_design.md) (subclasses, ORIV, spillovers). The draft report
-> [`reports/sanctions_innovation_report.pdf`](reports/sanctions_innovation_report.pdf) predates these updates.
+> Latest results: [`reports/sanctions_innovation_results_2026-11-20.pdf`](reports/sanctions_innovation_results_2026-11-20.pdf).
+> Estimates are in [`empirics/results/tables/`](empirics/results/tables/).
 
 ---
 
@@ -19,7 +18,7 @@ invention by field.
 
 **Main result: Russian domestic patents by technology field vs EU export-ban coverage (event study)**
 
-![Event study: 35 fields, both maps, bootstrap CIs](output/figures/fig38b_fields_official_es_boot.png)
+![Event study: 35 fields, both maps, bootstrap CIs](empirics/results/figures/fig38b_fields_official_es_boot.png)
 
 *PPML. 35 WIPO technology fields, field and year fixed effects, base year 2021. 95% CIs from a pairs cluster
 bootstrap-t over fields (999 draws), which is reliable with few clusters. Coefficient per SD of ban coverage (the share
@@ -33,7 +32,7 @@ unchanged by pre-war controls × year (university share, Western import dependen
 
 **Within fields: subclasses follow their field's exposure, not their own**
 
-![Own vs rest-of-field exposure, ORIV](output/figures/fig52_oriv_spillovers_es.png)
+![Own vs rest-of-field exposure, ORIV](empirics/results/figures/fig52_oriv_spillovers_es.png)
 
 *268 IPC subclasses, subclass and year fixed effects, OLS log(1 + patents), per 10 pp of coverage. Both the
 subclass's own ban coverage and the coverage of the rest of its WIPO field enter the same model, each corrected for
@@ -44,7 +43,7 @@ explanatory power: the bans act at the level of technology fields.*
 
 **The same result in raw data, with leave-one-out**
 
-![Summary: raw series, event study, leave-one-out](output/figures/fig48_summary.png)
+![Summary: raw series, event study, leave-one-out](empirics/results/figures/fig48_summary.png)
 
 *Official IPC codes. (A) Raw patent counts in the most- and least-banned quarter of the 35 WIPO fields, 2019–21 = 100.
 (B) PPML event study, field and year fixed effects, base 2021, per SD of ban coverage (the share of a field's 2019–21
@@ -54,7 +53,7 @@ to −0.107, all below zero. Dropping the five life-science fields together halv
 
 **Cross-country check: synthetic difference-in-differences for Iran 2012, Russia 2014 and Russia 2022**
 
-![Synthetic DiD paths](output/figures/fig20_sdid_paths.png)
+![Synthetic DiD paths](empirics/results/figures/fig20_sdid_paths.png)
 
 *Synthetic DiD (Arkhangelsky et al. 2021). Donors are countries with no Western economic sanction in force. The
 clearest effect is on **non-resident** (foreign) patent filings: about −0.6 log points after Iran 2012 and Russia
@@ -64,8 +63,8 @@ clearest effect is on **non-resident** (foreign) patent filings: about −0.6 lo
 
 <table>
 <tr>
-<td width="50%"><img src="output/figures/fig14_region_change_ranking_2014.png" alt="Regions ranked by change in domestic patents after 2014"></td>
-<td width="50%"><img src="output/figures/fig14_region_change_ranking.png" alt="Regions ranked by change in domestic patents after 2022"></td>
+<td width="50%"><img src="empirics/results/figures/fig14_region_change_ranking_2014.png" alt="Regions ranked by change in domestic patents after 2014"></td>
+<td width="50%"><img src="empirics/results/figures/fig14_region_change_ranking.png" alt="Regions ranked by change in domestic patents after 2022"></td>
 </tr>
 <tr>
 <td align="center"><b>2014–16 vs 2011–13</b></td>
@@ -98,8 +97,9 @@ The regional changes after 2014 and after 2022 are almost unrelated (correlation
 | **GADM 4.1**, russia-cities | boundaries, postal code → region | regional maps | public |
 
 Raw and cleaned data are **not in the repository** (about 3 GB, and some licences do not allow redistribution).
-`run_all.sh` downloads and rebuilds them. Every data choice is logged in
-[`notes/data_decisions.md`](notes/data_decisions.md).
+`run_all.py` rebuilds them from `data/raw/` (and downloads what can be scripted with `--with-collection`). Every data
+choice is logged in the author's analysis plan (kept private); each raw dataset has a provenance README in
+`data/raw/{dataset}/`.
 
 ## Methods used
 
@@ -108,24 +108,24 @@ staggered, heterogeneity-robust estimators run alongside plain TWFE.
 
 1. **Cross-country panel (1995–2023).** Staggered DiD on a country's first clean Western sanction episode:
    Callaway–Sant'Anna and Sun–Abraham, with never-treated and not-yet-treated controls
-   ([note 01](notes/01_cross_country_results.md)). **Synthetic DiD** for three single cases: Iran 2012, Russia
+  . **Synthetic DiD** for three single cases: Iran 2012, Russia
    2014 and Russia 2022. Local projections (onset, LP-DiD) are kept as robustness only.
 2. **Title classifier.** Post-2018 Russian patents have no IPC codes in open data. A TF-IDF + logistic regression
    on patent titles assigns them to the 35 WIPO technology fields. Out-of-time top-1 accuracy is 81%. Within-field
-   changes correlate 0.91 with IPC-based counts ([note 08](notes/08_title_classifier.md)).
+   changes correlate 0.91 with IPC-based counts.
 3. **Treatment: EU ban coverage by field.** 35 versions of Reg. 833/2014 are parsed, and each banned HS code is
-   dated. Coverage is the share of a field's 2019–21 Western imports that is banned ([note 10](notes/10_ban_coverage.md)).
+   dated. Coverage is the share of a field's 2019–21 Western imports that is banned.
    First stage: Western imports on coverage, by field.
 4. **Main test (pre-registered before any estimate was seen).**
    `P_ft = exp(β · Ban_f · Post_t + α_f + γ_t)`. PPML, 35 fields × 2015–2025, SEs clustered by field, and
    **randomization inference** (2,000 permutations) as the main p-value. Event-study version with base 2021. Six
-   pre-specified robustness checks ([note 11](notes/11_patents_ban_test.md)).
+   pre-specified robustness checks.
 5. **Staggered and continuous-dose versions.** Fields are treated when their coverage crosses 50% (cohorts
    2023–25), estimated with Sun–Abraham and Callaway–Sant'Anna. A time-varying dose combines the 2014 and 2022
    episodes.
 6. **Regions of Russia (Design D).** Exposure to the West (co-invention and co-authorship with the coalition) ×
    year event studies, region and year FE, PPML. Descriptive maps and rankings of post-2014 and post-2022 changes
-   ([note 06](notes/06_regional_maps_results.md)).
+  .
 
 ## Results so far
 
@@ -208,35 +208,42 @@ shock. The classifier adds measurement error to the outcome (checks with IPC-mat
 
 ## Repository layout
 
+The package follows a four-stage replication layout (collection, cleaning, processing, analysis).
+
 | Folder | Contents |
 |---|---|
-| `scripts/data/` | Python (uv): downloads, parsing, cleaning, panels (01–25) |
-| `scripts/analysis/` | R (fixest, did, quadprog): estimation and figures (01–18k) |
-| `output/figures/`, `output/tables/` | all figures (PNG + PDF) and result tables (CSV) |
-| `notes/` | design notes, results by step (00–14), data decisions, literature notes |
-| `reports/` | LaTeX draft report |
+| `data/raw/{dataset}/` | raw data as downloaded or provided (git-ignored); a provenance `README.md` per dataset; checksums in `data/raw/MANIFEST.sha256` |
+| `data/clean/{dataset}/` | cleaned source datasets (git-ignored) |
+| `data/processed/{workfile}/` | analysis-ready workfiles (git-ignored) |
+| `data/scripts/collection/` | `acquire_{dataset}.py`: downloads into `data/raw/` |
+| `data/scripts/cleaning/` | `clean_{dataset}.*`: raw → clean |
+| `data/scripts/processing/` | `process_{workfile}.*`: clean → workfiles |
+| `data/scripts/utils/`, `data/scripts/checks/` | shared helpers; baseline comparison |
+| `empirics/scripts/` | `NN_{explore,analyze,robust}_{what}.R`, numbered in run order; `00_setup.R` and helpers |
+| `empirics/results/` | `tables/` (CSV), `figures/` (PNG + PDF), `logs/` |
+| `reports/` | LaTeX reports |
 | `papers/` | index of the literature (PDFs not redistributed) |
-| `data/` | git-ignored; rebuilt by `run_all.sh` |
-
-Start with [`notes/14_official_ipc_results.md`](notes/14_official_ipc_results.md) (main result, official IPC), [`notes/00_data_walkthrough.md`](notes/00_data_walkthrough.md) (how the data are merged),
-[`notes/02_theory_and_design.md`](notes/02_theory_and_design.md) (theory and designs) and
-[`notes/data_decisions.md`](notes/data_decisions.md).
+| `archive/` | superseded files; `script_rename_map.csv` maps the old script names (e.g. `18t`, `23b`) to the new ones; `data_file_map.csv` lists every data file and the script that writes it |
+| `attempts-log.csv`, `mismatch-register.csv` | run register (appended by `run_all.py`); replication mismatches (none: this is not a replication of a published paper) |
 
 ## How to reproduce
 
-Requirements: Python ≥ 3.13 with [uv](https://docs.astral.sh/uv/), R with `fixest`, `did`, `quadprog`, `sf`, `tidyverse`,
-`patchwork`, `here`.
+Requirements: Python ≥ 3.13 with [uv](https://docs.astral.sh/uv/), R with `fixest`, `did`, `quadprog`, `sf`,
+`tidyverse`, `patchwork`, `here`, `concordance`, `HonestDiD`.
 
 ```bash
 uv sync
-./run_all.sh
+uv run python run_all.py              # cleaning -> processing -> empirics, from data/raw/
+uv run python run_all.py --list       # all steps and their dependencies
+uv run python run_all.py --check      # rerun and compare outputs with archive/baseline
 ```
 
-Manual steps (not scriptable):
-- GSDB V4 into `data/raw/gsdb/` (request form at globalsanctionsdatabase.com).
-- Rospatent register into `data/raw/rospatent/`.
-- A personal Rospatent search-platform API key in the environment variable `ROSPATENT_TOKEN` (for `21b`).
-- WDI bulk zip into `data/raw/wb/wdi_bulk/`.
-- A Google login for the BigQuery step.
+`--with-collection` also re-downloads the scriptable sources. It needs network access, the environment variable
+`ROSPATENT_TOKEN` (a personal Rospatent search-platform API key), and `GCP_PROJECT` with a cached Google login for
+BigQuery. Each step writes its log to `data/logs/{script}.log` or `empirics/results/logs/{script}.log`.
 
-`run_all.sh` skips the Russia stages when the Rospatent, BigQuery or BACI inputs are missing.
+Raw files that cannot be downloaded by script (see each `data/raw/{dataset}/README.md`): GSDB V4 (request form),
+the Rospatent invention register, BACI, the WDI bulk zip, WIPO indicators, BEA and Rosstat input-output tables,
+the EU dual-use correlation tables (CIRCABC), the Dorner-Harhoff concordances, TN VED product names, GADM and
+russia-cities. The optional Python `synthdid` cross-check (`empirics/scripts/10_robust_synthdid_python.py`) needs a
+separate environment (see its header).

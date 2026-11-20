@@ -1,0 +1,3 @@
+timestamp,actor,what,command,outcome,details,git_commit
+2026-11-20 16:56:13,run_all,pipeline run + baseline check,run_all.py --check,failure,outputs differ from baseline,1e30f2a-dirty
+2026-11-20 16:56:50,claude,verification of restructured layout,,success,"78 steps ran; 147 of 148 CSVs identical to pre-restructuring baseline; only empirics/results/tables/run_log.csv differs (02 appends a timestamped row each run: idempotency issue, to fix); figure files differ only in metadata",1e30f2a-dirty

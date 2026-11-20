@@ -1,10 +1,16 @@
-/data/
+# Data: raw, clean and processed files stay local; scripts, raw-data READMEs and the manifest are tracked
+/data/*
+!/data/scripts/
+!/data/raw/
+/data/raw/**
+!/data/raw/*/
+!/data/raw/*/README.md
+!/data/raw/MANIFEST.sha256
 .venv/
 __pycache__/
 .Rhistory
 .DS_Store
 *.Rproj.user
-SESSION_LOG.md
 # LaTeX build files
 reports/*.aux
 reports/*.log
@@ -21,6 +27,18 @@ papers/downloads/
 # Rospatent API documentation (third-party, kept locally only)
 /*.docx
 
-# Local-only AI handoff notes (versioned in the separate local repo .git-private)
-AI_CONTEXT.md
+# Local repo for private files (notes/, research-state.md, ANALYSIS_PLAN.md)
 .git-private/
+
+# Private research notes (versioned in the local repo .git-private, not public)
+notes/
+
+# Frozen outputs for regression checks (run_all.py --check)
+archive/baseline/
+
+# Local-only session state and analysis plan (versioned in .git-private)
+research-state.md
+ANALYSIS_PLAN.md
+
+# Generated per-step logs
+empirics/results/logs/

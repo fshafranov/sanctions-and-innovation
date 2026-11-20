@@ -11,4 +11,5 @@ dependencies = [
     "pydata-google-auth>=1.9.1",
     "requests>=2.34.2",
     "scikit-learn>=1.9.1",
+    "structlog>=26.1.0",
 ]
