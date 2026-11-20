@@ -34,3 +34,6 @@ AI_CONTEXT.md
 
 # Private research notes (versioned in the local repo .git-private, not public)
 notes/
+
+# Frozen outputs for regression checks (run_all.py --check)
+archive/baseline/
