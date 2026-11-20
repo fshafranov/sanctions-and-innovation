@@ -1,9 +1,9 @@
 """Field-level import exposure and field x year import panel (import-substitution design, notes/09_import_exposure.md).
 
-Input : data/clean/ru_imports_hs6.parquet (15), hs07_field_text.csv and hs07_field_industry.csv (16),
+Input : data/processed/ru_imports/ru_imports_hs6.parquet (15), hs07_field_text.csv and hs07_field_industry.csv (16),
         ru_domestic_field_year_imputed.csv (14; domestic patents by field, for the size measure)
-Output: data/clean/field_imports_year.csv  map, sample, field, year, west, china, other (thousand US$)
-        data/clean/field_exposure.csv      map, sample, field, period (2014 / 2022), west_share, west_per_patent,
+Output: data/processed/field_exposure/field_imports_year.csv  map, sample, field, year, west, china, other (thousand US$)
+        data/processed/field_exposure/field_exposure.csv      map, sample, field, period (2014 / 2022), west_share, west_per_patent,
                                             china_share, west_imports (pre-period annual mean)
 
 Rules (E1-E3 in notes/data_decisions.md)
@@ -26,18 +26,18 @@ POST = {2014: range(2015, 2017), 2022: range(2023, 2025)}
 
 
 def main():
-    imp = pd.read_parquet(CLEAN / "ru_imports_hs6.parquet")
+    imp = pd.read_parquet(ROOT / "data" / "processed" / "ru_imports" / "ru_imports_hs6.parquet")
     imp = imp.pivot_table(index=["year", "hs6"], columns="group", values="v", aggfunc="sum", fill_value=0)
     imp = imp.reset_index().rename(columns={"hs6": "hs07"})
     for g in ["west", "china", "other"]:
         if g not in imp:
             imp[g] = 0.0
     imp["chapter"] = imp.hs07.str[:2].astype(int)
-    pat = pd.read_csv(CLEAN / "ru_domestic_field_year_imputed.csv")
+    pat = pd.read_csv(ROOT / "data" / "processed" / "title_fields" / "ru_domestic_field_year_imputed.csv")
 
     panels, expo = [], []
     for mname in ["text", "industry"]:
-        f = CLEAN / f"hs07_field_{mname}.csv"
+        f = ROOT / "data" / "processed" / "hs_field_maps" / f"hs07_field_{mname}.csv"
         if not f.exists():
             print(f"map {mname}: not built, skipped")
             continue
@@ -69,11 +69,11 @@ def main():
                 e.insert(0, "map", mname)
                 expo.append(e)
     panel = pd.concat(panels)
-    panel.to_csv(CLEAN / "field_imports_year.csv", index=False)
+    panel.to_csv(ROOT / "data" / "processed" / "field_exposure" / "field_imports_year.csv", index=False)
     ex = pd.concat(expo)
     names = pat.drop_duplicates("field").set_index("field").field_en
     ex["field_en"] = ex.field.map(names)
-    ex.to_csv(CLEAN / "field_exposure.csv", index=False)
+    ex.to_csv(ROOT / "data" / "processed" / "field_exposure" / "field_exposure.csv", index=False)
     show = ex[(ex["sample"] == "manuf") & (ex.period == 2022)].sort_values("west_share", ascending=False)
     print(show[["map", "field_en", "west_share", "china_share", "west_imports"]].round(3).head(36).to_string(index=False))
     w = ex[ex["sample"] == "manuf"].pivot_table(index=["map", "field"], columns="period", values="west_share")

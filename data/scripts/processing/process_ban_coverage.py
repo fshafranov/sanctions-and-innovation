@@ -1,9 +1,9 @@
 """Ban coverage by technology field: share of a field's pre-period Western imports that the EU export bans cover
 (notes/10_ban_coverage.md). Treatment for the import-substitution design, defined by the sender (Kantor-Whalley logic).
 
-Input : data/clean/eu_ban_hs07.csv (18), ru_imports_hs6.parquet (15), hs07_field_{text,industry}.csv (16)
-Output: data/clean/field_ban_coverage.csv  map, sample, event, year, field, coverage, coverage_noex
-        data/clean/hs07_ban_first.csv      hs07, first ban date (eu2022 list), share at first listing
+Input : data/clean/eu_sanctions/eu_ban_hs07.csv (18), ru_imports_hs6.parquet (15), hs07_field_{text,industry}.csv (16)
+Output: data/processed/ban_coverage/field_ban_coverage.csv  map, sample, event, year, field, coverage, coverage_noex
+        data/processed/ban_coverage/hs07_ban_first.csv      hs07, first ban date (eu2022 list), share at first listing
 
 Rules (C1-C3 in notes/data_decisions.md)
   C1 coverage_{f,y} = sum_hs w(hs,f) * W(hs) * banned(hs,y) / sum_hs w(hs,f) * W(hs), with W = Russia's imports from
@@ -22,14 +22,14 @@ EVENTS = {"eu2022": (range(2019, 2022), [2022, 2023, 2024, 2025, 2026]), "oil201
 
 
 def main():
-    ban = pd.read_csv(CLEAN / "eu_ban_hs07.csv", dtype={"hs07": str, "version": str})
-    imp = pd.read_parquet(CLEAN / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
+    ban = pd.read_csv(ROOT / "data" / "clean" / "eu_sanctions" / "eu_ban_hs07.csv", dtype={"hs07": str, "version": str})
+    imp = pd.read_parquet(ROOT / "data" / "processed" / "ru_imports" / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
     imp = imp[imp.group == "west"]
     imp["chapter"] = imp.hs07.str[:2].astype(int)
 
     first = (ban[(ban.list == "eu2022") & (ban.share > 0)].sort_values("version").groupby("hs07")
              .agg(first_ban=("version", "first"), share_first=("share", "first")).reset_index())
-    first.to_csv(CLEAN / "hs07_ban_first.csv", index=False)
+    first.to_csv(ROOT / "data" / "processed" / "ban_coverage" / "hs07_ban_first.csv", index=False)
 
     out = []
     for lst, (pre, years) in EVENTS.items():
@@ -41,7 +41,7 @@ def main():
                 continue
             bv = b[b.version == vers.max()][["hs07", "share", "ex_only"]]
             for mname in ["text", "industry"]:
-                mp = pd.read_csv(CLEAN / f"hs07_field_{mname}.csv", dtype={"hs07": str})
+                mp = pd.read_csv(ROOT / "data" / "processed" / "hs_field_maps" / f"hs07_field_{mname}.csv", dtype={"hs07": str})
                 for sname, keep in [("manuf", W.chapter.between(28, 97)), ("all", W.chapter > 0)]:
                     x = W[keep].merge(mp, on="hs07").merge(bv, on="hs07", how="left")
                     x["share"] = x.share.fillna(0)
@@ -54,9 +54,9 @@ def main():
                                              "coverage": (g.num / g.den).values,
                                              "coverage_noex": (g.num2 / g.den).values}))
     c = pd.concat(out)
-    names = pd.read_csv(CLEAN / "ru_domestic_field_year_imputed.csv").drop_duplicates("field").set_index("field").field_en
+    names = pd.read_csv(ROOT / "data" / "processed" / "title_fields" / "ru_domestic_field_year_imputed.csv").drop_duplicates("field").set_index("field").field_en
     c["field_en"] = c.field.map(names)
-    c.to_csv(CLEAN / "field_ban_coverage.csv", index=False)
+    c.to_csv(ROOT / "data" / "processed" / "ban_coverage" / "field_ban_coverage.csv", index=False)
 
     # share of all Western imports (manufactured) covered, by year
     for lst, (pre, years) in EVENTS.items():

@@ -9,9 +9,9 @@
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261122)
 B <- 499
-pat <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE)
-du <- read_csv(here("data", "clean", "field_dualuse_2014.csv"), show_col_types = FALSE)
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
+pat <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_field_year_official.csv"), show_col_types = FALSE)
+du <- read_csv(here("data", "processed", "dualuse_2014", "field_dualuse_2014.csv"), show_col_types = FALSE)
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
 expo <- function(mp) du %>% filter(map == mp) %>%
   inner_join(cov %>% filter(map == mp, event == "oil2014", year == 2014) %>% select(field, oil = coverage), by = "field") %>%
   inner_join(cov %>% filter(map == mp, event == "eu2022", year == 2023) %>% select(field, ban = coverage), by = "field") %>%

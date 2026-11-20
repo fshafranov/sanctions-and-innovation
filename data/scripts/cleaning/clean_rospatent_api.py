@@ -1,7 +1,7 @@
 """Parse the Rospatent API weeks (21b) into one row per invention patent (session 5).
 
 Input : data/raw/rospatent_api/weeks/*.json.gz
-Output: data/clean/rospatent_api_biblio.parquet
+Output: data/clean/rospatent_api/rospatent_api_biblio.parquet
   reg_no, kind, filing_date, app_year, pub_date, legal_status, dataset,
   ipc (list of full codes, e.g. 'A61K31/7068'), ipc_sub (distinct subclasses), ipc_first (first listed code),
   cpc (list), holders (list of names), holder_cc (list of country codes in parentheses), inventor_cc (list),
@@ -56,12 +56,12 @@ def main():
         with gzip.open(f, "rt", encoding="utf-8") as g:
             rows += [row(h) for h in json.load(g)]
     d = pd.DataFrame(rows).drop_duplicates("reg_no")
-    d.to_parquet(CLEAN / "rospatent_api_biblio.parquet", index=False)
+    d.to_parquet(ROOT / "data" / "clean" / "rospatent_api" / "rospatent_api_biblio.parquet", index=False)
     print(f"{len(d)} patents from {len(list(WEEKS.glob('*.json.gz')))} weeks")
     print(d.groupby("app_year").agg(n=("reg_no", "size"), with_ipc=("ipc_first", lambda s: s.notna().mean()),
                                     mean_cit=("n_cit", "mean")).round(3).to_string())
     # agreement with Google IPC subclasses (patents in both sources)
-    g = pd.read_parquet(CLEAN / "rospatent_subclass_top.parquet", columns=["reg_no", "subs", "sub_top"])
+    g = pd.read_parquet(ROOT / "data" / "processed" / "title_subclasses" / "rospatent_subclass_top.parquet", columns=["reg_no", "subs", "sub_top"])
     m = d.merge(g, on="reg_no")
     both = m[m.subs.str.len() > 0]
     if len(both):

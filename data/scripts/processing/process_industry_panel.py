@@ -11,9 +11,9 @@ split over the table's groups of the same division). Coverage = banned share (en
 2019-21 Western imports, manufactured goods (HS 28-97).
 
 Input : data/raw/concordances/iab_dorner_harhoff/horizontal tables/corrtab_ipc4_frac_w08_3_ano.dta
-        data/clean/ru_domestic_subclass_year_official.csv, concord_hs_isic4.csv, ru_imports_hs6.parquet, eu_ban_hs07.csv
-Output: data/clean/industry_year_patents.csv     nace3, year, n
-        data/clean/industry_ban_coverage.csv     nace3, division, coverage, west_imports, n_hs
+        data/processed/official_ipc_panels/ru_domestic_subclass_year_official.csv, concord_hs_isic4.csv, ru_imports_hs6.parquet, eu_ban_hs07.csv
+Output: data/processed/industry_panel/industry_year_patents.csv     nace3, year, n
+        data/processed/industry_panel/industry_ban_coverage.csv     nace3, division, coverage, west_imports, n_hs
 """
 from pathlib import Path
 
@@ -33,16 +33,16 @@ def main():
     groups = sorted(t.nace3.unique())
     print(f"DH table: {t.ipc4.nunique()} IPC subclasses with manufacturing weight, {len(groups)} manufacturing NACE groups")
 
-    s = pd.read_csv(CLEAN / "ru_domestic_subclass_year_official.csv")
+    s = pd.read_csv(ROOT / "data" / "processed" / "official_ipc_panels" / "ru_domestic_subclass_year_official.csv")
     s = s[s.year.between(2005, 2025)]
     cov_share = s[s.subclass.isin(t.ipc4)].n_frac.sum() / s.n_frac.sum()
     print(f"share of fractional domestic patents (2005-25) in subclasses covered by the table: {cov_share:.3f}")
     p = s.merge(t[["ipc4", "nace3", "w"]], left_on="subclass", right_on="ipc4")
     p["n"] = p.n_frac * p.w
     p = p.groupby(["nace3", "year"]).n.sum().reset_index()
-    p.to_csv(CLEAN / "industry_year_patents.csv", index=False)
+    p.to_csv(ROOT / "data" / "processed" / "industry_panel" / "industry_year_patents.csv", index=False)
 
-    c = pd.read_csv(CLEAN / "concord_hs_isic4.csv", dtype=str).rename(columns={"HS_6d": "hs07", "ISIC4_4d": "isic4"})
+    c = pd.read_csv(ROOT / "data" / "clean" / "concordances" / "concord_hs_isic4.csv", dtype=str).rename(columns={"HS_6d": "hs07", "ISIC4_4d": "isic4"})
     c = c[c.isic4.str.fullmatch(r"\d{4}", na=False)].drop_duplicates()
     c = c[c.isic4.str[:2] != "33"]
     c["k"] = 1 / c.groupby("hs07").isic4.transform("size")
@@ -57,10 +57,10 @@ def main():
     lost = set(rest.isic4) - set(split.isic4)
     print(f"ISIC4 codes mapped by division split: {rest.isic4.nunique()} ({len(lost)} with no manufacturing group, dropped)")
 
-    imp = pd.read_parquet(CLEAN / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
+    imp = pd.read_parquet(ROOT / "data" / "processed" / "ru_imports" / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
     W = imp[(imp.group == "west") & imp.year.between(2019, 2021) & imp.hs07.str[:2].astype(int).between(28, 97)] \
         .groupby("hs07").v.mean().rename("W").reset_index()
-    ban = pd.read_csv(CLEAN / "eu_ban_hs07.csv", dtype={"hs07": str, "version": str})
+    ban = pd.read_csv(ROOT / "data" / "clean" / "eu_sanctions" / "eu_ban_hs07.csv", dtype={"hs07": str, "version": str})
     b = ban[(ban.list == "eu2022") & (ban.version <= "20231231")]
     b = b[b.version == b.version.max()][["hs07", "share"]]
     x = W.merge(m, on="hs07").merge(b, on="hs07", how="left").fillna({"share": 0})
@@ -68,7 +68,7 @@ def main():
     g = x.assign(num=x.den * x.share).groupby("nace3").agg(num=("num", "sum"), den=("den", "sum"), n_hs=("hs07", "nunique"))
     out = pd.DataFrame({"nace3": g.index, "division": g.index // 10, "coverage": (g.num / g.den).values,
                         "west_imports": g.den.values, "n_hs": g.n_hs.values})
-    out.to_csv(CLEAN / "industry_ban_coverage.csv", index=False)
+    out.to_csv(ROOT / "data" / "processed" / "industry_panel" / "industry_ban_coverage.csv", index=False)
     pre = p[p.year.between(2015, 2019)].groupby("nace3").n.mean()
     o = out.assign(pat=out.nace3.map(pre))
     keep = o[(o.pat >= 10) & (o.west_imports > 0)]

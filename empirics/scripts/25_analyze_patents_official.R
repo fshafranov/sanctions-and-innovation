@@ -10,14 +10,14 @@ set.seed(20261119)
 YEARS <- 2015:2025
 sector_of <- function(f) cut(f, c(0, 8, 13, 24, 32, 35), labels = c("El", "In", "Ch", "Me", "Ot"))
 
-fpan <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
+fpan <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS) %>% complete(field = 1:35, year = YEARS, fill = list(n_frac = 0, n_first = 0))
-fhol <- read_csv(here("data", "clean", "ru_domestic_field_year_holder_official.csv"), show_col_types = FALSE) %>%
+fhol <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_field_year_holder_official.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS, holder_type %in% c("firm", "university", "research", "individual")) %>%
   complete(field = 1:35, year = YEARS, holder_type, fill = list(n_frac = 0, n_first = 0))
-pred <- read_csv(here("data", "clean", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE) %>%
+pred <- read_csv(here("data", "processed", "title_fields", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS) %>% select(field, year, n_top)
-fcov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+fcov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", event == "eu2022", year == 2023)
 fban <- function(mp) fcov %>% filter(map == mp) %>% transmute(field, ban = as.numeric(scale(coverage)))
 
@@ -61,11 +61,11 @@ mdiff <- fepois(y ~ ban:post + ban:post:public | field^h + h^year,
                 cluster = ~field)
 
 # (B) subclass, within field
-spat <- read_csv(here("data", "clean", "ru_domestic_subclass_year_official.csv"), show_col_types = FALSE) %>%
+spat <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_subclass_year_official.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS) %>% complete(subclass, year = YEARS, fill = list(n_frac = 0, n_first = 0))
 keep <- spat %>% filter(year <= 2021) %>% group_by(subclass) %>% summarise(avg = mean(n_frac)) %>%
   filter(avg >= 10) %>% pull(subclass)
-scov <- read_csv(here("data", "clean", "subclass_ban_coverage.csv"), show_col_types = FALSE) %>% filter(year == 2023)
+scov <- read_csv(here("data", "processed", "subclass_ban_coverage", "subclass_ban_coverage.csv"), show_col_types = FALSE) %>% filter(year == 2023)
 resB <- map_dfr(c("industry", "text"), function(mp) {
   b <- scov %>% filter(map == mp, subclass %in% keep, !is.na(field)) %>% transmute(subclass, field, ban = as.numeric(scale(coverage)))
   d <- spat %>% rename(y = n_frac) %>% inner_join(b, by = "subclass") %>% mutate(post = as.integer(year >= 2022))

@@ -9,8 +9,8 @@
     IPC-NACE2 table was the first choice but its only online copy (EPO forum) is offline.
 
 Input : data/raw/tnved/tnved_tws.xlsx (tws.by, list of current TN VED codes and names, downloaded 12 Nov 2026)
-        data/clean/title_field_model.joblib (14), concord_*.csv (16a_export_concordances.R)
-Output: data/clean/hs07_field_text.csv, hs07_field_industry.csv  (hs07, field, w; w sums to 1 per hs07)
+        data/processed/title_fields/title_field_model.joblib (14), concord_*.csv (16a_export_concordances.R)
+Output: data/processed/hs_field_maps/hs07_field_text.csv, hs07_field_industry.csv  (hs07, field, w; w sums to 1 per hs07)
 """
 import __main__
 import importlib.util
@@ -49,7 +49,7 @@ def text_map():
     desc = t.assign(parts=parts).groupby("hs22").parts.apply(join)
     desc = desc.str.lower().str.replace("ё", "е")
     print(f"TN VED: {len(t)} 10-digit codes, {len(desc)} HS6 (HS 2022)")
-    m = joblib.load(CLEAN / "title_field_model.joblib")
+    m = joblib.load(ROOT / "data" / "processed" / "title_fields" / "title_field_model.joblib")
     P = m.proba(desc.values)
     cls = [int(c) for c in m.clf.classes_]
     p = pd.DataFrame(P, index=desc.index, columns=cls)
@@ -58,7 +58,7 @@ def text_map():
             top = p.loc[code].sort_values(ascending=False).head(2)
             print(f"  {code} {desc[code][:70]!r} -> {dict(top.round(2))}")
 
-    c = pd.read_csv(CLEAN / "concord_hs22_hs07.csv", dtype=str).rename(columns={"HS6_6d": "hs22", "HS3_6d": "hs07"})
+    c = pd.read_csv(ROOT / "data" / "clean" / "concordances" / "concord_hs22_hs07.csv", dtype=str).rename(columns={"HS6_6d": "hs22", "HS3_6d": "hs07"})
     c["k"] = 1 / c.groupby("hs22").hs07.transform("size")
     long = p.stack().rename("p").reset_index().rename(columns={"level_1": "field"})
     x = long.merge(c, on="hs22")
@@ -66,7 +66,7 @@ def text_map():
     x = x.groupby(["hs07", "field"]).w.sum().reset_index()
     x["w"] /= x.groupby("hs07").w.transform("sum")
     print(f"text map: {x.hs07.nunique()} HS07 codes")
-    x.to_csv(CLEAN / "hs07_field_text.csv", index=False)
+    x.to_csv(ROOT / "data" / "processed" / "hs_field_maps" / "hs07_field_text.csv", index=False)
     return x
 
 
@@ -84,7 +84,7 @@ def industry_map():
         return v[v.w_nf > 0][["nace", "field", "w_nf"]]
     v3, v2 = dh(3), dh(2)
 
-    c = pd.read_csv(CLEAN / "concord_hs_isic4.csv", dtype=str).rename(columns={"HS_6d": "hs07", "ISIC4_4d": "isic4"})
+    c = pd.read_csv(ROOT / "data" / "clean" / "concordances" / "concord_hs_isic4.csv", dtype=str).rename(columns={"HS_6d": "hs07", "ISIC4_4d": "isic4"})
     c = c[c.isic4.str.fullmatch(r"\d{4}", na=False)].drop_duplicates()
     c["k"] = 1 / c.groupby("hs07").isic4.transform("size")
     # M3 (session 5 fix): ISIC4 groups do not always exist in NACE Rev.2 (ISIC 2100 pharma = NACE 21.1 + 21.2;
@@ -100,7 +100,7 @@ def industry_map():
     x = x.groupby(["hs07", "field"]).w.sum().reset_index()
     x["w"] /= x.groupby("hs07").w.transform("sum")  # products whose industries file no patents drop out
     print(f"industry map: {x.hs07.nunique()} HS codes (of {c.hs07.nunique()} in the HS-ISIC4 table)")
-    x.to_csv(CLEAN / "hs07_field_industry.csv", index=False)
+    x.to_csv(ROOT / "data" / "processed" / "hs_field_maps" / "hs07_field_industry.csv", index=False)
     return x
 
 

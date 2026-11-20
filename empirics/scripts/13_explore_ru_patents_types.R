@@ -1,6 +1,6 @@
 # 08_ru_patents_types.R: Russia 2014 within Rospatent, by field and document type (Design D, patents part).
-# Data: data/clean/ru_patents_field_year.csv (data/scripts/processing/process_ru_patents_google.py, Google Patents via BigQuery),
-#       data/clean/field_dependence.csv (Design A, dep_frontier_z) and ru_patents_e21b_year.csv.
+# Data: data/processed/ru_patents_google/ru_patents_field_year.csv (data/scripts/processing/process_ru_patents_google.py, Google Patents via BigQuery),
+#       data/processed/field_panel_2014/field_dependence.csv (Design A, dep_frontier_z) and ru_patents_e21b_year.csv.
 # Questions
 #  (1) Did domestic inventions (inv_ru) or utility models (um) shift towards/away from sender-dependent fields
 #      after 2014? Event study: log(1+n_kt) ~ sum_t b_t * 1[year = t] * dep_z_k | field + year, base 2013.
@@ -13,9 +13,9 @@
 #        falls from 2014 because fast grants skip the A publication, not because filings fall.
 source(here::here("empirics", "scripts", "00_setup.R"))
 
-dep <- read_csv(here("data", "clean", "field_dependence.csv"), show_col_types = FALSE) %>%
+dep <- read_csv(here("data", "processed", "field_panel_2014", "field_dependence.csv"), show_col_types = FALSE) %>%
   select(field, dep_z = dep_frontier_z)
-p <- read_csv(here("data", "clean", "ru_patents_field_year.csv"), show_col_types = FALSE) %>%
+p <- read_csv(here("data", "processed", "ru_patents_google", "ru_patents_field_year.csv"), show_col_types = FALSE) %>%
   left_join(dep, by = "field") %>%
   filter((type == "inv_ru" & between(year, 2005, 2017)) | (type == "um" & between(year, 2005, 2019)))
 TYPE_LAB <- c(inv_ru = "Inventions, Russian holders", um = "Utility models")
@@ -56,9 +56,9 @@ write_csv(tri_tab, file.path(TAB_DIR, "ru_types_triple.csv"))
 print(tri_tab %>% select(model, term, estimate, std.error, p.value), n = 30)
 
 # (3) targeted fields: shares of each type's total --------------------------------------------------------------
-tot <- read_csv(here("data", "clean", "ru_patents_field_year.csv"), show_col_types = FALSE) %>%
+tot <- read_csv(here("data", "processed", "ru_patents_google", "ru_patents_field_year.csv"), show_col_types = FALSE) %>%
   group_by(year, type) %>% summarise(total = sum(n), food = sum(n[field == 18]), .groups = "drop")
-e21b <- read_csv(here("data", "clean", "ru_patents_e21b_year.csv"), show_col_types = FALSE)
+e21b <- read_csv(here("data", "processed", "ru_patents_google", "ru_patents_e21b_year.csv"), show_col_types = FALSE)
 sh <- tot %>% left_join(e21b, by = c("year", "type")) %>%
   filter(type %in% c("inv_ru", "um", "inv_foreign"), between(year, 2005, 2019)) %>%
   transmute(year, type, `Food chemistry (field 18)` = 100 * food / total,

@@ -18,8 +18,8 @@
 # Output: empirics/results/tables/field_eventstudy.csv, field_pooled.csv, field_permutation.csv; figures fig6-fig8.
 source(here::here("empirics", "scripts", "00_setup.R"))
 
-dep <- read_csv(here("data", "clean", "field_dependence.csv"), show_col_types = FALSE)
-load_panel <- function(file) read_csv(here("data", "clean", file), show_col_types = FALSE) %>%
+dep <- read_csv(here("data", "processed", "field_panel_2014", "field_dependence.csv"), show_col_types = FALSE)
+load_panel <- function(file) read_csv(here("data", "processed", "field_panel_2014", file), show_col_types = FALSE) %>%
   left_join(dep %>% select(field, dep_frontier_z, field_en), by = "field") %>%
   mutate(cf = paste(iso3, field), ky = paste(field, year), cy = paste(iso3, year))
 PANELS <- list(

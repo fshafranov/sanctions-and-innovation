@@ -31,7 +31,7 @@ OUTCOMES <- tribble(
 )
 
 read_panel <- function() {
-  read_csv(here("data", "clean", "panel.csv"), show_col_types = FALSE) %>%
+  read_csv(here("data", "processed", "country_panel", "panel.csv"), show_col_types = FALSE) %>%
     mutate(intl_share = 100 * intl_share) %>%
     arrange(iso3, year)
 }

@@ -1,7 +1,7 @@
 """Parse the application publications (kind A, script 21c) into one row per application (20 Nov 2026).
 
 Input : data/raw/rospatent_api/weeks_A/*.json.gz
-Output: data/clean/rospatent_api_apps.parquet
+Output: data/clean/rospatent_api/rospatent_api_apps.parquet
   app_no, doc_no, filing_date, app_year, pub_date, pub_year, pct (national phase of a PCT application),
   ipc (list of full codes), applicants (list), applicant_cc, inventor_cc, prio_cc, domestic, holder_type, applicant1
 Rule AP2 (as P2 for grants): domestic = all applicants RU (no applicants: all inventors RU) and no foreign priority.
@@ -62,7 +62,7 @@ def main():
     d["domestic"] = (hold_ru | (no_hold & inv_ru)) & ~prio_foreign
     d["applicant1"] = d.applicants.map(lambda l: re.sub(r"\s*\([A-Z]{2}\)\s*$", "", l[0]).strip() if l else "")
     d["holder_type"] = d.applicants.map(lambda l: s11.holder_type(l[0]) if l else "none")
-    d.to_parquet(CLEAN / "rospatent_api_apps.parquet", index=False)
+    d.to_parquet(ROOT / "data" / "clean" / "rospatent_api" / "rospatent_api_apps.parquet", index=False)
     print(f"{len(d):,} applications ({n0 - len(d)} duplicate application numbers dropped) from {len(files)} weeks")
     print(f"with IPC {d.ipc.str.len().gt(0).mean():.3f}; with applicant country {d.applicant_cc.str.len().gt(0).mean():.3f}")
     d["lag"] = d.pub_year - d.app_year

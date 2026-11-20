@@ -5,10 +5,10 @@ correlation table links each control number to the TARIC codes it can be declare
 
 Input : data/raw/circabc/2014 - Dual use correlation table 01 Apri 2014.xlsx  (TARIC 10-digit, DU code, control no.;
         downloaded by the user from CIRCABC, Nov 2026)
-        data/clean/concord_hsvintage_hs07.csv, ru_imports_hs6.parquet, hs07_field_{industry,text}.csv,
+        data/clean/concordances/concord_hsvintage_hs07.csv, ru_imports_hs6.parquet, hs07_field_{industry,text}.csv,
         field_ban_coverage.csv (oil list, for the comparison printout)
-Output: data/clean/hs07_dualuse_2014.csv        hs07, share_broad, share_narrow
-        data/clean/field_dualuse_2014.csv       map, field, du_broad, du_narrow (share of 2011-13 Western imports)
+Output: data/processed/dualuse_2014/hs07_dualuse_2014.csv        hs07, share_broad, share_narrow
+        data/processed/dualuse_2014/field_dualuse_2014.csv       map, field, du_broad, du_narrow (share of 2011-13 Western imports)
 """
 from pathlib import Path
 
@@ -29,7 +29,7 @@ def main():
     print(f"table: {len(d)} TARIC lines, {d.ctrl.nunique()} control numbers, {len(broad)} HS2012 codes "
           f"({len(narrow)} listed as a whole)")
 
-    c = pd.read_csv(CLEAN / "concord_hsvintage_hs07.csv", dtype=str)
+    c = pd.read_csv(ROOT / "data" / "clean" / "concordances" / "concord_hsvintage_hs07.csv", dtype=str)
     c = c[c.vintage == "HS2012"].copy()
     c["n_src"] = c.groupby("hs07").src.transform("size")
     c["b"] = c.src.isin(broad)
@@ -38,9 +38,9 @@ def main():
     unmatched = broad - set(c.src)
     print(f"HS2012 codes not in the concordance: {len(unmatched)}")
     h = h[(h.share_broad > 0)]
-    h.to_csv(CLEAN / "hs07_dualuse_2014.csv", index=False)
+    h.to_csv(ROOT / "data" / "processed" / "dualuse_2014" / "hs07_dualuse_2014.csv", index=False)
 
-    imp = pd.read_parquet(CLEAN / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
+    imp = pd.read_parquet(ROOT / "data" / "processed" / "ru_imports" / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
     W = imp[(imp.group == "west") & imp.year.between(2011, 2013) & imp.hs07.str[:2].astype(int).between(28, 97)] \
         .groupby("hs07").v.mean().rename("W").reset_index()
     tot = W.merge(h, on="hs07", how="left").fillna(0)
@@ -48,19 +48,19 @@ def main():
           f"narrow {(tot.W * tot.share_narrow).sum() / tot.W.sum():.3f}")
     out = []
     for mp in ["industry", "text"]:
-        w = pd.read_csv(CLEAN / f"hs07_field_{mp}.csv", dtype={"hs07": str})
+        w = pd.read_csv(ROOT / "data" / "processed" / "hs_field_maps" / f"hs07_field_{mp}.csv", dtype={"hs07": str})
         x = W.merge(w, on="hs07").merge(h, on="hs07", how="left").fillna({"share_broad": 0, "share_narrow": 0})
         x["den"] = x.w * x.W
         g = x.assign(nb=x.den * x.share_broad, nn=x.den * x.share_narrow).groupby("field")[["nb", "nn", "den"]].sum()
         out.append(pd.DataFrame({"map": mp, "field": g.index, "du_broad": (g.nb / g.den).values,
                                  "du_narrow": (g.nn / g.den).values}))
     f = pd.concat(out)
-    f.to_csv(CLEAN / "field_dualuse_2014.csv", index=False)
-    cov = pd.read_csv(CLEAN / "field_ban_coverage.csv")
+    f.to_csv(ROOT / "data" / "processed" / "dualuse_2014" / "field_dualuse_2014.csv", index=False)
+    cov = pd.read_csv(ROOT / "data" / "processed" / "ban_coverage" / "field_ban_coverage.csv")
     cov = cov[(cov["sample"] == "manuf") & (((cov.event == "eu2022") & (cov.year == 2023)) | ((cov.event == "oil2014") & (cov.year == 2014)))]
     cv = cov.pivot_table(index=["map", "field"], columns="event", values="coverage").reset_index()
     m = f.merge(cv, on=["map", "field"])
-    names = pd.read_csv(CLEAN / "ru_domestic_field_year_imputed.csv").drop_duplicates("field").set_index("field").field_en
+    names = pd.read_csv(ROOT / "data" / "processed" / "title_fields" / "ru_domestic_field_year_imputed.csv").drop_duplicates("field").set_index("field").field_en
     for mp, g in m.groupby("map"):
         print(f"\n{mp}: corr dual-use broad with 2022 coverage {g.du_broad.corr(g.eu2022):.2f}, with oil list "
               f"{g.du_broad.corr(g.oil2014):.2f}; narrow vs broad {g.du_narrow.corr(g.du_broad):.2f}")

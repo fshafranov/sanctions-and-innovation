@@ -11,11 +11,11 @@
 source(here::here("empirics", "scripts", "00_setup.R"))
 YEARS <- 2015:2025
 
-pat <- read_csv(here("data", "clean", "ru_domestic_subclass_year_official.csv"), show_col_types = FALSE) %>%
+pat <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_subclass_year_official.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS) %>% complete(subclass, year = YEARS, fill = list(n_frac = 0, n_first = 0))
 keep <- pat %>% filter(year <= 2021) %>% group_by(subclass) %>% summarise(avg = mean(n_frac)) %>%
   filter(avg >= 10) %>% pull(subclass)
-covall <- read_csv(here("data", "clean", "subclass_ban_coverage.csv"), show_col_types = FALSE) %>%
+covall <- read_csv(here("data", "processed", "subclass_ban_coverage", "subclass_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(subclass %in% keep, !is.na(field))
 sector_of <- function(f) cut(f, c(0, 8, 13, 24, 32, 35), labels = c("El", "In", "Ch", "Me", "Ot"))
 

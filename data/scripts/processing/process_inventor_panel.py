@@ -11,9 +11,9 @@ Rules (IV1-IV4 in notes/data_decisions.md)
   IV3 field shares: an application's weight is split equally over its distinct WIPO fields (Schmoch, D1); an
       inventor-year's field profile = sum over that year's applications.
   IV4 holder type of the application (P4 regex on first holder/applicant).
-Output: data/clean/inventor_year_field.parquet and .csv.gz (name, year, field, w, n_apps_year, holder_type_mode, common)
-        data/clean/inventor_applications.parquet (app key, year, fields, holder_type, n_inventors)
-        data/clean/inventor_app_field_year.csv (field x year applications, fractional, same sample; for R)
+Output: data/processed/inventor_panel/inventor_year_field.parquet and .csv.gz (name, year, field, w, n_apps_year, holder_type_mode, common)
+        data/processed/inventor_panel/inventor_applications.parquet (app key, year, fields, holder_type, n_inventors)
+        data/processed/inventor_panel/inventor_app_field_year.csv (field x year applications, fractional, same sample; for R)
 """
 import gzip
 import importlib.util
@@ -91,11 +91,11 @@ def main():
     print(f"RU inventor-application rows: {n_ru:,}; with patronymic format: {ok.mean():.3f}")
     inv = inv[ok].drop_duplicates(["key", "name"])
     d["n_inventors"] = d.key.map(inv.groupby("key").size()).fillna(0).astype(int)
-    d[["key", "year", "fields", "holder_type", "n_inventors"]].to_parquet(CLEAN / "inventor_applications.parquet", index=False)
+    d[["key", "year", "fields", "holder_type", "n_inventors"]].to_parquet(ROOT / "data" / "processed" / "inventor_panel" / "inventor_applications.parquet", index=False)
     fa = d[["year", "fields"]].explode("fields")
     fa["w"] = 1 / d.fields.str.len().reindex(fa.index)
     fa.groupby(["fields", "year"]).w.sum().rename("applications").reset_index().rename(columns={"fields": "field"}) \
-        .to_csv(CLEAN / "inventor_app_field_year.csv", index=False)
+        .to_csv(ROOT / "data" / "processed" / "inventor_panel" / "inventor_app_field_year.csv", index=False)
 
     x = inv[["name", "year", "key", "holder_type", "fields"]].explode("fields")
     x["w"] = 1 / x.groupby(["key", "name"]).fields.transform("size")
@@ -106,8 +106,8 @@ def main():
     sur = inv.drop_duplicates("name").name.str.split().str[0].value_counts()
     top = set(sur.head(300).index)
     iy["common"] = iy.name.str.split().str[0].isin(top)
-    iy.to_parquet(CLEAN / "inventor_year_field.parquet", index=False)
-    iy.to_csv(CLEAN / "inventor_year_field.csv.gz", index=False)
+    iy.to_parquet(ROOT / "data" / "processed" / "inventor_panel" / "inventor_year_field.parquet", index=False)
+    iy.to_csv(ROOT / "data" / "processed" / "inventor_panel" / "inventor_year_field.csv.gz", index=False)
     a = iy.drop_duplicates(["name", "year"])
     print(f"inventors: {a.name.nunique():,}; inventor-years: {len(a):,}; common-surname share {a.common.mean():.3f}")
     first = a.groupby("name").year.min()

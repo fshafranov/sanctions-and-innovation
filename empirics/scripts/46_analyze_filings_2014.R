@@ -11,8 +11,8 @@
 # Output: empirics/results/tables/filings_2014_es.csv, filings_2014_pooled.csv, filings_foreign_groups_es.csv,
 #         filings_foreign_top_applicants.csv; fig61_filings_2014, fig62_foreign_groups
 source(here::here("empirics", "scripts", "00_setup.R"))
-fp <- read_csv(here("data", "clean", "ru_filings_field_year_origin.csv"), show_col_types = FALSE)
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+fp <- read_csv(here("data", "processed", "filings_panel", "ru_filings_field_year_origin.csv"), show_col_types = FALSE)
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", map == "industry")
 expo <- function(ev, yr) cov %>% filter(event == ev, year == yr) %>% transmute(field, ban = as.numeric(scale(coverage)))
 mk <- function(o, from, to) fp %>% filter(origin %in% o) %>% group_by(field, year) %>%
@@ -70,7 +70,7 @@ p <- ggplot(es, aes(year, estimate, colour = origin, fill = origin)) +
 save_figure(p, "fig61_filings_2014", width = 11, height = 4.6)
 
 # (C) foreign groups
-fg <- read_csv(here("data", "clean", "ru_filings_foreign_field_year_group.csv"), show_col_types = FALSE)
+fg <- read_csv(here("data", "processed", "filings_panel", "ru_filings_foreign_field_year_group.csv"), show_col_types = FALSE)
 groups <- list("West" = quote(grp == "west"), "West without Ford" = quote(grp == "west" & !ford),
                "China" = quote(grp == "china"), "West, PCT entries" = quote(grp == "west" & pct),
                "West, direct filings" = quote(grp == "west" & !pct))
@@ -89,13 +89,13 @@ print(ges %>% mutate(v = sprintf("%.2f%s", estimate, ifelse(conf.low > 0 | conf.
         select(group, year, v) %>% arrange(year) %>% pivot_wider(names_from = year, values_from = v) %>% as.data.frame())
 
 hi <- cov %>% filter(event == "eu2022", year == 2023) %>% filter(coverage >= quantile(coverage, 2 / 3)) %>% pull(field)
-top <- read_csv(here("data", "clean", "ru_filings_foreign_applicant_year.csv"), show_col_types = FALSE) %>%
+top <- read_csv(here("data", "processed", "filings_panel", "ru_filings_foreign_applicant_year.csv"), show_col_types = FALSE) %>%
   filter(field %in% hi) %>% group_by(applicant, year) %>% summarise(n = sum(n_frac), .groups = "drop") %>%
   complete(applicant, year = 2010:2024, fill = list(n = 0)) %>% group_by(applicant) %>%
   summarise(n_2013_14 = mean(n[year %in% 2013:2014]), n_2015_17 = mean(n[year %in% 2015:2017]),
             n_2019_20 = mean(n[year %in% 2019:2020]), n_2022_24 = mean(n[year %in% 2022:2024]),
             drop = n_2013_14 - n_2019_20) %>% arrange(desc(drop))
-all_hi <- read_csv(here("data", "clean", "ru_filings_foreign_field_year_group.csv"), show_col_types = FALSE) %>%
+all_hi <- read_csv(here("data", "processed", "filings_panel", "ru_filings_foreign_field_year_group.csv"), show_col_types = FALSE) %>%
   filter(field %in% hi) %>% group_by(year) %>% summarise(n = sum(n_frac))
 tot_drop <- mean(all_hi$n[all_hi$year %in% 2013:2014]) - mean(all_hi$n[all_hi$year %in% 2019:2020])
 top <- top %>% mutate(share_of_total_drop = drop / tot_drop)

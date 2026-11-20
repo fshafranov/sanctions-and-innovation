@@ -7,8 +7,8 @@
 #         empirics/results/tables/import_first_stage.csv
 source(here::here("empirics", "scripts", "00_setup.R"))
 
-imp <- read_csv(here("data", "clean", "field_imports_year.csv"), show_col_types = FALSE)
-ex  <- read_csv(here("data", "clean", "field_exposure.csv"), show_col_types = FALSE)
+imp <- read_csv(here("data", "processed", "field_exposure", "field_imports_year.csv"), show_col_types = FALSE)
+ex  <- read_csv(here("data", "processed", "field_exposure", "field_exposure.csv"), show_col_types = FALSE)
 
 events <- tribble(~event, ~ref, ~from, ~to,
                   2014,   2013, 2008,  2019,

@@ -60,7 +60,6 @@ if [ -f data/raw/rospatent/data-20261102-structure-20180828.csv ]; then   # user
       Rscript empirics/scripts/23_analyze_patents_holder_region.R 2>&1 | tee data/logs/16f_patents_holder_region_R.log
       # session 5: IPC subclass design (classifier ~30 min)
       uv run python -I -W ignore data/scripts/processing/process_title_subclasses.py 2>&1 | tee data/logs/14b_subclass_classifier.log
-      uv run python -I -c "import pandas as pd; p=pd.read_parquet('data/clean/rospatent_subclass_top.parquet'); p=p[p.domestic & ~p.mass_filer & p.app_year.between(2015,2025)]; p.groupby(['sub_top','app_year','holder_type']).size().rename('n').reset_index().rename(columns={'sub_top':'subclass','app_year':'year','holder_type':'h'}).to_csv('data/clean/ru_domestic_subclass_holder_year.csv', index=False)"
       uv run python -I -W ignore data/scripts/processing/process_subclass_ban_coverage.py 2>&1 | tee data/logs/19b_subclass_ban_coverage.log
       Rscript empirics/scripts/24_analyze_patents_subclass.R 2>&1 | tee data/logs/17_patents_subclass_R.log
       # official IPC from the Rospatent API (needs ROSPATENT_TOKEN; slow, resumable) and RFSD

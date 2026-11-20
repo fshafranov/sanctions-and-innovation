@@ -5,9 +5,9 @@ Input : data/raw/eu_sanctions/02014R0833-YYYYMMDD.xhtml  35 consolidated version
         EU Publications Office CELLAR API (publications.europa.eu/resource/celex/<CELEX>, Accept:
         application/xhtml+xml), list of versions from its SPARQL endpoint; downloaded 12 Nov 2026. (The EUR-Lex web
         pages answer scripted requests with a bot check, so they were not used.)
-        data/clean/concord_hsvintage_hs07.csv (16a_export_concordances.R)
-Output: data/clean/eu_ban_codes.csv     version, annex, subtitle, code (as printed), ex (partial "ex" code)
-        data/clean/eu_ban_hs07.csv      version date, list, hs07, share (share of the HS07 code's source codes banned),
+        data/clean/concordances/concord_hsvintage_hs07.csv (16a_export_concordances.R)
+Output: data/clean/eu_sanctions/eu_ban_codes.csv     version, annex, subtitle, code (as printed), ex (partial "ex" code)
+        data/clean/eu_sanctions/eu_ban_hs07.csv      version date, list, hs07, share (share of the HS07 code's source codes banned),
                                         ex_only (banned only through "ex" codes)
 
 Rules (B1-B4 in notes/data_decisions.md)
@@ -82,7 +82,7 @@ def vintage(date):
 
 
 def main():
-    conc = pd.read_csv(CLEAN / "concord_hsvintage_hs07.csv", dtype=str)
+    conc = pd.read_csv(ROOT / "data" / "clean" / "concordances" / "concord_hsvintage_hs07.csv", dtype=str)
     conc["n_src"] = conc.groupby(["vintage", "hs07"]).src.transform("size")
     out = []
     for p in sorted(RAW.glob("02014R0833-*.xhtml")):
@@ -95,7 +95,7 @@ def main():
     codes = pd.concat(out)
     codes = codes[~((codes.article == "3") & (codes.version >= "20220101"))]  # Annex II oil list only pre-2022 (B4)
     codes["list"] = (codes.version < "20220101").map({True: "oil2014", False: "eu2022"})
-    codes.to_csv(CLEAN / "eu_ban_codes.csv", index=False)
+    codes.to_csv(ROOT / "data" / "clean" / "eu_sanctions" / "eu_ban_codes.csv", index=False)
     print(codes.groupby(["version", "list"]).size().unstack(fill_value=0).to_string())
     print(codes[codes.version == codes.version.max()].groupby(["annex", "article"]).agg(
         n=("code", "size"), ex=("ex", "mean")).round(2).to_string())
@@ -115,7 +115,7 @@ def main():
         agg = agg.reset_index().assign(version=ver, list=lst)
         res.append(agg[["version", "list", "hs07", "share", "ex_only"]])
     r = pd.concat(res)
-    r.to_csv(CLEAN / "eu_ban_hs07.csv", index=False)
+    r.to_csv(ROOT / "data" / "clean" / "eu_sanctions" / "eu_ban_hs07.csv", index=False)
     print(r.groupby(["version", "list"]).agg(hs07=("hs07", "size"), share_sum=("share", "sum")).round(0).to_string())
 
 

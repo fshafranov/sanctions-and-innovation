@@ -12,11 +12,13 @@ Rules (SC1-SC4 in notes/data_decisions.md)
      hit; within-subclass changes after subclass and year FE, 2010-2020 (predicted vs IPC counts).
   SC3 cross-fitting: 3 folds for labelled patents filed 2000-2021; final model on all of them for the rest.
   SC4 count = top predicted subclass (whole count), domestic non-mass-filer inventions, by filing year.
-Output: data/clean/ru_domestic_subclass_year.csv   subclass, year, n_top, n_obs (IPC-based where matched)
-        data/clean/ru_domestic_region_subclass_year.csv  region, subclass, year, n_top
-        data/clean/rospatent_subclass_top.parquet  reg_no, app_year, domestic, mass_filer, holder_type, sub_top,
+Output: data/processed/title_subclasses/ru_domestic_subclass_year.csv   subclass, year, n_top, n_obs (IPC-based where matched)
+        data/processed/title_subclasses/ru_domestic_region_subclass_year.csv  region, subclass, year, n_top
+        data/processed/title_subclasses/ru_domestic_subclass_holder_year.csv  subclass, year, h (holder type), n
+        (domestic, mass filers dropped, 2015-2025; was an inline step in run_all.sh until 20 Nov 2026)
+        data/processed/title_subclasses/rospatent_subclass_top.parquet  reg_no, app_year, domestic, mass_filer, holder_type, sub_top,
                                                     p_top, subs (true subclasses)
-        data/clean/title_subclass_model.joblib     final model (used for product names in 16b_hs_subclass_maps.py)
+        data/processed/title_subclasses/title_subclass_model.joblib     final model (used for product names in 16b_hs_subclass_maps.py)
         data/logs/14b_subclass_validation.csv
 """
 import importlib.util
@@ -43,7 +45,7 @@ def load():
     t.columns = ["reg_no", "title"]
     t["title"] = (t.title.fillna("").str.replace(r"\s+", " ", regex=True).str.strip().str.lower()
                   .str.replace("ё", "е"))
-    r = pd.read_parquet(CLEAN / "rospatent_inventions.parquet",
+    r = pd.read_parquet(ROOT / "data" / "clean" / "rospatent" / "rospatent_inventions.parquet",
                         columns=["reg_no", "app_year", "domestic", "region", "mass_filer", "holder_type"])
     r = r.merge(t.drop_duplicates("reg_no"), on="reg_no", how="left")
     r = r[(r.app_year >= 2000) & (r.title.str.len() > 3)].copy()
@@ -123,14 +125,14 @@ def main():
         sub_top[tt.index], p_top[tt.index] = c[:, 0], p
     print(f"[{time.time()-t0:.0f}s] final model on {len(lab)} patents")
     m = Model().fit(*expand(lab, keep))
-    joblib.dump(m, CLEAN / "title_subclass_model.joblib")
+    joblib.dump(m, ROOT / "data" / "processed" / "title_subclasses" / "title_subclass_model.joblib")
     rest = r[~r.index.isin(lab.index)]
     c, p = top_k(m, rest.title.values, 1)
     sub_top[rest.index], p_top[rest.index] = c[:, 0], p
     r["sub_top"], r["p_top"] = sub_top, p_top
     r[["reg_no", "app_year", "domestic", "mass_filer", "holder_type", "region", "sub_top", "p_top", "subs"]].assign(
         subs=lambda x: x.subs.apply(lambda s: list(s) if isinstance(s, list) else [])).to_parquet(
-        CLEAN / "rospatent_subclass_top.parquet", index=False)
+        ROOT / "data" / "processed" / "title_subclasses" / "rospatent_subclass_top.parquet", index=False)
 
     d = r[r.domestic & ~r.mass_filer]
     top = d.groupby(["sub_top", "app_year"]).size().rename("n_top")
@@ -141,10 +143,10 @@ def main():
     full = pd.MultiIndex.from_product([sorted(keep), sorted(d.app_year.unique())], names=["sub_top", "app_year"])
     sy = pd.concat([top, obs], axis=1).reindex(full).fillna(0).reset_index()
     sy.columns = ["subclass", "year", "n_top", "n_obs"]
-    sy.to_csv(CLEAN / "ru_domestic_subclass_year.csv", index=False)
+    sy.to_csv(ROOT / "data" / "processed" / "title_subclasses" / "ru_domestic_subclass_year.csv", index=False)
     (d.dropna(subset=["region"]).groupby(["region", "sub_top", "app_year"]).size().rename("n_top").reset_index()
      .rename(columns={"sub_top": "subclass", "app_year": "year"})
-     .to_csv(CLEAN / "ru_domestic_region_subclass_year.csv", index=False))
+     .to_csv(ROOT / "data" / "processed" / "title_subclasses" / "ru_domestic_region_subclass_year.csv", index=False))
 
     # S2 within-subclass changes, out-of-fold predicted vs IPC, 2010-2020, subclasses with >= 20 per year on avg
     g = sy[sy.year.between(2010, 2020)].copy()
@@ -160,7 +162,17 @@ def main():
             {"metric": "within_slope", "value": slope, "n": g.subclass.nunique()}]
     pd.DataFrame(val).to_csv(LOGS / "14b_subclass_validation.csv", index=False)
     print(sy.groupby("year")[["n_top", "n_obs"]].sum().loc[2010:].round(0))
+    holder_counts()
     print(f"[{time.time()-t0:.0f}s] done")
+
+
+def holder_counts():
+    """Subclass x year x holder type counts of domestic patents (top predicted subclass), for 24_analyze_patents_subclass."""
+    p = pd.read_parquet(ROOT / "data" / "processed" / "title_subclasses" / "rospatent_subclass_top.parquet")
+    p = p[p.domestic & ~p.mass_filer & p.app_year.between(2015, 2025)]
+    p.groupby(["sub_top", "app_year", "holder_type"]).size().rename("n").reset_index() \
+        .rename(columns={"sub_top": "subclass", "app_year": "year", "holder_type": "h"}) \
+        .to_csv(ROOT / "data" / "processed" / "title_subclasses" / "ru_domestic_subclass_holder_year.csv", index=False)
 
 
 if __name__ == "__main__":

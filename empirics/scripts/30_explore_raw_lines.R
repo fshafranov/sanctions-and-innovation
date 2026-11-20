@@ -6,9 +6,9 @@
 #  fig46 every field's series (log index, 2019-21 = 0), coloured by coverage
 source(here::here("empirics", "scripts", "00_setup.R"))
 YEARS <- 2010:2025
-pat <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
+pat <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS)
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", event == "eu2022", year == 2023, map == "industry") %>% select(field, coverage) %>%
   mutate(bin = cut(coverage, quantile(coverage, 0:4 / 4), include.lowest = TRUE,
                    labels = c("Q1 lowest coverage (8-43%)", "Q2 (45-52%)", "Q3 (56-59%)", "Q4 highest coverage (59-67%)")))

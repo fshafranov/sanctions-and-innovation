@@ -1,13 +1,13 @@
 """Region x year panel for Design D maps and the pre/post-2022 comparison.
 
-Inputs : data/clean/rospatent_inventions.parquet (11_parse_rospatent_register.py)
+Inputs : data/clean/rospatent/rospatent_inventions.parquet (11_parse_rospatent_register.py)
          data/raw/openalex/regions/region_year.csv (09_get_openalex_regions.py)
          data/raw/rucities/russia-regions.json (ISO codes, names, population)
-Outputs: data/clean/region_crosswalk.csv   OpenAlex region name -> ISO 3166-2
-         data/clean/region_year_panel.csv  ISO x year: patents (domestic, by holder type, attorney-free), Western
+Outputs: data/processed/region_panel/region_crosswalk.csv   OpenAlex region name -> ISO 3166-2
+         data/processed/region_panel/region_year_panel.csv  ISO x year: patents (domestic, by holder type, attorney-free), Western
                                            co-invention, publications (all/small teams, coalition, China)
-         data/clean/region_exposure.csv    ISO: exposure measures (pre-2022) and pre/post changes
-         data/clean/region_exposure_2014.csv  same for 2014: pre 2011-13 (articles 2012-13, OpenAlex series
+         data/processed/region_panel/region_exposure.csv    ISO: exposure measures (pre-2022) and pre/post changes
+         data/processed/region_panel/region_exposure_2014.csv  same for 2014: pre 2011-13 (articles 2012-13, OpenAlex series
                                            starts 2012), post 2014-16, co-invention 2006-13
 Rules: P7 patents dated by application (filing) year, domestic only, individual mass filers dropped;
        2022: pre = 2019-21, post = 2022-24 (2025 filings still incomplete because of the grant lag);
@@ -61,10 +61,10 @@ def main():
     assert regions.iso.is_unique and len(regions) == 83
     cw = pd.DataFrame({"openalex_region": list(OA), "iso": list(OA.values())})
     assert cw.iso.isin(regions.iso).all() and cw.iso.is_unique
-    cw.to_csv(CLEAN / "region_crosswalk.csv", index=False)
+    cw.to_csv(ROOT / "data" / "processed" / "region_panel" / "region_crosswalk.csv", index=False)
 
     # patents
-    p = pd.read_parquet(CLEAN / "rospatent_inventions.parquet")
+    p = pd.read_parquet(ROOT / "data" / "clean" / "rospatent" / "rospatent_inventions.parquet")
     p = p[p.app_year.between(2006, 2025) & p.region.isin(regions.iso)].copy()
     p["app_year"] = p.app_year.astype(int)
     dom = p[p.domestic & ~p.mass_filer]
@@ -91,7 +91,7 @@ def main():
     oa = oa.pivot_table(index=["iso", "year"], columns="partner", values="works", aggfunc="sum").add_prefix("pub_")
     pan = pan.merge(oa.reset_index(), on=["iso", "year"], how="left")
     pan = pan.merge(regions[["iso", "name_en", "district", "pop"]], on="iso")
-    pan.to_csv(CLEAN / "region_year_panel.csv", index=False)
+    pan.to_csv(ROOT / "data" / "processed" / "region_panel" / "region_year_panel.csv", index=False)
 
     print(pan.groupby("year")[["pat", "pat_firm", "pat_university", "pub_all_small", "ruh_west_link"]].sum())
     for ep, (PRE, POST, LINK, suf) in EPISODES.items():
@@ -125,7 +125,7 @@ def exposure(pan, regions, PRE, POST, LINK, suf, ep):
         ex["dlog_" + c] = np.where(ok, np.log(ex[c + "_post"] / ex[c + "_pre"]) - nat, np.nan)
         ex["share_pre_" + c] = ex[c + "_pre"] / ex[c + "_pre"].sum()
         ex["share_post_" + c] = ex[c + "_post"] / ex[c + "_post"].sum()
-    ex.reset_index().to_csv(CLEAN / f"region_exposure{suf}.csv", index=False)
+    ex.reset_index().to_csv(ROOT / "data" / "processed" / "region_panel" / f"region_exposure{suf}.csv", index=False)
 
     print(ex[["x_science", "x_invent", "dlog_pat", "dlog_pat_firm", "dlog_pub_all_small"]].describe().round(3))
     print(ex[["x_science", "x_invent", "dlog_pat", "dlog_pat_firm", "dlog_pub_all_small", "pat_pc_pre"]]

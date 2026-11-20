@@ -9,9 +9,9 @@
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261124)
 B <- 499; R <- 1000
-pat <- read_csv(here("data", "clean", "industry_year_patents.csv"), show_col_types = FALSE)
-cov <- read_csv(here("data", "clean", "industry_ban_coverage.csv"), show_col_types = FALSE)
-inp <- read_csv(here("data", "clean", "industry_input_exposure.csv"), show_col_types = FALSE)
+pat <- read_csv(here("data", "processed", "industry_panel", "industry_year_patents.csv"), show_col_types = FALSE)
+cov <- read_csv(here("data", "processed", "industry_panel", "industry_ban_coverage.csv"), show_col_types = FALSE)
+inp <- read_csv(here("data", "processed", "input_exposure", "industry_input_exposure.csv"), show_col_types = FALSE)
 keep <- pat %>% filter(between(year, 2015, 2019)) %>% group_by(nace3) %>% summarise(pre = mean(n)) %>% filter(pre >= 10)
 d0 <- pat %>% filter(between(year, 2015, 2025)) %>% complete(nace3, year = 2015:2025, fill = list(n = 0)) %>%
   inner_join(cov %>% filter(west_imports > 0, nace3 %in% keep$nace3), by = "nace3") %>%

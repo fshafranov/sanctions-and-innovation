@@ -13,9 +13,9 @@
 # Output: empirics/results/tables/inventor_field_es.csv, inventor_field_pooled.csv, inventor_cont_es.csv,
 #         inventor_cont_pooled.csv; fig63_inventor_margins, fig64_inventor_continuation
 source(here::here("empirics", "scripts", "00_setup.R"))
-iy <- read_csv(here("data", "clean", "inventor_year_field.csv.gz"), show_col_types = FALSE)
-fa <- read_csv(here("data", "clean", "inventor_app_field_year.csv"), show_col_types = FALSE)
-ban <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+iy <- read_csv(here("data", "processed", "inventor_panel", "inventor_year_field.csv.gz"), show_col_types = FALSE)
+fa <- read_csv(here("data", "processed", "inventor_panel", "inventor_app_field_year.csv"), show_col_types = FALSE)
+ban <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", event == "eu2022", year == 2023, map == "industry") %>%
   transmute(field, ban = as.numeric(scale(coverage)))
 

@@ -10,7 +10,7 @@
 #         fig35_patents_holder_es, fig36_patents_region_es
 source(here::here("empirics", "scripts", "00_setup.R"))
 
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", event == "eu2022", year == 2023)
 ban <- function(mp) cov %>% filter(map == mp) %>% transmute(field, ban = as.numeric(scale(coverage)))
 sector_of <- function(f) cut(f, c(0, 8, 13, 24, 32, 35),
@@ -19,7 +19,7 @@ YEARS <- 2015:2025
 tidy_es <- function(m, ...) broom::tidy(m, conf.int = TRUE) %>% mutate(...)
 
 # ---- (A) holder types ------------------------------------------------------------------------------------------
-hol <- read_csv(here("data", "clean", "ru_domestic_field_year_holder.csv"), show_col_types = FALSE) %>%
+hol <- read_csv(here("data", "processed", "field_holder_panel", "ru_domestic_field_year_holder.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS, holder_type %in% c("firm", "university", "research", "individual")) %>%
   complete(field = 1:35, year = YEARS, holder_type, fill = list(n = 0))
 
@@ -71,7 +71,7 @@ ggsave(file.path(FIG_DIR, "fig35_patents_holder_es.pdf"), p, width = 11, height 
 ggsave(file.path(FIG_DIR, "fig35_patents_holder_es.png"), p, width = 11, height = 4.5, dpi = 150)
 
 # ---- (B) region x field x year ---------------------------------------------------------------------------------
-reg <- read_csv(here("data", "clean", "ru_domestic_region_field_year_imputed.csv"), show_col_types = FALSE) %>%
+reg <- read_csv(here("data", "processed", "title_fields", "ru_domestic_region_field_year_imputed.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS, !is.na(region)) %>% group_by(region, field, year) %>%
   summarise(n = sum(n_top), .groups = "drop") %>%
   complete(region, field = 1:35, year = YEARS, fill = list(n = 0))

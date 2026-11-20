@@ -4,7 +4,7 @@ substitution design, notes/09_import_exposure.md).
 Input : data/raw/baci/BACI_HS07_V202601.zip  (cepii.fr, release Jan 2026; downloaded 12 Nov 2026; one CSV per year
         with t (year), i (exporter), j (importer), k (HS6), v (value, thousand current US$), q (tonnes);
         reconciled from importer and exporter reports, so Russia's imports after 2021 come from partners' reports)
-Output: data/clean/ru_imports_hs6.parquet  year, hs6, group, v   (group: west, china, other)
+Output: data/processed/ru_imports/ru_imports_hs6.parquet  year, hs6, group, v   (group: west, china, other)
 
 Rules (I1-I2 in notes/data_decisions.md)
   I1 west = the 2022 sanctions coalition, same list as data/scripts/cleaning/clean_rospatent.py (EU27, US, GB, CA,
@@ -20,7 +20,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[3]
 ZIP = ROOT / "data" / "raw" / "baci" / "BACI_HS07_V202601.zip"
-OUT = ROOT / "data" / "clean" / "ru_imports_hs6.parquet"
+OUT = ROOT / "data" / "processed" / "ru_imports" / "ru_imports_hs6.parquet"
 
 EU27 = "AT BE BG HR CY CZ DK EE FI FR DE GR HU IE IT LV LT LU MT NL PL PT RO SK SI ES SE".split()
 WEST_ISO2 = set(EU27 + "US GB CA JP KR SG AU NZ CH NO IS LI".split())

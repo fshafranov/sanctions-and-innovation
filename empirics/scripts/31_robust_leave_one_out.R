@@ -5,10 +5,10 @@
 #      fine chemistry), the 5 largest fields, telecom/digital/semiconductors/computers (electronics core)
 # Output: empirics/results/tables/leave_one_out.csv; fig47_leave_one_out
 source(here::here("empirics", "scripts", "00_setup.R"))
-pat <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
+pat <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
   filter(between(year, 2015, 2025))
-nm <- read_csv(here("data", "clean", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE) %>% distinct(field, field_en)
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+nm <- read_csv(here("data", "processed", "title_fields", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE) %>% distinct(field, field_en)
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", event == "eu2022", year == 2023)
 est <- function(mp, drop = integer(0)) {
   b <- cov %>% filter(map == mp, !field %in% drop) %>% transmute(field, ban = as.numeric(scale(coverage)))

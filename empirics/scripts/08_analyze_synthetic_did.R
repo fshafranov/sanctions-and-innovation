@@ -20,7 +20,7 @@
 # Outcomes: log(1+resident patents), log(1+non-resident patents), log OpenAlex articles, log WB articles,
 #   internationally co-authored share (pp).
 # Output: empirics/results/tables/sdid_estimates.csv, sdid_paths.csv, sdid_weights.csv, sdid_yearly.csv; figures fig20-22;
-#   data/clean/sdid_case_data.csv (the balanced case panels, re-estimated with the Python synthdid package in 12c).
+#   data/processed/sdid_cases/sdid_case_data.csv (the balanced case panels, re-estimated with the Python synthdid package in 12c).
 source(here::here("empirics", "scripts", "00_setup.R"))
 suppressPackageStartupMessages(library(quadprog))
 
@@ -78,7 +78,7 @@ run_case <- function(cs, outcome) {
 out <- map(CASES, function(cs) map(names(OUTS), ~ run_case(cs, .x))) %>% flatten() %>% compact()
 est <- map_dfr(out, "est") %>% mutate(lo = tau - 1.96 * se_placebo, hi = tau + 1.96 * se_placebo)
 paths <- map_dfr(out, "paths"); wts <- map_dfr(out, "weights")
-write_csv(map_dfr(out, "data"), here("data", "clean", "sdid_case_data.csv"))   # input for 12c (Python synthdid)
+write_csv(map_dfr(out, "data"), here("data", "processed", "sdid_cases", "sdid_case_data.csv"))   # input for 12c (Python synthdid)
 write_csv(est, file.path(TAB_DIR, "sdid_estimates.csv"))
 write_csv(paths, file.path(TAB_DIR, "sdid_paths.csv"))
 write_csv(wts, file.path(TAB_DIR, "sdid_weights.csv"))

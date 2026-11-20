@@ -19,8 +19,8 @@ Mass filers (D2, notes/data_decisions.md): individuals with >= 1,000 invention g
 Field assignment (D1): every IPC code of the document mapped to a field: main group first (concordance codes
   like 'H04N   5/%'), otherwise subclass ('F21H%'); fractional counting over the distinct fields of a document
   (as WIPO does). Documents without IPC are dropped (0% of grants/UMs, 11% of applications).
-Output: data/clean/ru_patents_field_year.csv  (field, field_en, year, type, n)
-        data/clean/ru_patents_e21b_year.csv   (year, type, n_e21b): documents with any E21B code (oil and gas
+Output: data/processed/ru_patents_google/ru_patents_field_year.csv  (field, field_en, year, type, n)
+        data/processed/ru_patents_google/ru_patents_e21b_year.csv   (year, type, n_e21b): documents with any E21B code (oil and gas
         drilling, the target of the 2014 US/EU oil-technology export controls), whole counts
 """
 import re
@@ -93,7 +93,7 @@ def main():
     d["fields"] = d.ipc.apply(fields)
     d["e21b"] = d.ipc.apply(lambda cs: any(c.startswith("E21B") for c in cs))
     e = d.groupby(["year", "type"]).e21b.sum().rename("n_e21b").reset_index()
-    e.to_csv(CLEAN / "ru_patents_e21b_year.csv", index=False)
+    e.to_csv(ROOT / "data" / "processed" / "ru_patents_google" / "ru_patents_e21b_year.csv", index=False)
 
     d = d[d.fields.str.len() > 0]
     d["w"] = 1 / d.fields.str.len()
@@ -103,7 +103,7 @@ def main():
                                       names=["field", "year", "type"])
     p = p.set_index(["field", "year", "type"]).reindex(full, fill_value=0).reset_index()
     p["field_en"] = p.field.map(names)
-    p.to_csv(CLEAN / "ru_patents_field_year.csv", index=False)
+    p.to_csv(ROOT / "data" / "processed" / "ru_patents_google" / "ru_patents_field_year.csv", index=False)
     print(p.groupby(["type"]).n.sum().round(0).to_dict())
     print(p[p.year.between(2010, 2021)].pivot_table(index="year", columns="type", values="n", aggfunc="sum").round(0))
 

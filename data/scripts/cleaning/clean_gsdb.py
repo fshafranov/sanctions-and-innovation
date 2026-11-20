@@ -2,8 +2,8 @@
 
 Input:  data/raw/gsdb/GSDB_V4.csv (case level: case_id, sanctioned_state, sanctioning_state, begin, end, type dummies)
         data/raw/wb/wb_countries.csv (target universe: World Bank economies, aggregates dropped)
-Output: data/clean/gsdb_cases_long.csv   one row per case x target country (after splitting lists)
-        data/clean/gsdb_country_year.csv one row per ISO3 x year (1985-2023), zeros where no case
+Output: data/clean/gsdb/gsdb_cases_long.csv   one row per case x target country (after splitting lists)
+        data/clean/gsdb/gsdb_country_year.csv one row per ISO3 x year (1985-2023), zeros where no case
 
 Decisions (notes/data_decisions.md, G1-G7):
   G1 multi-target rows are split, one case per listed country (user, 11 Nov 2026)
@@ -27,7 +27,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[3]
 RAW = ROOT / "data" / "raw"
-OUT = ROOT / "data" / "clean"
+OUT = ROOT / "data" / "clean" / "gsdb"
 OUT.mkdir(parents=True, exist_ok=True)
 
 WESTERN = {"United States", "EU", "UN", "United Kingdom", "Canada", "Japan", "Australia", "Switzerland", "Norway"}

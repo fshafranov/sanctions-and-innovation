@@ -4,7 +4,7 @@
 # Output: fig25_title_classifier_fields.{pdf,png}
 source(here::here("empirics", "scripts", "00_setup.R"))
 
-fy <- read_csv(here("data", "clean", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE) %>%
+fy <- read_csv(here("data", "processed", "title_fields", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE) %>%
   filter(year >= 2010, year <= 2025)
 
 d <- bind_rows(

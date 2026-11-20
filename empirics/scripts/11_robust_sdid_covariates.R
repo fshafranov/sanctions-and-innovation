@@ -13,7 +13,7 @@
 #   matched   donors restricted to the half closest to the sanctioned country in standardised covariate space
 #             (Euclidean distance), then SDID on the outcome
 # Balance table: sanctioned country vs simple donor mean vs SDID-weighted donors (baseline weights), per covariate.
-# Inputs: data/clean/sdid_case_data.csv (from 12), data/clean/covariates_country_year.csv (from 13), panel.
+# Inputs: data/processed/sdid_cases/sdid_case_data.csv (from 12), data/clean/wb/covariates_country_year.csv (from 13), panel.
 # Output: empirics/results/tables/sdid_covariates.csv, sdid_balance.csv; figures fig23_sdid_covariates, fig24_sdid_balance.
 source(here::here("empirics", "scripts", "00_setup.R"))
 source(here::here("empirics", "scripts", "sdid_functions.R"))
@@ -28,8 +28,8 @@ CORE <- c(lgdppc = "log GDP per capita", lpop = "log population", oilgas = "Oil 
           urban_share = "Urban population, %")
 EXT <- c(CORE, tertiary_enrol = "Tertiary enrolment, %", rd_gdp = "R&D, % GDP")
 
-cases <- read_csv(here("data", "clean", "sdid_case_data.csv"), show_col_types = FALSE)
-cov <- read_csv(here("data", "clean", "covariates_country_year.csv"), show_col_types = FALSE) %>%
+cases <- read_csv(here("data", "processed", "sdid_cases", "sdid_case_data.csv"), show_col_types = FALSE)
+cov <- read_csv(here("data", "clean", "wb", "covariates_country_year.csv"), show_col_types = FALSE) %>%
   full_join(read_panel() %>% select(iso3, year, gdppc, pop, rd_gdp), by = c("iso3", "year")) %>%
   mutate(lgdppc = log(gdppc), lpop = log(pop), oilgas = oil_rents + gas_rents)
 

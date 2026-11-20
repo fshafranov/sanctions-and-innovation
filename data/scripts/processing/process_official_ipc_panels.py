@@ -8,7 +8,7 @@ notes/data_decisions.md).
      fields (n_frac, WIPO convention) and whole count in the field of the first-listed IPC code (n_first);
      subclass = distinct subclasses, fractional (n_frac) and first-listed (n_first).
 Same population as the predicted panels: domestic, mass filers dropped, by filing year (register).
-Output: data/clean/ru_domestic_field_year_official.csv, ru_domestic_subclass_year_official.csv,
+Output: data/processed/official_ipc_panels/ru_domestic_field_year_official.csv, ru_domestic_subclass_year_official.csv,
         ru_domestic_field_year_holder_official.csv, ru_domestic_subclass_holder_year_official.csv
 """
 import importlib.util
@@ -33,10 +33,10 @@ def field_of(code):
 
 
 def main():
-    reg = pd.read_parquet(CLEAN / "rospatent_inventions.parquet",
+    reg = pd.read_parquet(ROOT / "data" / "clean" / "rospatent" / "rospatent_inventions.parquet",
                           columns=["reg_no", "app_year", "domestic", "mass_filer", "holder_type"])
     reg["reg_no"] = reg.reg_no.astype(str)
-    api = pd.read_parquet(CLEAN / "rospatent_api_biblio.parquet", columns=["reg_no", "ipc"])
+    api = pd.read_parquet(ROOT / "data" / "clean" / "rospatent_api" / "rospatent_api_biblio.parquet", columns=["reg_no", "ipc"])
     g = pd.read_parquet(RAW / "bigquery" / "ru_publications.parquet", columns=["publication_number", "ipc"])
     g = g[g.publication_number.str.match(r"RU-\d+-C")].copy()
     g["reg_no"] = g.publication_number.str.split("-").str[1].astype(int).astype(str)
@@ -61,17 +61,17 @@ def main():
         first = d.dropna(subset=[unit_first]).groupby([unit_first, "app_year"] + keys).size().rename("n_first")
         first.index.names = [unit_list, "app_year"] + keys
         out = pd.concat([frac, first], axis=1).fillna(0).reset_index().rename(columns={"app_year": "year"})
-        out.to_csv(CLEAN / name, index=False)
+        out.to_csv(ROOT / "data" / "processed" / "official_ipc_panels" / name, index=False)
         return out
 
     f = panel("fields", "f_first", [], "ru_domestic_field_year_official.csv").rename(columns={"fields": "field"})
-    f.rename(columns={"fields": "field"}).to_csv(CLEAN / "ru_domestic_field_year_official.csv", index=False)
+    f.rename(columns={"fields": "field"}).to_csv(ROOT / "data" / "processed" / "official_ipc_panels" / "ru_domestic_field_year_official.csv", index=False)
     s = panel("subs", "s_first", [], "ru_domestic_subclass_year_official.csv")
-    s.rename(columns={"subs": "subclass"}).to_csv(CLEAN / "ru_domestic_subclass_year_official.csv", index=False)
+    s.rename(columns={"subs": "subclass"}).to_csv(ROOT / "data" / "processed" / "official_ipc_panels" / "ru_domestic_subclass_year_official.csv", index=False)
     fh = panel("fields", "f_first", ["holder_type"], "ru_domestic_field_year_holder_official.csv")
-    fh.rename(columns={"fields": "field"}).to_csv(CLEAN / "ru_domestic_field_year_holder_official.csv", index=False)
+    fh.rename(columns={"fields": "field"}).to_csv(ROOT / "data" / "processed" / "official_ipc_panels" / "ru_domestic_field_year_holder_official.csv", index=False)
     sh = panel("subs", "s_first", ["holder_type"], "ru_domestic_subclass_holder_year_official.csv")
-    sh.rename(columns={"subs": "subclass"}).to_csv(CLEAN / "ru_domestic_subclass_holder_year_official.csv", index=False)
+    sh.rename(columns={"subs": "subclass"}).to_csv(ROOT / "data" / "processed" / "official_ipc_panels" / "ru_domestic_subclass_holder_year_official.csv", index=False)
     print(f.groupby("year")[["n_frac", "n_first"]].sum().loc[2010:].round(0).to_string())
 
 

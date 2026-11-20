@@ -67,7 +67,7 @@ def main():
     dep["dep_frontier_z"] = (dep.dep_frontier - dep.dep_frontier.mean()) / dep.dep_frontier.std()
     names = pd.read_excel(RAW / "wipo" / "unzipped" / "patent_technology_field_names.xlsx")
     dep = dep.merge(names[["class_id", "field_en"]].rename(columns={"class_id": "field"}), on="field")
-    dep.to_csv(CLEAN / "field_dependence.csv", index=False)
+    dep.to_csv(ROOT / "data" / "processed" / "field_panel_2014" / "field_dependence.csv", index=False)
     print(dep.sort_values("dep_frontier")[["field", "field_en", "dep_frontier"]].round(3).to_string(index=False))
 
     # --- domestic panel (WIPO publications, residents at own office) -------------------------------------
@@ -81,7 +81,7 @@ def main():
     keep = set(pre_mean[pre_mean >= 500].index) - {"UKR"}
     dom = complete(w[w.iso3.isin(keep)], "iso3", (2000, 2021))
     dom["sender"] = dom.iso3.isin(SENDERS_2014).astype(int)
-    dom.to_csv(CLEAN / "field_panel_domestic.csv", index=False)
+    dom.to_csv(ROOT / "data" / "processed" / "field_panel_2014" / "field_panel_domestic.csv", index=False)
     print(f"\ndomestic panel: {dom.iso3.nunique()} countries ({sorted(keep)})")
 
     # --- PCT panel by inventor country ---------------------------------------------------------------------
@@ -90,7 +90,7 @@ def main():
     keep = set(pre_mean[pre_mean >= 100].index) - {"UKR"}
     pp = complete(pct[pct.iso3.isin(keep)], "iso3", (2000, 2022))
     pp["sender"] = pp.iso3.isin(SENDERS_2014).astype(int)
-    pp.to_csv(CLEAN / "field_panel_pct.csv", index=False)
+    pp.to_csv(ROOT / "data" / "processed" / "field_panel_2014" / "field_panel_pct.csv", index=False)
     print(f"PCT panel: {pp.iso3.nunique()} countries; RUS in panel: {'RUS' in keep}")
 
 

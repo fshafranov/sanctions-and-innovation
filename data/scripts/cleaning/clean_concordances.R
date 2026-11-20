@@ -3,7 +3,8 @@
 #   concord_hs22_hs07.csv : HS 2022 6-digit -> HS 2007 6-digit (TN VED product names are HS 2022 based; BACI is HS07)
 #   concord_hs_isic4.csv  : HS 6-digit (all vintages pooled, as in the package) -> ISIC Rev.4 4-digit
 suppressPackageStartupMessages(library(concordance))
-out <- here::here("data", "clean")
+out <- here::here("data", "clean", "concordances")
+dir.create(out, showWarnings = FALSE, recursive = TRUE)
 data(hs6_hs3); data(hs_isic4)
 write.csv(unique(hs6_hs3[, c("HS6_6d", "HS3_6d")]), file.path(out, "concord_hs22_hs07.csv"), row.names = FALSE)
 write.csv(unique(hs_isic4[, c("HS_6d", "ISIC4_4d")]), file.path(out, "concord_hs_isic4.csv"), row.names = FALSE)

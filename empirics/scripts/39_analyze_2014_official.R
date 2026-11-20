@@ -8,8 +8,8 @@
 #      Ban x 1[2014-2021] and Ban x 1[2022+], base 2005-2013
 # Output: empirics/results/tables/patents_2014_official.csv, patents_2014_official_pooled.csv; fig55_2014_official
 source(here::here("empirics", "scripts", "00_setup.R"))
-pat <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE)
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
+pat <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_field_year_official.csv"), show_col_types = FALSE)
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
 expo <- function(ev, yr, mp) cov %>% filter(event == ev, year == yr, map == mp) %>% transmute(field, ban = as.numeric(scale(coverage)))
 specs <- tribble(~label, ~ev, ~yr, ~from, ~to,
                  "A. 2014 oil-equipment list (2005-2021)", "oil2014", 2014, 2005, 2021,

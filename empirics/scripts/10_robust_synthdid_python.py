@@ -10,7 +10,7 @@ Python, so it is installed WITHOUT its pins in a separate environment:
     uv venv --python 3.13 <env>; VIRTUAL_ENV=<env> uv pip install numpy pandas scipy matplotlib statsmodels
     VIRTUAL_ENV=<env> uv pip install --no-deps synthdid==0.10.1
     <env>/bin/python empirics/scripts/10_robust_synthdid_python.py
-Input : data/clean/sdid_case_data.csv.  Output: empirics/results/tables/sdid_python_vs_r.csv
+Input : data/processed/sdid_cases/sdid_case_data.csv.  Output: empirics/results/tables/sdid_python_vs_r.csv
 """
 from pathlib import Path
 
@@ -21,7 +21,7 @@ from synthdid.synthdid import Synthdid
 ROOT = Path(__file__).resolve().parents[2]
 np.random.seed(20261112)
 
-d = pd.read_csv(ROOT / "data" / "clean" / "sdid_case_data.csv")
+d = pd.read_csv(ROOT / "data" / "processed" / "sdid_cases" / "sdid_case_data.csv")
 r = pd.read_csv(ROOT / "empirics" / "results" / "tables" / "sdid_estimates.csv")
 rows = []
 for (case, outcome), g in d.groupby(["case", "outcome"], sort=False):

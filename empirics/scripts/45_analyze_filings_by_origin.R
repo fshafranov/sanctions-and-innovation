@@ -13,7 +13,7 @@
 source(here::here("empirics", "scripts", "00_setup.R"))
 YEARS <- 2015:2024
 
-tot <- read_csv(here("data", "clean", "ru_filings_year_totals.csv"), show_col_types = FALSE)
+tot <- read_csv(here("data", "processed", "filings_panel", "ru_filings_year_totals.csv"), show_col_types = FALSE)
 wb <- read_panel() %>% filter(iso3 == "RUS", year %in% 2012:2024) %>% select(year, pat_res, pat_nres)
 bench <- tot %>% group_by(year, origin) %>% summarise(n = sum(n), n_pct = sum(n[pct]), .groups = "drop") %>%
   pivot_wider(names_from = origin, values_from = c(n, n_pct)) %>% inner_join(wb, by = "year") %>%
@@ -21,10 +21,10 @@ bench <- tot %>% group_by(year, origin) %>% summarise(n = sum(n), n_pct = sum(n[
 write_csv(bench, file.path(TAB_DIR, "filings_benchmark.csv"))
 print(bench %>% mutate(across(starts_with("ratio"), ~ round(., 2))), width = 200)
 
-fp <- read_csv(here("data", "clean", "ru_filings_field_year_origin.csv"), show_col_types = FALSE)
-gp <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
+fp <- read_csv(here("data", "processed", "filings_panel", "ru_filings_field_year_origin.csv"), show_col_types = FALSE)
+gp <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
   transmute(field, year, y = n_frac)
-fban <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+fban <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", event == "eu2022", year == 2023, map == "industry") %>%
   transmute(field, ban = as.numeric(scale(coverage)))
 

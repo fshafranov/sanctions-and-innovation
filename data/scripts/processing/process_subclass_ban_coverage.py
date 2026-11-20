@@ -8,11 +8,11 @@ Two product -> subclass maps, as for fields (M1):
 Coverage (C1 at subclass level): share of 2019-21 Western manufactured imports (HS 28-97) mapped to the subclass
 that is banned at the end of year y (eu2022 list), y = 2022..2026. Plus Western/Chinese imports by subclass x year.
 
-Input : data/clean/eu_ban_hs07.csv, ru_imports_hs6.parquet, concord_hs_isic4.csv, concord_hs22_hs07.csv,
+Input : data/clean/eu_sanctions/eu_ban_hs07.csv, ru_imports_hs6.parquet, concord_hs_isic4.csv, concord_hs22_hs07.csv,
         title_subclass_model.joblib (14b), data/raw/tnved/tnved_tws.xlsx, Dorner-Harhoff ipc4 tables
 Output: data/clean/hs07_subclass_{text,industry}.csv  (hs07, subclass, w; w sums to 1 per hs07)
-        data/clean/subclass_ban_coverage.csv          map, year, subclass, coverage, coverage_noex, west_pre
-        data/clean/subclass_imports_year.csv          map, subclass, year, west, china
+        data/processed/subclass_ban_coverage/subclass_ban_coverage.csv          map, year, subclass, coverage, coverage_noex, west_pre
+        data/processed/subclass_ban_coverage/subclass_imports_year.csv          map, subclass, year, west, china
 """
 import __main__
 import importlib.util
@@ -54,7 +54,7 @@ def tnved_names():
 
 def text_map(top=10):
     desc = tnved_names()
-    m = joblib.load(CLEAN / "title_subclass_model.joblib")
+    m = joblib.load(ROOT / "data" / "processed" / "title_subclasses" / "title_subclass_model.joblib")
     P = m.proba(desc.values)
     cls = m.clf.classes_
     idx = np.argsort(-P, axis=1)[:, :top]  # keep the 10 most likely subclasses per product, renormalised
@@ -62,7 +62,7 @@ def text_map(top=10):
     p = pd.DataFrame(rows, columns=["hs22", "subclass", "p"])
     for code in ["851762", "300490", "854231", "870323", "845710"]:
         print("  text", code, p[p.hs22 == code].nlargest(3, "p")[["subclass", "p"]].round(2).values.tolist())
-    c = pd.read_csv(CLEAN / "concord_hs22_hs07.csv", dtype=str).rename(columns={"HS6_6d": "hs22", "HS3_6d": "hs07"})
+    c = pd.read_csv(ROOT / "data" / "clean" / "concordances" / "concord_hs22_hs07.csv", dtype=str).rename(columns={"HS6_6d": "hs22", "HS3_6d": "hs07"})
     c["k"] = 1 / c.groupby("hs22").hs07.transform("size")
     x = p.merge(c, on="hs22")
     x["w"] = x.p * x.k
@@ -80,7 +80,7 @@ def industry_map():
         v["subclass"] = v.f.str.replace("ipc4_", "", regex=False)
         return v[v.w_nf > 0][["nace", "subclass", "w_nf"]]
     v3, v2 = dh(3), dh(2)
-    c = pd.read_csv(CLEAN / "concord_hs_isic4.csv", dtype=str).rename(columns={"HS_6d": "hs07", "ISIC4_4d": "isic4"})
+    c = pd.read_csv(ROOT / "data" / "clean" / "concordances" / "concord_hs_isic4.csv", dtype=str).rename(columns={"HS_6d": "hs07", "ISIC4_4d": "isic4"})
     c = c[c.isic4.str.fullmatch(r"\d{4}", na=False)].drop_duplicates()
     c["k"] = 1 / c.groupby("hs07").isic4.transform("size")
     c["nace"] = c.isic4.str[:3].astype(int)
@@ -99,11 +99,11 @@ def main():
     maps = {"text": text_map(), "industry": industry_map()}
     for k, v in maps.items():
         print(f"{k} map: {v.hs07.nunique()} HS07 codes, {v.subclass.nunique()} subclasses")
-        v.to_csv(CLEAN / f"hs07_subclass_{k}.csv", index=False)
+        v.to_csv(ROOT / "data" / "processed" / "subclass_ban_coverage" / f"hs07_subclass_{k}.csv", index=False)
 
-    ban = pd.read_csv(CLEAN / "eu_ban_hs07.csv", dtype={"hs07": str, "version": str})
+    ban = pd.read_csv(ROOT / "data" / "clean" / "eu_sanctions" / "eu_ban_hs07.csv", dtype={"hs07": str, "version": str})
     ban = ban[ban.list == "eu2022"]
-    imp = pd.read_parquet(CLEAN / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
+    imp = pd.read_parquet(ROOT / "data" / "processed" / "ru_imports" / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
     imp = imp[imp.hs07.str[:2].astype(int).between(28, 97)]
     W = imp[(imp.group == "west") & imp.year.between(2019, 2021)].groupby("hs07").v.mean().rename("W").reset_index()
 
@@ -133,8 +133,8 @@ def main():
     modal = grp.groupby("subclass").field.agg(lambda z: z.value_counts().index[0])
     cov["field"] = cov.subclass.map(by_sub).fillna(cov.subclass.map(modal))
     print("subclasses without a WIPO field:", cov[cov.field.isna()].subclass.nunique())
-    cov.to_csv(CLEAN / "subclass_ban_coverage.csv", index=False)
-    pd.concat(flows).to_csv(CLEAN / "subclass_imports_year.csv", index=False)
+    cov.to_csv(ROOT / "data" / "processed" / "subclass_ban_coverage" / "subclass_ban_coverage.csv", index=False)
+    pd.concat(flows).to_csv(ROOT / "data" / "processed" / "subclass_ban_coverage" / "subclass_imports_year.csv", index=False)
     s = cov[cov.year == 2023].pivot(index="subclass", columns="map", values="coverage")
     print(s.describe().round(3))
     print("corr text vs industry (2023):", round(s.text.corr(s.industry), 2))

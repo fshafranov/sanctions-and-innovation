@@ -8,9 +8,9 @@
 #  (5) dose-bin event study: quartiles of coverage vs the lowest quartile (fig44): parallel trends across doses
 # Output: empirics/results/tables/pretrend_tests.csv; fig43_placebo_scatter, fig44_dose_bins_es
 source(here::here("empirics", "scripts", "00_setup.R"))
-pat <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
+pat <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
   filter(between(year, 2015, 2025))
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", event == "eu2022", year == 2023)
 out <- list()
 for (mp in c("industry", "text")) {

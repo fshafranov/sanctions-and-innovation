@@ -1,5 +1,5 @@
 # 10_region_maps.R: maps of Russian regions' exposure to the West and of changes in patents and papers after 2022
-# (Design D). Data: data/clean/region_exposure.csv, region_year_panel.csv (data/scripts/processing/process_region_panel.py);
+# (Design D). Data: data/processed/region_panel/region_exposure.csv, region_year_panel.csv (data/scripts/processing/process_region_panel.py);
 # boundaries: GADM 4.1 level 1 (data/raw/gadm; 83 regions, Crimea not included).
 # Exposure (pre-2022): X1 science = coalition co-authored share of small-team articles 2019-21;
 #                      X2 invention = share of Russian-holder patents filed 2012-21 with a coalition co-inventor or
@@ -41,7 +41,7 @@ EPISODES <- list(
        note = "Articles: OpenAlex indexing of Russian journals grew fast in these years; read with care."))
 
 run_episode <- function(E) {
-  ex <- read_csv(here("data", "clean", paste0("region_exposure", E$suf, ".csv")), show_col_types = FALSE)
+  ex <- read_csv(here("data", "processed", "region_panel", paste0("region_exposure", E$suf, ".csv")), show_col_types = FALSE)
   stopifnot(all(geo$iso %in% ex$iso))
   ex <- ex %>% mutate(name_en = str_replace_all(name_en, "\u2013", "-"), pat_pc_pre = na_if(pat_pc_pre, 0),
                 # thin bases are left blank: < 300 small-team articles, < 100 Russian-held patents in the exposure window
@@ -154,7 +154,7 @@ run_episode <- function(E) {
   save_figure(p15, paste0("fig15_region_exposure_vs_change", E$suf), 10, 9)
 
   # event study: region x year ------------------------------------------------------------------------------------
-  pan <- read_csv(here("data", "clean", "region_year_panel.csv"), show_col_types = FALSE) %>%
+  pan <- read_csv(here("data", "processed", "region_panel", "region_year_panel.csv"), show_col_types = FALSE) %>%
     filter(between(year, E$es_from, E$es_to)) %>%
     inner_join(ex %>% filter(pat_pre >= 30) %>% select(iso, x_science, x_invent), by = "iso") %>%
     mutate(xs = (x_science - mean(x_science, na.rm = TRUE)) / sd(x_science, na.rm = TRUE),

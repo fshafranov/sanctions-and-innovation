@@ -8,8 +8,8 @@
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261118)
 
-pat <- read_csv(here("data", "clean", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE)
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+pat <- read_csv(here("data", "processed", "title_fields", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE)
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", event == "eu2022", year == 2023)
 sector_of <- function(f) cut(f, c(0, 8, 13, 24, 32, 35),
                              labels = c("Electrical", "Instruments", "Chemistry", "Mechanical", "Other"))

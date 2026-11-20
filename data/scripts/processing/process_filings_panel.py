@@ -15,10 +15,10 @@ Rules (AP3-AP5 in notes/data_decisions.md)
   AP6 foreign applicant group from the first applicant's country (grants: first holder country): west = 2022
       coalition (as P3), china = CN/HK, other; ford = first applicant name starts with "Форд" (Ford Global
       Technologies, two spellings), flagged because its 2015-17 filing surge and 2018 exit drive a kink (note 16).
-Output: data/clean/ru_filings_year_totals.csv (year x origin x source x pct counts, for the benchmark),
-        data/clean/ru_filings_field_year_origin.csv (field x year x origin [x holder_type], n_frac),
-        data/clean/ru_filings_foreign_field_year_group.csv (foreign: field x year x grp x pct x ford, n_frac),
-        data/clean/ru_filings_foreign_applicant_year.csv (foreign applicants with >= 50 filings 2010-24:
+Output: data/processed/filings_panel/ru_filings_year_totals.csv (year x origin x source x pct counts, for the benchmark),
+        data/processed/filings_panel/ru_filings_field_year_origin.csv (field x year x origin [x holder_type], n_frac),
+        data/processed/filings_panel/ru_filings_foreign_field_year_group.csv (foreign: field x year x grp x pct x ford, n_frac),
+        data/processed/filings_panel/ru_filings_foreign_applicant_year.csv (foreign applicants with >= 50 filings 2010-24:
         applicant x year x field, n_frac)
 """
 import importlib.util
@@ -43,13 +43,13 @@ def norm_no(s):
 
 
 def main():
-    a = pd.read_parquet(CLEAN / "rospatent_api_apps.parquet")
+    a = pd.read_parquet(ROOT / "data" / "clean" / "rospatent_api" / "rospatent_api_apps.parquet")
     a["key"] = norm_no(a.app_no)
-    reg = pd.read_parquet(CLEAN / "rospatent_inventions.parquet",
+    reg = pd.read_parquet(ROOT / "data" / "clean" / "rospatent" / "rospatent_inventions.parquet",
                           columns=["reg_no", "app_no", "app_year", "domestic", "holder_type", "holder1", "pct_no",
                                    "holder_cc"])
     reg["reg_no"], reg["key"] = reg.reg_no.astype(str), norm_no(reg.app_no)
-    api = pd.read_parquet(CLEAN / "rospatent_api_biblio.parquet", columns=["reg_no", "ipc"])
+    api = pd.read_parquet(ROOT / "data" / "clean" / "rospatent_api" / "rospatent_api_biblio.parquet", columns=["reg_no", "ipc"])
     g = pd.read_parquet(RAW / "bigquery" / "ru_publications.parquet", columns=["publication_number", "ipc"])
     g = g[g.publication_number.str.match(r"RU-\d+-C")].copy()
     g["reg_no"] = g.publication_number.str.split("-").str[1].astype(int).astype(str)
@@ -75,7 +75,7 @@ def main():
 
     tot = d.groupby(["app_year", "origin", "source", "pct"]).size().rename("n").reset_index() \
         .rename(columns={"app_year": "year"})
-    tot.to_csv(CLEAN / "ru_filings_year_totals.csv", index=False)
+    tot.to_csv(ROOT / "data" / "processed" / "filings_panel" / "ru_filings_year_totals.csv", index=False)
     print(tot.pivot_table(index="year", columns=["origin", "source"], values="n", aggfunc="sum").fillna(0)
           .astype(int).loc[2014:].to_string())
 
@@ -87,7 +87,7 @@ def main():
     x["w"] = 1 / d.fields.str.len().reindex(x.index)
     p = x.groupby(["fields", "app_year", "origin", "holder_type", "source"]).w.sum().rename("n_frac").reset_index() \
         .rename(columns={"fields": "field", "app_year": "year"})
-    p.to_csv(CLEAN / "ru_filings_field_year_origin.csv", index=False)
+    p.to_csv(ROOT / "data" / "processed" / "filings_panel" / "ru_filings_field_year_origin.csv", index=False)
     print(p.groupby(["year", "origin"]).n_frac.sum().unstack().loc[2014:].round(0).to_string())
 
     # AP6 foreign groups and applicants
@@ -100,14 +100,14 @@ def main():
     x["w"] = 1 / fo.fields.str.len().reindex(x.index)
     q = x.groupby(["fields", "app_year", "grp", "pct", "ford"]).w.sum().rename("n_frac").reset_index() \
         .rename(columns={"fields": "field", "app_year": "year"})
-    q.to_csv(CLEAN / "ru_filings_foreign_field_year_group.csv", index=False)
+    q.to_csv(ROOT / "data" / "processed" / "filings_panel" / "ru_filings_foreign_field_year_group.csv", index=False)
     print(fo[fo.app_year <= 2024].groupby(["app_year", "grp"]).size().unstack().to_string())
     print("Ford filings by year:", fo[fo.ford].groupby("app_year").size().to_dict())
     big = fo[fo.app_year.between(2010, 2024)].holder1.value_counts()
     big = set(big[big >= 50].index)
     ap = x[x.holder1.isin(big) & x.app_year.between(2010, 2024)].groupby(["holder1", "app_year", "fields"]).w.sum() \
         .rename("n_frac").reset_index().rename(columns={"holder1": "applicant", "fields": "field", "app_year": "year"})
-    ap.to_csv(CLEAN / "ru_filings_foreign_applicant_year.csv", index=False)
+    ap.to_csv(ROOT / "data" / "processed" / "filings_panel" / "ru_filings_foreign_applicant_year.csv", index=False)
     print(f"{len(big)} foreign applicants with >= 50 filings 2010-24")
 
 

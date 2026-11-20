@@ -6,7 +6,7 @@ filed 2008-2017, 89% (2018), 70% (2020), 39% (2021), ~0% (2022+). See notes/08_t
 
 Input
   data/raw/rospatent/data-20261102-structure-20180828.csv   titles ("invention name"), registration numbers
-  data/clean/rospatent_inventions.parquet                   domestic flag, region, mass filers (script 11)
+  data/clean/rospatent/rospatent_inventions.parquet                   domestic flag, region, mass filers (script 11)
   data/raw/bigquery/ru_publications.parquet                 IPC codes of granted RU inventions (kind C*)
   data/raw/wipo/ipc_technology.xlsx                          IPC -> 35 WIPO fields (same rule as script 10, D1)
 
@@ -22,13 +22,13 @@ Model (T1-T4 in notes/data_decisions.md)
      (mostly 2021+) get the model trained on all labelled patents filed 2000-2021.
 
 Output
-  data/clean/rospatent_field_probs.parquet  reg_no, app_year, domestic, region, mass_filer, labelled, true fields,
+  data/processed/title_fields/rospatent_field_probs.parquet  reg_no, app_year, domestic, region, mass_filer, labelled, true fields,
                                             p_1..p_35 (predicted probabilities)
-  data/clean/ru_domestic_field_year_imputed.csv  field x filing year, domestic non-mass-filer inventions:
+  data/processed/title_fields/ru_domestic_field_year_imputed.csv  field x filing year, domestic non-mass-filer inventions:
             n_top (MAIN: each patent counted once in its top predicted field, T6),
             n_prob (sum of predicted probabilities; attenuates changes, check only),
             n_obs (IPC-based, where matched), n_hybrid (IPC where matched, predicted otherwise)
-  data/clean/ru_domestic_region_field_year_imputed.csv  region x field x filing year, n_top and n_hybrid
+  data/processed/title_fields/ru_domestic_region_field_year_imputed.csv  region x field x filing year, n_top and n_hybrid
   data/logs/14_title_classifier_validation.csv  accuracy table
 """
 import importlib.util
@@ -58,7 +58,7 @@ def load():
     t.columns = ["reg_no", "title"]
     t["title"] = (t.title.fillna("").str.replace(r"\s+", " ", regex=True).str.strip().str.lower()
                   .str.replace("ё", "е"))
-    r = pd.read_parquet(CLEAN / "rospatent_inventions.parquet",
+    r = pd.read_parquet(ROOT / "data" / "clean" / "rospatent" / "rospatent_inventions.parquet",
                         columns=["reg_no", "app_year", "domestic", "region", "mass_filer"])
     r = r.merge(t.drop_duplicates("reg_no"), on="reg_no", how="left")
     r = r[(r.app_year >= 2000) & (r.title.str.len() > 3)].copy()
@@ -180,7 +180,7 @@ def main():
         P[pos[te.index].values] = m.proba(te.title.values)
     print(f"[{time.time()-t0:.0f}s] final model: training on {len(lab21)} patents (2000-2021)")
     m = Model().fit(*expand(lab21))
-    joblib.dump(m, CLEAN / "title_field_model.joblib")  # reused for product names (16_hs_field_maps.py)
+    joblib.dump(m, ROOT / "data" / "processed" / "title_fields" / "title_field_model.joblib")  # reused for product names (16_hs_field_maps.py)
     rest = r[~r.index.isin(lab21.index)]
     P[pos[rest.index].values] = m.proba(rest.title.values)
     cls = [int(c) for c in m.clf.classes_]
@@ -189,7 +189,7 @@ def main():
     out = pd.concat([r.reset_index(drop=True), pd.DataFrame(P, columns=pc)], axis=1)
     out["fields"] = out.fields.apply(lambda s: list(s) if isinstance(s, list) else [])
     out["field_top"] = np.array(cls)[P.argmax(1)]
-    out.to_parquet(CLEAN / "rospatent_field_probs.parquet", index=False)
+    out.to_parquet(ROOT / "data" / "processed" / "title_fields" / "rospatent_field_probs.parquet", index=False)
 
     # panels: domestic, not mass filers
     d = out[out.domestic & ~out.mass_filer].copy()
@@ -216,13 +216,13 @@ def main():
     full = pd.MultiIndex.from_product([cls, sorted(d.app_year.unique())], names=k)
     fy = fy.reindex(full).fillna(0).reset_index().rename(columns={"app_year": "year"})
     fy["field_en"] = fy.field.map(names)
-    fy.to_csv(CLEAN / "ru_domestic_field_year_imputed.csv", index=False)
+    fy.to_csv(ROOT / "data" / "processed" / "title_fields" / "ru_domestic_field_year_imputed.csv", index=False)
 
     k = ["region", "field", "app_year"]
     rfy = pd.concat([agg(top.dropna(subset=["region"]), k, "n_top"),
                      agg(hyb.dropna(subset=["region"]), k, "n_hybrid")], axis=1).fillna(0)
     rfy.reset_index().rename(columns={"app_year": "year"}).to_csv(
-        CLEAN / "ru_domestic_region_field_year_imputed.csv", index=False)
+        ROOT / "data" / "processed" / "title_fields" / "ru_domestic_region_field_year_imputed.csv", index=False)
 
     # T6 check: within-field changes, predicted vs IPC-based, after field and year FE, 2010-2020 (out-of-fold)
     g = fy[fy.year.between(2010, 2020)].copy()

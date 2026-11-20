@@ -6,8 +6,8 @@
 # PPML, domestic invention patents (n_top), field and year FE, SEs clustered by field; both product->field maps.
 # Output: empirics/results/tables/patents_2014_eventstudy.csv, patents_2014_pooled.csv; fig32_patents_2014_eventstudy
 source(here::here("empirics", "scripts", "00_setup.R"))
-pat <- read_csv(here("data", "clean", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE)
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
+pat <- read_csv(here("data", "processed", "title_fields", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE)
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
 
 expo <- function(ev, yr, mp) cov %>% filter(event == ev, year == yr, map == mp) %>%
   transmute(field, ban = as.numeric(scale(coverage)))

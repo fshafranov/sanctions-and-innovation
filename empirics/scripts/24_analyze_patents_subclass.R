@@ -7,14 +7,14 @@
 # SEs clustered by subclass; conservative variant clustered by WIPO field (35). Randomization inference permutes
 # Ban_s across subclasses within field (1,000 draws).
 # Output: empirics/results/tables/patents_subclass.csv, patents_subclass_es.csv, patents_subclass_holder.csv;
-#         fig37_patents_subclass_es. Holder counts: data/clean/ru_domestic_subclass_holder_year.csv (from 14b output)
+#         fig37_patents_subclass_es. Holder counts: data/processed/title_subclasses/ru_domestic_subclass_holder_year.csv (from 14b output)
 source(here::here("empirics", "scripts", "00_setup.R"))
 set.seed(20261118)
 YEARS <- 2015:2025
 
-pat <- read_csv(here("data", "clean", "ru_domestic_subclass_year.csv"), show_col_types = FALSE) %>%
+pat <- read_csv(here("data", "processed", "title_subclasses", "ru_domestic_subclass_year.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS)
-cov <- read_csv(here("data", "clean", "subclass_ban_coverage.csv"), show_col_types = FALSE) %>%
+cov <- read_csv(here("data", "processed", "subclass_ban_coverage", "subclass_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(year == 2023) %>% select(map, subclass, field, coverage, coverage_noex)
 size <- pat %>% filter(year <= 2021) %>% group_by(subclass) %>% summarise(avg = mean(n_top))
 keep <- size %>% filter(avg >= 10) %>% pull(subclass)
@@ -83,7 +83,7 @@ ggsave(file.path(FIG_DIR, "fig37_patents_subclass_es.pdf"), p, width = 9, height
 ggsave(file.path(FIG_DIR, "fig37_patents_subclass_es.png"), p, width = 9, height = 5, dpi = 150)
 
 # holder types at subclass level (field x year FE within holder)
-pt <- read_csv(here("data", "clean", "ru_domestic_subclass_holder_year.csv"), show_col_types = FALSE) %>%
+pt <- read_csv(here("data", "processed", "title_subclasses", "ru_domestic_subclass_holder_year.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS, h %in% c("firm", "university", "research", "individual")) %>%
   complete(subclass, year = YEARS, h, fill = list(n = 0))
 hres <- map_dfr(c("industry", "text"), function(mp) {

@@ -9,9 +9,9 @@ WS_p, b_p: Western share of Russia's 2019-21 imports and banned share (end-2023 
 HS codes of product row p (HS -> ISIC4 without 33xx -> 3-digit group named by the row's code; 2-digit fallback).
 
 Input : data/raw/rosstat_io/baz_tzv-2021.xlsx (Rosstat, recovered from the Wayback Machine, archived 4 Apr 2025)
-        data/clean/concord_hs_isic4.csv, ru_imports_hs6.parquet, eu_ban_hs07.csv, industry_ban_coverage.csv
-Output: data/clean/industry_input_exposure_ru.csv  nace3, rs_col, dep, sh, west
-        data/clean/rosstat_product_shares.csv      product row, WS, b
+        data/clean/concordances/concord_hs_isic4.csv, ru_imports_hs6.parquet, eu_ban_hs07.csv, industry_ban_coverage.csv
+Output: data/processed/input_exposure_ru/industry_input_exposure_ru.csv  nace3, rs_col, dep, sh, west
+        data/processed/input_exposure_ru/rosstat_product_shares.csv      product row, WS, b
 """
 import re
 from pathlib import Path
@@ -53,13 +53,13 @@ def main():
     mdom = mdom.reindex(index=mimp.index, columns=mimp.columns).fillna(0)
     print(f"Rosstat 2021: {mimp.shape[0]} manufactured product rows x {mimp.shape[1]} manufacturing industry columns")
 
-    c = pd.read_csv(CLEAN / "concord_hs_isic4.csv", dtype=str).rename(columns={"HS_6d": "hs07", "ISIC4_4d": "isic4"})
+    c = pd.read_csv(ROOT / "data" / "clean" / "concordances" / "concord_hs_isic4.csv", dtype=str).rename(columns={"HS_6d": "hs07", "ISIC4_4d": "isic4"})
     c = c[c.isic4.str.fullmatch(r"\d{4}", na=False)].drop_duplicates()
     c = c[c.isic4.str[:2] != "33"]
     c["k"] = 1 / c.groupby("hs07").isic4.transform("size")
-    imp = pd.read_parquet(CLEAN / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
+    imp = pd.read_parquet(ROOT / "data" / "processed" / "ru_imports" / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
     imp = imp[imp.year.between(2019, 2021)].groupby(["hs07", "group"]).v.mean().unstack(fill_value=0)
-    ban = pd.read_csv(CLEAN / "eu_ban_hs07.csv", dtype={"hs07": str, "version": str})
+    ban = pd.read_csv(ROOT / "data" / "clean" / "eu_sanctions" / "eu_ban_hs07.csv", dtype={"hs07": str, "version": str})
     b = ban[(ban.list == "eu2022") & (ban.version <= "20231231")]
     b = b[b.version == b.version.max()].set_index("hs07").share
     x = c.merge(imp.reset_index(), on="hs07")
@@ -80,7 +80,7 @@ def main():
                 acc += g2.loc[pre[:2]]
         rows.append((p, acc.W / acc.A if acc.A > 0 else 0.0, acc.WB / acc.W if acc.W > 0 else 0.0))
     ps = pd.DataFrame(rows, columns=["product", "WS", "b"]).set_index("product")
-    ps.to_csv(CLEAN / "rosstat_product_shares.csv")
+    ps.to_csv(ROOT / "data" / "processed" / "input_exposure_ru" / "rosstat_product_shares.csv")
     print(ps.loc[[r for r in ["21.2", "26.1", "26.3", "26.5", "28.4", "29.3", "20.14", "24.1"] if r in ps.index]].round(2).to_string())
 
     num = (mimp.mul(ps.WS * ps.b, axis=0)).sum()
@@ -89,7 +89,7 @@ def main():
     col = pd.DataFrame({"dep": num / den, "sh": num / wimp, "west": wimp / den})
 
     # Rosstat industry columns -> NACE 3-digit units
-    units = pd.read_csv(CLEAN / "industry_ban_coverage.csv").nace3.astype(int).tolist()
+    units = pd.read_csv(ROOT / "data" / "processed" / "industry_panel" / "industry_ban_coverage.csv").nace3.astype(int).tolist()
 
     def covers(code, n3):
         s = str(n3)
@@ -106,12 +106,12 @@ def main():
             cd = max(hits, key=len)  # most specific column
             out.append((n3, cd, *col.loc[cd, ["dep", "sh", "west"]].tolist()))
     o = pd.DataFrame(out, columns=["nace3", "rs_col", "dep", "sh", "west"])
-    o.to_csv(CLEAN / "industry_input_exposure_ru.csv", index=False)
+    o.to_csv(ROOT / "data" / "processed" / "input_exposure_ru" / "industry_input_exposure_ru.csv", index=False)
     print(f"\nNACE3 units mapped: {len(o)} of {len(units)}; distinct Rosstat columns: {o.rs_col.nunique()}")
     show = col.loc[[k for k in ["21", "26", "27", "28", "29", "30", "32.5", "24.1 + 24.2 + 24.3", "20.1", "22.2"] if k in col.index]]
     print(show.round(3).to_string())
-    oc = pd.read_csv(CLEAN / "industry_ban_coverage.csv")
-    bea = pd.read_csv(CLEAN / "industry_input_exposure.csv")
+    oc = pd.read_csv(ROOT / "data" / "processed" / "industry_panel" / "industry_ban_coverage.csv")
+    bea = pd.read_csv(ROOT / "data" / "processed" / "input_exposure" / "industry_input_exposure.csv")
     m = o.merge(oc, on="nace3").merge(bea, on="nace3")
     print(f"corr: dep vs output coverage {m.dep.corr(m.coverage):.2f}; dep vs BEA input {m.dep.corr(m.input_cov):.2f}; "
           f"sh vs BEA input {m.sh.corr(m.input_cov):.2f}; dep vs west {m.dep.corr(m.west):.2f}")

@@ -1,8 +1,8 @@
 """Merge World Bank indicators, OpenAlex counts and GSDB sanction measures into one country-year panel.
 
 Inputs:  data/raw/pwt/pwt110_rtfpna_fred.csv (TFP), data/raw/wb/wb_indicators.csv, data/raw/wb/wb_countries.csv, data/raw/openalex/openalex_country_year.csv,
-         data/clean/gsdb_country_year.csv
-Output:  data/clean/panel.csv  (ISO3 x year, 1985-2024; World Bank economies, aggregates dropped)
+         data/clean/gsdb/gsdb_country_year.csv
+Output:  data/processed/country_panel/panel.csv  (ISO3 x year, 1985-2024; World Bank economies, aggregates dropped)
 
 Decisions (notes/data_decisions.md, P1-P4):
   P1 unit = World Bank economy (ISO3); Taiwan has GSDB cases but no WB data and drops out here
@@ -45,7 +45,7 @@ def main():
     pwt = pd.read_csv(RAW / "pwt" / "pwt110_rtfpna_fred.csv").rename(columns={"rtfpna": "tfp"})
     p = p.merge(pwt, on=["iso3", "year"], how="left")  # P5: PWT 11.0 rtfpna (2021 = 1), missing stays missing
 
-    gs = pd.read_csv(CLEAN / "gsdb_country_year.csv")
+    gs = pd.read_csv(ROOT / "data" / "clean" / "gsdb" / "gsdb_country_year.csv")
     p = p.merge(gs, on=["iso3", "year"], how="left")
     sanc = [c for c in gs.columns if c not in ("iso3", "year")]
     in_gsdb_years = p.year <= 2023
@@ -54,7 +54,7 @@ def main():
     med = p[p.year.between(1995, 2023)].groupby("iso3").pop.median()
     p["pop_ge1m"] = p.iso3.map(med >= 1e6).fillna(False).astype(int)
     p = p.sort_values(["iso3", "year"])
-    p.to_csv(CLEAN / "panel.csv", index=False)
+    p.to_csv(ROOT / "data" / "processed" / "country_panel" / "panel.csv", index=False)
 
     s = p[p.year.between(1995, 2023) & (p.pop_ge1m == 1)]
     print(f"panel: {p.iso3.nunique()} economies, {len(p)} rows; base sample {s.iso3.nunique()} economies")

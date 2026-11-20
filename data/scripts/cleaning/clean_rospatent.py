@@ -5,7 +5,7 @@ Input : data/raw/rospatent/data-20261102-structure-20180828.csv (downloaded by t
         data/raw/rucities/russia-cities.json, russia-regions.json (github.com/arbaev/russia-cities, 1,109 towns
         with region, one postal code each; 83 regions with ISO 3166-2 codes) for postal code -> region.
         (GeoNames postal codes were the first choice but download.geonames.org did not answer, 12 Nov 2026.)
-Output: data/clean/rospatent_inventions.parquet
+Output: data/clean/rospatent/rospatent_inventions.parquet
 
 Rules (notes/data_decisions.md, P1-P7):
   P1 region = 6-digit Russian postal code at the start of the correspondence address. Its first 3 digits (the
@@ -30,7 +30,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[3]
 RAW = ROOT / "data" / "raw" / "rospatent" / "data-20261102-structure-20180828.csv"
 CITIES = ROOT / "data" / "raw" / "rucities"
-OUT = ROOT / "data" / "clean" / "rospatent_inventions.parquet"
+OUT = ROOT / "data" / "clean" / "rospatent" / "rospatent_inventions.parquet"
 
 EU27 = "AT BE BG HR CY CZ DK EE FI FR DE GR HU IE IT LV LT LU MT NL PL PT RO SK SI ES SE".split()
 COALITION = set(EU27 + "US GB CA JP KR TW SG AU NZ CH NO IS LI".split())

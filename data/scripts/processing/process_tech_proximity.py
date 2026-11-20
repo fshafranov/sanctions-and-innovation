@@ -7,7 +7,7 @@ Population: domestic invention patents, mass filers dropped, filing years 2010-2
   P2 holder overlap: H = holder x unit matrix of fractional patent counts; s_ij = cosine(H[:, i], H[:, j]);
      w_holder_ij = s_ij / sum_{k != i} s_ik (diagonal excluded). Holder names: lower case, quotes, country suffix
      "(RU)" and legal-form abbreviations removed; each holder of a patent gets the patent's fractional count.
-Output: data/clean/tech_proximity.csv  level (subclass/field), i, j, w_coclass, w_holder
+Output: data/processed/tech_proximity/tech_proximity.csv  level (subclass/field), i, j, w_coclass, w_holder
 """
 import re
 from itertools import combinations
@@ -72,15 +72,15 @@ def weights(d, col, level):
 
 
 def main():
-    reg = pd.read_parquet(CLEAN / "rospatent_inventions.parquet", columns=["reg_no", "app_year", "domestic", "mass_filer"])
+    reg = pd.read_parquet(ROOT / "data" / "clean" / "rospatent" / "rospatent_inventions.parquet", columns=["reg_no", "app_year", "domestic", "mass_filer"])
     reg["reg_no"] = reg.reg_no.astype(str)
-    api = pd.read_parquet(CLEAN / "rospatent_api_biblio.parquet", columns=["reg_no", "ipc", "holders"])
+    api = pd.read_parquet(ROOT / "data" / "clean" / "rospatent_api" / "rospatent_api_biblio.parquet", columns=["reg_no", "ipc", "holders"])
     d = reg[reg.domestic & ~reg.mass_filer & reg.app_year.between(2010, 2021)].merge(api, on="reg_no")
     d["subs"] = d.ipc.apply(lambda cs: sorted({c[:4] for c in cs if len(c) >= 4}))
     d["fields"] = d.ipc.apply(lambda cs: sorted({f for f in map(field_of, cs) if f}))
     d["holders"] = d.holders.apply(lambda h: list(h) if h is not None else [])
     out = pd.concat([weights(d, "subs", "subclass"), weights(d, "fields", "field")])
-    out.to_csv(CLEAN / "tech_proximity.csv", index=False)
+    out.to_csv(ROOT / "data" / "processed" / "tech_proximity" / "tech_proximity.csv", index=False)
     f = out[out.level == "field"].copy()
     print("example: field 3 (telecom), top co-class neighbours:",
           f[f.i == 3].nlargest(4, "w_coclass")[["j", "w_coclass", "w_holder"]].round(3).to_dict("records"))

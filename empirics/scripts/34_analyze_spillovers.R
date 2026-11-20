@@ -10,7 +10,7 @@
 # Output: empirics/results/tables/spillovers.csv, spillovers_corr.csv; fig50_spillovers
 source(here::here("empirics", "scripts", "00_setup.R"))
 YEARS <- 2015:2025
-prox <- read_csv(here("data", "clean", "tech_proximity.csv"), show_col_types = FALSE,
+prox <- read_csv(here("data", "processed", "tech_proximity", "tech_proximity.csv"), show_col_types = FALSE,
                  col_types = cols(i = "c", j = "c", level = "c"))
 
 nb <- function(cv, lvl) {  # cv: unit (chr), cov  -> unit, n_coclass, n_holder
@@ -21,11 +21,11 @@ nb <- function(cv, lvl) {  # cv: unit (chr), cov  -> unit, n_coclass, n_holder
 }
 
 # ---- subclass panel ----
-sp <- read_csv(here("data", "clean", "ru_domestic_subclass_year_official.csv"), show_col_types = FALSE) %>%
+sp <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_subclass_year_official.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS) %>% complete(subclass, year = YEARS, fill = list(n_frac = 0, n_first = 0))
 keep <- sp %>% filter(year <= 2021) %>% group_by(subclass) %>% summarise(avg = mean(n_frac)) %>%
   filter(avg >= 10) %>% pull(subclass)
-scov <- read_csv(here("data", "clean", "subclass_ban_coverage.csv"), show_col_types = FALSE) %>%
+scov <- read_csv(here("data", "processed", "subclass_ban_coverage", "subclass_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(year == 2023, !is.na(field))
 sub_panel <- function(mp) {
   cv <- scov %>% filter(map == mp) %>% transmute(unit = subclass, field, cov = coverage, W = west_pre)
@@ -35,9 +35,9 @@ sub_panel <- function(mp) {
     left_join(rest, by = "unit") %>%
     inner_join(sp %>% rename(unit = subclass), by = "unit")
 }
-fp <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
+fp <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
   filter(year %in% YEARS)
-fcov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+fcov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", event == "eu2022", year == 2023)
 fld_panel <- function(mp) {
   cv <- fcov %>% filter(map == mp) %>% transmute(unit = as.character(field), field, cov = coverage)

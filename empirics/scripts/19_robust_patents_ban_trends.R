@@ -4,8 +4,8 @@
 #   extrapolated (beta = average post deviation from the extrapolated pre-trend); (c) short window 2019-2025.
 # Output: empirics/results/tables/patents_ban_trends.csv
 source(here::here("empirics", "scripts", "00_setup.R"))
-pat <- read_csv(here("data", "clean", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE)
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+pat <- read_csv(here("data", "processed", "title_fields", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE)
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", event == "eu2022", year == 2023)
 out <- map_dfr(c("industry", "text"), function(mp) {
   d <- pat %>% filter(between(year, 2015, 2025)) %>% select(field, year, y = n_top) %>%

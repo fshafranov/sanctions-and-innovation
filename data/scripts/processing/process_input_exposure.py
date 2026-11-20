@@ -3,10 +3,10 @@ Input exposure_j = Sum_c U(c, j) b_c / Sum_c U(c, j): the banned share of what i
 2017 detailed Use table (US input structure as proxy) and b_c the banned share of Russia's 2019-21 Western imports
 in commodity c's product group (end-2023 EU list).
 
-Input : data/raw/bea/IOUse_Before_Redefinitions_PRO_2017_Detail.xlsx (sheet 2017), data/clean/bea_detail_naics.csv,
+Input : data/raw/bea/IOUse_Before_Redefinitions_PRO_2017_Detail.xlsx (sheet 2017), data/clean/bea/bea_detail_naics.csv,
         concord_naics17_isic4.csv, concord_hs_isic4.csv, ru_imports_hs6.parquet, eu_ban_hs07.csv,
         industry_ban_coverage.csv (output exposure, script 28)
-Output: data/clean/industry_input_exposure.csv  nace3, input_cov, input_cov_exown, input_value
+Output: data/processed/input_exposure/industry_input_exposure.csv  nace3, input_cov, input_cov_exown, input_value
 """
 from pathlib import Path
 
@@ -35,8 +35,8 @@ def isic_to_nace(isic, groups):
 
 def main():
     groups = nace_groups()
-    bn = pd.read_csv(CLEAN / "bea_detail_naics.csv", dtype=str)
-    ni = pd.read_csv(CLEAN / "concord_naics17_isic4.csv", dtype=str).dropna()
+    bn = pd.read_csv(ROOT / "data" / "clean" / "bea" / "bea_detail_naics.csv", dtype=str)
+    ni = pd.read_csv(ROOT / "data" / "processed" / "input_exposure" / "concord_naics17_isic4.csv", dtype=str).dropna()
     ni["w"] = ni.w.astype(float)
     ni["w"] = ni.w / ni.groupby("naics").w.transform("sum")
     bi = bn.merge(ni, on="naics")
@@ -46,14 +46,14 @@ def main():
     print(f"BEA manufacturing codes: {len(manuf_bea)}; with ISIC link: {len(manuf_bea & set(bi.bea))}")
 
     # banned share by ISIC4 product group (Western imports 2019-21, end-2023 list)
-    c = pd.read_csv(CLEAN / "concord_hs_isic4.csv", dtype=str).rename(columns={"HS_6d": "hs07", "ISIC4_4d": "isic4"})
+    c = pd.read_csv(ROOT / "data" / "clean" / "concordances" / "concord_hs_isic4.csv", dtype=str).rename(columns={"HS_6d": "hs07", "ISIC4_4d": "isic4"})
     c = c[c.isic4.str.fullmatch(r"\d{4}", na=False)].drop_duplicates()
     c = c[c.isic4.str[:2] != "33"]
     c["k"] = 1 / c.groupby("hs07").isic4.transform("size")
-    imp = pd.read_parquet(CLEAN / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
+    imp = pd.read_parquet(ROOT / "data" / "processed" / "ru_imports" / "ru_imports_hs6.parquet").rename(columns={"hs6": "hs07"})
     W = imp[(imp.group == "west") & imp.year.between(2019, 2021) & imp.hs07.str[:2].astype(int).between(28, 97)] \
         .groupby("hs07").v.mean().rename("W").reset_index()
-    ban = pd.read_csv(CLEAN / "eu_ban_hs07.csv", dtype={"hs07": str, "version": str})
+    ban = pd.read_csv(ROOT / "data" / "clean" / "eu_sanctions" / "eu_ban_hs07.csv", dtype={"hs07": str, "version": str})
     b = ban[(ban.list == "eu2022") & (ban.version <= "20231231")]
     b = b[b.version == b.version.max()][["hs07", "share"]]
     x = W.merge(c, on="hs07").merge(b, on="hs07", how="left").fillna({"share": 0})
@@ -99,8 +99,8 @@ def main():
         out.append((n3, num / den if den > 0 else np.nan,
                     (use[mask] * bc.reindex(use.index)[mask]).sum() / use[mask].sum() if use[mask].sum() > 0 else np.nan, den))
     o = pd.DataFrame(out, columns=["nace3", "input_cov", "input_cov_exown", "input_value"])
-    o.to_csv(CLEAN / "industry_input_exposure.csv", index=False)
-    oc = pd.read_csv(CLEAN / "industry_ban_coverage.csv")
+    o.to_csv(ROOT / "data" / "processed" / "input_exposure" / "industry_input_exposure.csv", index=False)
+    oc = pd.read_csv(ROOT / "data" / "processed" / "industry_panel" / "industry_ban_coverage.csv")
     m = oc.merge(o, on="nace3")
     print(f"NACE3 industries with input exposure: {len(o)}; overlap with output sample: {len(m)}")
     print(f"corr(output coverage, input exposure) = {m.coverage.corr(m.input_cov):.2f}; "

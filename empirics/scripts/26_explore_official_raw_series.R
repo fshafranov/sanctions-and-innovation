@@ -3,13 +3,13 @@
 # indexed 2021 = 100, by holder type. No regression. Output: fig39_official_raw_series
 source(here::here("empirics", "scripts", "00_setup.R"))
 YEARS <- 2012:2025
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", event == "eu2022", year == 2023, map == "industry") %>%
   transmute(field, grp = cut(coverage, quantile(coverage, c(0, 1/3, 2/3, 1)), include.lowest = TRUE,
                              labels = c("Low coverage (12 fields)", "Middle", "High coverage")))
-all <- read_csv(here("data", "clean", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
+all <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_field_year_official.csv"), show_col_types = FALSE) %>%
   mutate(holder_type = "All domestic")
-hol <- read_csv(here("data", "clean", "ru_domestic_field_year_holder_official.csv"), show_col_types = FALSE) %>%
+hol <- read_csv(here("data", "processed", "official_ipc_panels", "ru_domestic_field_year_holder_official.csv"), show_col_types = FALSE) %>%
   filter(holder_type %in% c("firm", "university", "research")) %>%
   mutate(holder_type = recode(holder_type, firm = "Firms", university = "Universities", research = "Research institutes"))
 d <- bind_rows(all, hol) %>% filter(year %in% YEARS) %>% inner_join(cov, by = "field") %>%

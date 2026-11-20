@@ -1,9 +1,9 @@
 # Check (20 Nov 2026, note 15): does UNbanned Western input access predict more patenting? banned (dep) and unbanned
 # (west - dep) Western inputs in one PPML model, industry + year FE, SEs clustered by Rosstat column; sample exclusions.
 source(here::here("empirics", "scripts", "00_setup.R"))
-pat <- read_csv(here("data", "clean", "industry_year_patents.csv"), show_col_types = FALSE)
-cov <- read_csv(here("data", "clean", "industry_ban_coverage.csv"), show_col_types = FALSE)
-ru <- read_csv(here("data", "clean", "industry_input_exposure_ru.csv"), show_col_types = FALSE)
+pat <- read_csv(here("data", "processed", "industry_panel", "industry_year_patents.csv"), show_col_types = FALSE)
+cov <- read_csv(here("data", "processed", "industry_panel", "industry_ban_coverage.csv"), show_col_types = FALSE)
+ru <- read_csv(here("data", "processed", "input_exposure_ru", "industry_input_exposure_ru.csv"), show_col_types = FALSE)
 keep <- pat %>% filter(between(year, 2015, 2019)) %>% group_by(nace3) %>% summarise(pre = mean(n)) %>% filter(pre >= 10)
 base <- pat %>% filter(between(year, 2015, 2025)) %>% complete(nace3, year = 2015:2025, fill = list(n = 0)) %>%
   inner_join(cov %>% filter(west_imports > 0, nace3 %in% keep$nace3), by = "nace3") %>% inner_join(ru, by = "nace3") %>%

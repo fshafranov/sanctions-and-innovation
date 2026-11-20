@@ -13,9 +13,9 @@ source(here::here("empirics", "scripts", "00_setup.R"))
 suppressPackageStartupMessages(library(did))
 set.seed(20261112)
 
-pat <- read_csv(here("data", "clean", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE) %>%
+pat <- read_csv(here("data", "processed", "title_fields", "ru_domestic_field_year_imputed.csv"), show_col_types = FALSE) %>%
   select(field, field_en, year, y = n_top)
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>%
   filter(sample == "manuf", map == "industry")
 oil <- cov %>% filter(event == "oil2014") %>% select(field, oil = coverage)
 eu  <- cov %>% filter(event == "eu2022") %>% select(field, year, eu = coverage)

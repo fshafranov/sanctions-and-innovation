@@ -4,7 +4,7 @@ Source: World Bank WDI bulk file https://databankfiles.worldbank.org/public/ddpe
         (283 MB, last modified 8 Oct 2026; downloaded 12 Nov 2026 because the WDI API returned HTTP 502 for every
         request that day). Kept in data/raw/wb/wdi_bulk/; only the indicators below are extracted.
         Download: curl -L -o data/raw/wb/wdi_bulk/WDI_CSV.zip <url above>
-Output: data/clean/covariates_country_year.csv (iso3, year, one column per covariate, 1990-2024)
+Output: data/clean/wb/covariates_country_year.csv (iso3, year, one column per covariate, 1990-2024)
 GDP per capita, population, R&D % GDP and researchers come from the outcome panel (01_get_wb.py).
 """
 import zipfile
@@ -14,7 +14,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[3]
 ZIP = ROOT / "data" / "raw" / "wb" / "wdi_bulk" / "WDI_CSV.zip"
-OUT = ROOT / "data" / "clean" / "covariates_country_year.csv"
+OUT = ROOT / "data" / "clean" / "wb" / "covariates_country_year.csv"
 
 INDICATORS = {
     "NY.GDP.PETR.RT.ZS": "oil_rents",        # Oil rents (% of GDP)

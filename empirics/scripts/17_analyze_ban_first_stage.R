@@ -4,9 +4,9 @@
 # Output: fig28_ban_first_stage.{pdf,png}, fig29_ban_coverage_vs_drop.{pdf,png}, empirics/results/tables/ban_first_stage.csv
 source(here::here("empirics", "scripts", "00_setup.R"))
 
-imp <- read_csv(here("data", "clean", "field_imports_year.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
-cov <- read_csv(here("data", "clean", "field_ban_coverage.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
-ex  <- read_csv(here("data", "clean", "field_exposure.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
+imp <- read_csv(here("data", "processed", "field_exposure", "field_imports_year.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
+cov <- read_csv(here("data", "processed", "ban_coverage", "field_ban_coverage.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
+ex  <- read_csv(here("data", "processed", "field_exposure", "field_exposure.csv"), show_col_types = FALSE) %>% filter(sample == "manuf")
 
 spec <- tribble(~event, ~list, ~cov_year, ~ref, ~from, ~to,
                 2022, "eu2022", 2023, 2021, 2015, 2024,
