@@ -1,4 +1,4 @@
-# 13_title_classifier_check.R: does the title-based field imputation (scripts/data/14_title_field_classifier.py)
+# 13_title_classifier_check.R: does the title-based field imputation (data/scripts/processing/process_title_fields.py)
 # reproduce IPC-based field counts? Domestic Rospatent inventions (no mass filers), by filing year.
 # Predicted counts in 2010-2021 are out-of-fold (cross-fitted), so the overlap is a fair test.
 # Output: fig25_title_classifier_fields.{pdf,png}

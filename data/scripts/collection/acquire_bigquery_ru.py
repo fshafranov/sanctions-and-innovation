@@ -13,8 +13,8 @@ Columns kept: publication/application number, kind code, family id, filing/publi
 No addresses exist in this table.
 
 Usage:
-  GCP_PROJECT=<your-project-id> uv run python scripts/data/08_get_bigquery_ru.py --dry-run   # bytes scanned only
-  GCP_PROJECT=<your-project-id> uv run python scripts/data/08_get_bigquery_ru.py             # download
+  GCP_PROJECT=<your-project-id> uv run python data/scripts/collection/acquire_bigquery_ru.py --dry-run   # bytes scanned only
+  GCP_PROJECT=<your-project-id> uv run python data/scripts/collection/acquire_bigquery_ru.py             # download
 Login: a browser window opens once (Google OAuth via pydata-google-auth); the token is cached in
 ~/.pydata_google_auth. Nothing is stored in this repo.
 

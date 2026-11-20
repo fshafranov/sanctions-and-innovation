@@ -10,7 +10,7 @@ Rules (AP1 in notes/data_decisions.md)
       sort filing_date:asc, limit 500, offset paging; weeks 2010-01-04 .. 2026-11-15, newest first;
       one request at a time, 1 s pause, back-off as 21b; resumable (weeks already saved are skipped).
 Raw output: data/raw/rospatent_api/weeks_A/<monday YYYYMMDD>.json.gz (full hit records, as returned)
-Usage: zsh -ic 'uv run python -I scripts/data/21c_get_rospatent_api_apps.py [--weeks N]'
+Usage: zsh -ic 'uv run python -I data/scripts/collection/acquire_rospatent_api_apps.py [--weeks N]'
 """
 import argparse
 import gzip
@@ -26,7 +26,7 @@ import requests
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "data" / "raw" / "rospatent_api" / "weeks_A"
-sp = importlib.util.spec_from_file_location("s21b", ROOT / "scripts" / "data" / "21b_get_rospatent_api.py")
+sp = importlib.util.spec_from_file_location("s21b", ROOT / "data" / "scripts" / "collection" / "acquire_rospatent_api.py")
 s21b = importlib.util.module_from_spec(sp)
 sp.loader.exec_module(s21b)
 LIMIT, PAUSE = s21b.LIMIT, s21b.PAUSE

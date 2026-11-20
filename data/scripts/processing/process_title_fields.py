@@ -48,7 +48,7 @@ RAW, CLEAN, LOGS = ROOT / "data" / "raw", ROOT / "data" / "clean", ROOT / "data"
 REG_CSV = RAW / "rospatent" / "data-20261102-structure-20180828.csv"
 SEED = 20261112
 
-spec = importlib.util.spec_from_file_location("s10", ROOT / "scripts" / "data" / "10_build_ru_patent_fields.py")
+spec = importlib.util.spec_from_file_location("s10", ROOT / "data" / "scripts" / "processing" / "process_ru_patents_google.py")
 s10 = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(s10)
 

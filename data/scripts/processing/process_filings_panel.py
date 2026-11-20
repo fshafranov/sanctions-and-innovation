@@ -28,10 +28,10 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW, CLEAN = ROOT / "data" / "raw", ROOT / "data" / "clean"
-sp11 = importlib.util.spec_from_file_location("s11", ROOT / "scripts" / "data" / "11_parse_rospatent_register.py")
+sp11 = importlib.util.spec_from_file_location("s11", ROOT / "data" / "scripts" / "cleaning" / "clean_rospatent.py")
 s11 = importlib.util.module_from_spec(sp11)
 sp11.loader.exec_module(s11)
-sp = importlib.util.spec_from_file_location("s23", ROOT / "scripts" / "data" / "23_build_official_ipc_panels.py")
+sp = importlib.util.spec_from_file_location("s23", ROOT / "data" / "scripts" / "processing" / "process_official_ipc_panels.py")
 s23 = importlib.util.module_from_spec(sp)
 sp.loader.exec_module(s23)
 MASS_RU = ["Щепочкина Юлия Алексеевна", "Квасенков Олег Иванович", "Кочетов Олег Савельевич", "Ахмедов Магомед Эминович"]

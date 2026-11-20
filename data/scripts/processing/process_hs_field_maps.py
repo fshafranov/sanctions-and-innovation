@@ -24,7 +24,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 RAW, CLEAN = ROOT / "data" / "raw", ROOT / "data" / "clean"
 
-spec = importlib.util.spec_from_file_location("s14", ROOT / "scripts" / "data" / "14_title_field_classifier.py")
+spec = importlib.util.spec_from_file_location("s14", ROOT / "data" / "scripts" / "processing" / "process_title_fields.py")
 s14 = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(s14)
 __main__.Model = s14.Model  # the model was pickled from 14 run as __main__

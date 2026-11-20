@@ -7,7 +7,7 @@ Rules (OA1-OA2 in notes/data_decisions.md)
   OA2 trial: random sample of 10,000 (sample=10000, seed=20261120; 61 s). Full run: cursor paging over all
       matching authors (~3,300 requests, about an hour), --full.
 Output: data/raw/openalex/authors/sample_10000_seed20261120.json.gz (trial) or all_ru_authors.json.gz (--full)
-Usage: uv run python -I scripts/data/33_get_openalex_authors.py [--full]
+Usage: uv run python -I data/scripts/collection/acquire_openalex_authors.py [--full]
 """
 import argparse
 import gzip

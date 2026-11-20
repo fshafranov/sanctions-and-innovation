@@ -14,7 +14,7 @@ Rules (A1-A3 in notes/data_decisions.md)
   A3 politeness: one request at a time, 1 s pause; on errors wait 30 s, 60 s, ... (max 30 min); stop after 10
      consecutive failures. Resumable: weeks already saved are skipped.
 Raw output: data/raw/rospatent_api/weeks/<monday YYYYMMDD>.json.gz  (list of full hit records, as returned)
-Usage: zsh -ic 'uv run python -I scripts/data/21b_get_rospatent_api.py [--weeks N]'
+Usage: zsh -ic 'uv run python -I data/scripts/collection/acquire_rospatent_api.py [--weeks N]'
 """
 import argparse
 import gzip

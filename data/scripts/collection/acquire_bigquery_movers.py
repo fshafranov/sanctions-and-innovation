@@ -11,7 +11,7 @@ Rules (MV1-MV3 in notes/data_decisions.md)
       no patronymic), so levels are upper bounds and the series is read as a change over time.
   MV3 recent years are incomplete (18-month publication lag): 2024-2025 counts are lower bounds.
 Login and project as script 08 (env GCP_PROJECT, OAuth token cached in ~/.pydata_google_auth; nothing in the repo).
-Usage: GCP_PROJECT=<id> uv run python -I scripts/data/32_get_bigquery_movers.py [--dry-run]
+Usage: GCP_PROJECT=<id> uv run python -I data/scripts/collection/acquire_bigquery_movers.py [--dry-run]
 Output: data/raw/bigquery/movers_by_year.csv (y, pool_n, abroad_n), movers_by_destination.csv (y, cc, n), manifest
 """
 import argparse

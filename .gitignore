@@ -1,4 +1,11 @@
-/data/
+# Data: raw, clean and processed files stay local; scripts, raw-data READMEs and the manifest are tracked
+/data/*
+!/data/scripts/
+!/data/raw/
+/data/raw/**
+!/data/raw/*/
+!/data/raw/*/README.md
+!/data/raw/MANIFEST.sha256
 .venv/
 __pycache__/
 .Rhistory

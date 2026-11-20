@@ -16,7 +16,7 @@ Raw HTML kept only for the first 200 pages (parser checks).
 
 STATUS: blocked. On 18 Nov 2026 the site answered scripted requests with a DDoS-Guard browser check (HTTP 403);
 nothing was collected. Do not work around it; use the Rospatent search platform API instead (token from the user).
-Usage:  uv run python -I scripts/data/21_get_fips_ipc.py [--limit N]
+Usage:  uv run python -I archive/scripts/21_get_fips_ipc.py [--limit N]
 Output: data/raw/fips/fips_ipc.csv  reg_no, tier, http, ipc, cpc, status, fee, fetched_at
         (ipc/cpc: codes separated by "; ", e.g. "A61B 5/296 (2021.01)")
         data/raw/fips/html_sample/<reg_no>.html

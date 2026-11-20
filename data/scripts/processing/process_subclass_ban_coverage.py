@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[2]
 RAW, CLEAN = ROOT / "data" / "raw", ROOT / "data" / "clean"
 DH = RAW / "concordances" / "iab_dorner_harhoff" / "vertical tables"
 
-spec = importlib.util.spec_from_file_location("s14b", ROOT / "scripts" / "data" / "14b_title_subclass_classifier.py")
+spec = importlib.util.spec_from_file_location("s14b", ROOT / "data" / "scripts" / "processing" / "process_title_subclasses.py")
 s14b = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(s14b)
 __main__.Model = s14b.Model  # pickled from 14b run as __main__
@@ -125,7 +125,7 @@ def main():
                      .reset_index().assign(map=k))
     cov = pd.concat(cov)
     # subclass -> WIPO field (Schmoch 2008 table): the subclass entry, else the field most of its groups map to
-    sp = importlib.util.spec_from_file_location("s10", ROOT / "scripts" / "data" / "10_build_ru_patent_fields.py")
+    sp = importlib.util.spec_from_file_location("s10", ROOT / "data" / "scripts" / "processing" / "process_ru_patents_google.py")
     s10 = importlib.util.module_from_spec(sp)
     sp.loader.exec_module(s10)
     by_group, by_sub, _ = s10.concordance()

@@ -1,5 +1,5 @@
 # 08_ru_patents_types.R: Russia 2014 within Rospatent, by field and document type (Design D, patents part).
-# Data: data/clean/ru_patents_field_year.csv (scripts/data/10_build_ru_patent_fields.py, Google Patents via BigQuery),
+# Data: data/clean/ru_patents_field_year.csv (data/scripts/processing/process_ru_patents_google.py, Google Patents via BigQuery),
 #       data/clean/field_dependence.csv (Design A, dep_frontier_z) and ru_patents_e21b_year.csv.
 # Questions
 #  (1) Did domestic inventions (inv_ru) or utility models (um) shift towards/away from sender-dependent fields

@@ -1,6 +1,6 @@
 # 12d_sdid_covariates.R: synthetic DiD with country-level covariates (robustness to 12_synthetic_did.R).
 #
-# Covariates (World Bank WDI; scripts/data/13_get_wb_covariates.py and the outcome panel), each averaged over the
+# Covariates (World Bank WDI; data/scripts/cleaning/clean_wb_covariates.py and the outcome panel), each averaged over the
 # case's PRE-sanction years only (no post-sanction values, which the sanctions themselves move):
 #   core: log GDP per capita, log population, oil + gas rents % GDP, trade % GDP, FDI inflows % GDP,
 #         manufacturing value added % GDP, urban population %

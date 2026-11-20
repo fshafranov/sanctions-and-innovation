@@ -13,7 +13,7 @@ okved, flags, ...) plus balance-sheet / P&L lines: 1110 intangible assets, 1120 
 Line meanings follow the Russian statement forms (Form 1 balance sheet, Form 2 P&L); check against the
 dataset's descriptive_names_dict.csv before use.
 
-Usage : uv run python -I scripts/data/24_get_rfsd.py [--schema] [--years 2021 2022]
+Usage : uv run python -I data/scripts/collection/acquire_rfsd.py [--schema] [--years 2021 2022]
 Output: data/raw/rfsd/rfsd_<year>_selected.parquet
 """
 import argparse

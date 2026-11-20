@@ -1,5 +1,5 @@
 # 10_region_maps.R: maps of Russian regions' exposure to the West and of changes in patents and papers after 2022
-# (Design D). Data: data/clean/region_exposure.csv, region_year_panel.csv (scripts/data/12_build_region_panel.py);
+# (Design D). Data: data/clean/region_exposure.csv, region_year_panel.csv (data/scripts/processing/process_region_panel.py);
 # boundaries: GADM 4.1 level 1 (data/raw/gadm; 83 regions, Crimea not included).
 # Exposure (pre-2022): X1 science = coalition co-authored share of small-team articles 2019-21;
 #                      X2 invention = share of Russian-holder patents filed 2012-21 with a coalition co-inventor or

@@ -17,7 +17,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 CLEAN = ROOT / "data" / "clean"
-sp = importlib.util.spec_from_file_location("s10", ROOT / "scripts" / "data" / "10_build_ru_patent_fields.py")
+sp = importlib.util.spec_from_file_location("s10", ROOT / "data" / "scripts" / "processing" / "process_ru_patents_google.py")
 s10 = importlib.util.module_from_spec(sp)
 sp.loader.exec_module(s10)
 BY_GROUP, BY_SUB, _ = s10.concordance()

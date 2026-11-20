@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 WEEKS = ROOT / "data" / "raw" / "rospatent_api" / "weeks_A"
 CLEAN = ROOT / "data" / "clean"
 CC = re.compile(r"\(([A-Z]{2})\)\s*$")
-sp = importlib.util.spec_from_file_location("s11", ROOT / "scripts" / "data" / "11_parse_rospatent_register.py")
+sp = importlib.util.spec_from_file_location("s11", ROOT / "data" / "scripts" / "cleaning" / "clean_rospatent.py")
 s11 = importlib.util.module_from_spec(sp)
 sp.loader.exec_module(s11)
 

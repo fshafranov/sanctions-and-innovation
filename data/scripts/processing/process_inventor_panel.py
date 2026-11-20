@@ -28,13 +28,13 @@ RAW, CLEAN = ROOT / "data" / "raw" / "rospatent_api", ROOT / "data" / "clean"
 
 
 def load(name, file):
-    sp = importlib.util.spec_from_file_location(name, ROOT / "scripts" / "data" / file)
+    sp = importlib.util.spec_from_file_location(name, ROOT / file)
     m = importlib.util.module_from_spec(sp)
     sp.loader.exec_module(m)
     return m
 
 
-s11, s23 = load("s11", "11_parse_rospatent_register.py"), load("s23", "23_build_official_ipc_panels.py")
+s11, s23 = load("s11", "data/scripts/cleaning/clean_rospatent.py"), load("s23", "data/scripts/processing/process_official_ipc_panels.py")
 CC = re.compile(r"\(([A-Z]{2})\)\s*$")
 PATRON = re.compile(r"^[А-ЯЁ][а-яё\-]+ [А-ЯЁ][а-яё\-]+ [А-ЯЁ][а-яё]+(вич|вна|ич|кызы|оглы)$")
 MASS = {"Щепочкина Юлия Алексеевна", "Квасенков Олег Иванович", "Кочетов Олег Савельевич", "Ахмедов Магомед Эминович"}

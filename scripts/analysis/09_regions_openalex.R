@@ -1,5 +1,5 @@
 # 09_regions_openalex.R: Russian regions around 2022, publications (Design D, first regional look).
-# Data: data/raw/openalex/regions/region_year.csv (scripts/data/09_get_openalex_regions.py).
+# Data: data/raw/openalex/regions/region_year.csv (data/scripts/collection/acquire_openalex_regions.py).
 # Exposure E_r (knowledge channel): share of the region's 2019-21 articles co-authored with the 2022 coalition.
 # Capacity C_r: region's 2019-21 article output (log), split at the median ("large" vs "small" science base).
 # Outcomes 2015-2025: log articles (all); coalition co-authored share (pp); China co-authored share (pp).

@@ -7,7 +7,7 @@ Input : data/raw/baci/BACI_HS07_V202601.zip  (cepii.fr, release Jan 2026; downlo
 Output: data/clean/ru_imports_hs6.parquet  year, hs6, group, v   (group: west, china, other)
 
 Rules (I1-I2 in notes/data_decisions.md)
-  I1 west = the 2022 sanctions coalition, same list as scripts/data/11_parse_rospatent_register.py (EU27, US, GB, CA,
+  I1 west = the 2022 sanctions coalition, same list as data/scripts/cleaning/clean_rospatent.py (EU27, US, GB, CA,
      JP, KR, TW, SG, AU, NZ, CH, NO, IS, LI). Taiwan is BACI code 490 ("Other Asia, nes"). china = CHN + HKG + MAC.
   I2 Russia = importer code 643. All years in the file are kept.
 """
