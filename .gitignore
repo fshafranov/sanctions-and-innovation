@@ -11,7 +11,6 @@ __pycache__/
 .Rhistory
 .DS_Store
 *.Rproj.user
-SESSION_LOG.md
 # LaTeX build files
 reports/*.aux
 reports/*.log
@@ -28,8 +27,7 @@ papers/downloads/
 # Rospatent API documentation (third-party, kept locally only)
 /*.docx
 
-# Local-only AI handoff notes (versioned in the separate local repo .git-private)
-AI_CONTEXT.md
+# Local repo for private files (notes/, research-state.md)
 .git-private/
 
 # Private research notes (versioned in the local repo .git-private, not public)
@@ -37,3 +35,6 @@ notes/
 
 # Frozen outputs for regression checks (run_all.py --check)
 archive/baseline/
+
+# Local-only session state (versioned in .git-private)
+research-state.md
