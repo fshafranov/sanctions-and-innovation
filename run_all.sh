@@ -100,6 +100,8 @@ if [ -f data/raw/rospatent/data-20261102-structure-20180828.csv ]; then   # user
       uv run python -I scripts/data/23b_build_filings_panel.py 2>&1 | tee data/logs/23b_filings_panel.log
       Rscript scripts/analysis/18t_filings_by_origin.R 2>&1 | tee data/logs/18t_filings_origin_R.log
       Rscript scripts/analysis/18u_filings_2014.R 2>&1 | tee data/logs/18u_filings_2014_R.log
+      uv run python -I scripts/data/31_build_inventor_panel.py 2>&1 | tee data/logs/31_inventor_panel.log
+      Rscript scripts/analysis/18v_inventor_exit.R 2>&1 | tee data/logs/18v_inventor_exit_R.log
       uv run python -I scripts/data/24_get_rfsd.py 2>&1 | tee data/logs/24_get_rfsd.log
     fi
   fi
