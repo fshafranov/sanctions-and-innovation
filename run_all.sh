@@ -92,6 +92,8 @@ if [ -f data/raw/rospatent/data-20261102-structure-20180828.csv ]; then   # user
       Rscript scripts/data/29b_naics_isic_concord.R 2>&1 | tee data/logs/29b_naics_isic.log
       uv run python -I scripts/data/29c_input_exposure.py 2>&1 | tee data/logs/29c_input_exposure.log
       Rscript scripts/analysis/18r_input_exposure.R 2>&1 | tee data/logs/18r_input_exposure_R.log
+      uv run python -I scripts/data/30_rosstat_input_exposure.py 2>&1 | tee data/logs/30_rosstat_input.log
+      Rscript scripts/analysis/18s_rosstat_input_exposure.R 2>&1 | tee data/logs/18s_rosstat_input_R.log
       uv run python -I scripts/data/24_get_rfsd.py 2>&1 | tee data/logs/24_get_rfsd.log
     fi
   fi

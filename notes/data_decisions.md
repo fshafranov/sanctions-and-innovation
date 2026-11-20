@@ -203,3 +203,17 @@ Counts 1995–2023: 427 Western economic onset years (131 five-year-clean episod
   to NACE3 with ISIC weights). Main: all manufactured inputs; variant: excluding the industry's own product group.
   Estimation as IND1 (same 55 industries, PPML, industry + year FE, 2015-2025, base 2021): input exposure alone; output
   exposure alone; both in one model. Event study with bootstrap pre-test, pooled with RI. All versions reported.
+
+- **RU1 (20 Nov 2026), Russia-specific input exposure, fixed before estimation.** Source: Rosstat basic input-output
+  tables 2021 (data/raw/rosstat_io/baz_tzv-2021.xlsx, recovered from the Wayback Machine), sheets «М-имп» (imported
+  products used, CIF) and «М-отеч» (domestic products used, basic prices); manufactured product rows (OKPD 2 10-33) only.
+  Product row p -> HS via ISIC: each code component maps to the ISIC4 3-digit group with the same digits (2-digit if no
+  HS maps to that group); HS -> ISIC4 as in IND1 (no 33xx). Per product row: WS_p = Western share of Russia's 2019-21
+  imports, b_p = banned share (end-2023) of the Western imports.
+  Industry column j (Rosstat code, e.g. "26", "24.1 + 24.2 + 24.3", "32 без 32.1 и 32.5") -> our NACE 3-digit units by
+  prefix. Measures: **main** dep_j = Sum_p Mimp(p,j) WS_p b_p / Sum_p (Mimp + Mdom)(p,j) (share of manufactured inputs
+  that were Western imports later banned); **variant** sh_j = Sum_p Mimp WS b / Sum_p Mimp WS (banned share of Western
+  imported inputs); **control** west_j = Sum_p Mimp WS / Sum_p (Mimp + Mdom) (Western import dependence regardless of bans).
+  Estimation: same 55 industries as IND1, PPML, industry + year FE, 2015-2025, base 2021, z-scored; SEs clustered by
+  Rosstat column (treatment level), industry-clustered alongside; RI permutes exposure across Rosstat columns; bootstrap
+  pre-test resamples columns. Specs: dep alone; sh alone; dep + west (ban vs dependence); dep + output exposure.
