@@ -23,4 +23,4 @@ Checksums: `data/raw/MANIFEST.sha256`.
 
 ## Access quirks
 
-Downloaded by hand because of its size (slow server); see ANALYSIS_PLAN.md rules I1-I2.
+Downloaded by hand because of its size (slow server); decision rules I1-I2.

@@ -27,7 +27,7 @@ papers/downloads/
 # Rospatent API documentation (third-party, kept locally only)
 /*.docx
 
-# Local repo for private files (notes/, research-state.md)
+# Local repo for private files (notes/, research-state.md, ANALYSIS_PLAN.md)
 .git-private/
 
 # Private research notes (versioned in the local repo .git-private, not public)
@@ -36,8 +36,9 @@ notes/
 # Frozen outputs for regression checks (run_all.py --check)
 archive/baseline/
 
-# Local-only session state (versioned in .git-private)
+# Local-only session state and analysis plan (versioned in .git-private)
 research-state.md
+ANALYSIS_PLAN.md
 
 # Generated per-step logs
 empirics/results/logs/

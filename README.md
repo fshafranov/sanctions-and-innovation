@@ -10,8 +10,7 @@ invention by field.
 > **Status (19 Nov 2026): work in progress.** All patents now carry **official Rospatent IPC codes** (search-platform
 > API, 1994–2026), replacing the title classifier. With official codes the main event study has a **flat pre-period**.
 > Latest results: [`reports/sanctions_innovation_results_2026-11-20.pdf`](reports/sanctions_innovation_results_2026-11-20.pdf).
-> Estimates are in [`empirics/results/tables/`](empirics/results/tables/), design and data decisions in
-> [`ANALYSIS_PLAN.md`](ANALYSIS_PLAN.md).
+> Estimates are in [`empirics/results/tables/`](empirics/results/tables/).
 
 ---
 
@@ -99,7 +98,7 @@ The regional changes after 2014 and after 2022 are almost unrelated (correlation
 
 Raw and cleaned data are **not in the repository** (about 3 GB, and some licences do not allow redistribution).
 `run_all.py` rebuilds them from `data/raw/` (and downloads what can be scripted with `--with-collection`). Every data
-choice is logged in [`ANALYSIS_PLAN.md`](ANALYSIS_PLAN.md); each raw dataset has a provenance README in
+choice is logged in the author's analysis plan (kept private); each raw dataset has a provenance README in
 `data/raw/{dataset}/`.
 
 ## Methods used
@@ -225,7 +224,6 @@ The package follows a four-stage replication layout (collection, cleaning, proce
 | `reports/` | LaTeX reports |
 | `papers/` | index of the literature (PDFs not redistributed) |
 | `archive/` | superseded files; `script_rename_map.csv` maps the old script names (e.g. `18t`, `23b`) to the new ones; `data_file_map.csv` lists every data file and the script that writes it |
-| `ANALYSIS_PLAN.md` | question, pre-registered main specification, all data and design decisions, robustness list, change log |
 | `attempts-log.csv`, `mismatch-register.csv` | run register (appended by `run_all.py`); replication mismatches (none: this is not a replication of a published paper) |
 
 ## How to reproduce
